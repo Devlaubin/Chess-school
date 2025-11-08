@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Chess Shool — Base</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="site-wrapper">
+  <header id="base-header" class="site-header card">
+    <div class="header-row">
+      <div>
+        <h1 id="base-title">Chess School — Base</h1>
+      </div>
+    </div>
+  </header>
+  <main>
+    <nav class="main-nav">
+      <a class="nav-link" href="index.html">Accueil</a>
+      <a class="nav-link active" href="base.html">Base</a>
+      <a class="nav-link" href="specificite.html">Spécificités</a>
+      <a class="nav-link" href="test.html">Test</a>
+    </nav>
+  </main>
+  <main id="mainbases">
+    <section id="section-echiquier" class="content-section card">
+      <h2 id="echiquier-title">L'Échiquier</h2>
+      <p id="echiquier-desc">L'échiquier est composé de 64 cases (8×8) alternant entre cases claires et foncées.</p>
+      <p id="echiquier-orientation">Il s'oriente avec une case blanche dans le coin droit de chaque joueur.</p>
+      <p id="echiquier-notation">Les colonnes sont notées de <strong>a</strong> à <strong>h</strong> (de gauche à droite) et les rangées de <strong>1</strong> à <strong>8</strong> (de bas en haut).</p>
+    </section>
+
+    <section id="section-pieces" class="content-section">
+      <h2 id="pieces-title">Les Pièces et leur Placement</h2>
+      <p id="pieces-desc">Chaque joueur dispose de 16 pièces :</p>
+    <ol>
+      <li>1 Roi - la pièce la plus importante</li>
+      <li>1 Dame - la pièce la plus puissante</li>
+      <li>2 Tours - des pièces puissantes qui se déplacent horizontalement et verticalement</li>
+      <li>2 Fous - se déplacent en diagonale</li>
+      <li>2 Cavaliers - les seules pièces qui peuvent sauter par-dessus d'autres pièces</li>
+      <li>8 Pions - les pièces les plus nombreuses et les moins puissantes</li>
+    </ol>
+
+    <section id="section-deplacements" class="content-section">
+      <h2 id="deplacements-title">Déplacement des Pièces</h2>
+      <h3 id="roi-title">Le Roi</h3>
+      <p id="roi-desc">Se déplace d'une case dans n'importe quelle direction (horizontale, verticale, diagonale).</p>
+
+      <h3 id="dame-title">La Dame</h3>
+      <p id="dame-desc">Se déplace dans n'importe quelle direction (horizontale, verticale, diagonale) et d'autant de cases que souhaité tant que le chemin est libre.</p>
+
+      <h3 id="tour-title">La Tour</h3>
+      <p id="tour-desc">Se déplace horizontalement ou verticalement d'autant de cases que souhaité tant que le chemin est libre.</p>
+
+      <h3 id="fou-title">Le Fou</h3>
+      <p id="fou-desc">Se déplace en diagonale d'autant de cases que souhaité tant que le chemin est libre.</p>
+
+      <h3 id="cavalier-title">Le Cavalier</h3>
+      <p id="cavalier-desc">Se déplace en forme de "L" (2 cases dans une direction puis 1 case perpendiculairement). Il peut sauter par-dessus d'autres pièces.</p>
+
+      <h3 id="pion-title">Le Pion</h3>
+      <p id="pion-desc">Se déplace d'une case vers l'avant. Lors de son premier mouvement, il peut avancer de deux cases. Il capture en diagonale vers l'avant.</p>
+    </section>
+
+    <section id="section-objectif" class="content-section">
+      <h2 id="objectif-title">Objectif du Jeu</h2>
+      <p id="objectif-desc">L'objectif est de mettre le roi adverse en échec et mat, c'est-à-dire dans une position où :</p>
+      <ul id="objectif-list">
+        <li>Le roi est en échec (menacé de capture)</li>
+        <li>Le joueur ne peut pas déplacer son roi hors d'échec</li>
+        <li>Le joueur ne peut pas capturer la pièce qui met en échec</li>
+        <li>Le joueur ne peut pas bloquer l'échec</li>
+      </ul>
+    </section>
+
+    <section id="section-regles" class="content-section">
+      <h2 id="regles-title">Règles de Base</h2>
+      <ul id="regles-list">
+        <li>Les blancs jouent en premier</li>
+        <li>Les joueurs jouent à tour de rôle</li>
+        <li>Un joueur ne peut pas passer son tour</li>
+        <li>Un joueur ne peut pas déplacer ses pièces sur des cases occupées par ses propres pièces</li>
+        <li>Toutes les pièces capturent en remplaçant la pièce adverse sur sa case (sauf pour la prise en passant)</li>
+        <li>Un joueur ne peut pas mettre ou laisser son propre roi en échec.</li>
+      </ul>
+    </section>
+  </main>
+    <footer id="base-footer" class="site-footer">
+      <p>&copy; 2025 Chess School</p>
+    </footer>
+  </div>
+    <script src="index.js"></script>
+</body>
+</html>

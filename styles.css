@@ -1,0 +1,155 @@
+.nav-link {
+    text-decoration: none;
+    margin-right: 10px;
+    color: blanchedalmond;
+}
+
+.site-footer {
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.site-title {
+    font-family: "Bitcount Grid Single", system-ui;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0,
+        "CRSV" 0.5,
+        "ELSH" 0,
+        "ELXP" 0;
+}
+
+#spec-title {
+    font-family: "Bitcount Grid Single", system-ui;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0,
+        "CRSV" 0.5,
+        "ELSH" 0,
+        "ELXP" 0;
+}
+
+#base-title {
+    font-family: "Bitcount Grid Single", system-ui;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0,
+        "CRSV" 0.5,
+        "ELSH" 0,
+        "ELXP" 0;
+}
+
+.main-nav {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#spec-footer {
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+#base-footer {
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.site-footercard {
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+#bienvenue-index {
+    font-family: "Bitcount Grid Single", system-ui;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
+    text-align: center;
+    font-variation-settings:
+        "slnt" 0,
+        "CRSV" 0.5,
+        "ELSH" 0,
+        "ELXP" 0;
+}
+
+.muted {
+    text-align: center;
+    font-style: italic;
+    color: gray;
+}
+
+body {
+    background-image: url(images/background.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.nav-link {
+    background: linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+    background-color: #599bb3;
+    border-radius: 36px;
+    border: 2px solid #29668f;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 17px;
+    padding: 16px 31px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #3d768a;
+}
+
+.nav-link:hover {
+    background: linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+    background-color: #408c99;
+}
+
+.nav-link:active {
+    position: relative;
+    top: 1px;
+}
+
+#mainbases {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 20px;
+    margin: 20px;
+}
+
+.site-title,
+#spec-title,
+#base-title,
+#bienvenue-index {
+    color: #b9b0b0;
+}
+
+#mainbases {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#spec-footer,
+#base-footer,
+.site-footercard {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #b9b0b0;
+    font-size: small;
+}
+
+.nav-link {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 8px;
+    text-shadow: none;
+    opacity: 0.73;
+}
