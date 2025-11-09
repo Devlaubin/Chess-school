@@ -13,8 +13,6 @@
 .site-title {
     font-family: "Bitcount Grid Single", system-ui;
     font-optical-sizing: auto;
-    font-weight: <weight>;
-    font-style: normal;
     font-variation-settings:
         "slnt" 0,
         "CRSV" 0.5,
@@ -25,8 +23,6 @@
 #spec-title {
     font-family: "Bitcount Grid Single", system-ui;
     font-optical-sizing: auto;
-    font-weight: <weight>;
-    font-style: normal;
     font-variation-settings:
         "slnt" 0,
         "CRSV" 0.5,
@@ -37,8 +33,6 @@
 #base-title {
     font-family: "Bitcount Grid Single", system-ui;
     font-optical-sizing: auto;
-    font-weight: <weight>;
-    font-style: normal;
     font-variation-settings:
         "slnt" 0,
         "CRSV" 0.5,
@@ -72,8 +66,6 @@
 #bienvenue-index {
     font-family: "Bitcount Grid Single", system-ui;
     font-optical-sizing: auto;
-    font-weight: <weight>;
-    font-style: normal;
     text-align: center;
     font-variation-settings:
         "slnt" 0,
@@ -95,22 +87,20 @@ body {
 }
 
 .nav-link {
-    background: linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
     background-color: #599bb3;
-    border-radius: 36px;
-    border: 2px solid #29668f;
+    border-radius: 42px;
+    border: 1px solid #29668f;
     display: inline-block;
     cursor: pointer;
     color: #ffffff;
     font-family: Arial;
     font-size: 17px;
-    padding: 16px 31px;
+    padding: 5px 27px;
     text-decoration: none;
-    text-shadow: 0px 1px 0px #3d768a;
+    text-shadow: 0px 1px 50px #3d768a;
 }
 
-.nav-link:hover {
-    background: linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+.nv-link:hover {
     background-color: #408c99;
 }
 
@@ -144,20 +134,9 @@ body {
     color: #b9b0b0;
     font-size: small;
 }
-
-.nav-link {
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    padding: 8px;
-    text-shadow: none;
-    opacity: 0.73;
-}
 #ouvertures-title {
     font-family: "Bitcount Grid Single", system-ui;
     font-optical-sizing: auto;
-    font-weight: <weight>;
-    font-style: normal;
     font-variation-settings:
             "slnt" 0,
             "CRSV" 0.5,
