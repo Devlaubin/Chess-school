@@ -81,9 +81,10 @@
 }
 
 body {
-    background-image: url(images/background.jpg);
+    /* background-image: url(images/background.jpg); */
     background-size: cover;
     background-attachment: fixed;
+    background-color: #181a1b;
 }
 
 .nav-link {
@@ -97,8 +98,8 @@ body {
     color: #ffffff;
     font-family: Arial;
     font-size: 17px;
-    padding: 0 22px; /* keep horizontal padding, vertical centering via min-height */
-    min-height: 40px; /* match burger height for vertical alignment */
+    padding: 0 22px; 
+    min-height: 40px; 
     text-decoration: none;
     text-shadow: 0px 1px 50px #3d768a;
 }
@@ -134,7 +135,7 @@ body {
 #base-footer,
 .site-footercard {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: #b9b0b0;
+    color: #d6c0c0;
     font-size: small;
 }
 #ouvertures-title {
@@ -154,22 +155,22 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-/* Header / Navigation layout */
 .header-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 12px 20px;
-    position: relative; /* allow absolute positioning inside header for consistent vertical alignment */
+    position: relative; 
 }
 
 .brand h1 {
     margin: 0;
     font-size: 1.4rem;
+    padding-bottom: 14px;
 }
 
 .main-nav {
-    position: static; /* let header-row be the positioning context so the burger aligns with the title */
+    position: static;
     display: flex;
     align-items: center;
 }
@@ -179,7 +180,7 @@ body {
     gap: 8px;
     align-items: center;
     white-space: nowrap;
-    margin-right: 64px; /* leave room for burger on the right */
+    margin-right: 64px; 
 }
 
 .nav-toggle {
@@ -188,24 +189,23 @@ body {
     justify-content: center;
     width: 44px;
     height: 40px;
-    background: rgba(0,0,0,0.18);
+    background: rgba(0, 0, 0, 0.18);
     border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     padding: 6px;
     margin-left: 12px;
     cursor: pointer;
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
     transition: background 160ms ease, transform 160ms ease;
 }
 
 .nav-toggle:focus-visible {
-    outline: 3px solid rgba(90,150,200,0.25);
+    outline: 3px solid rgba(90, 150, 200, 0.25);
 }
 
-.nav-toggle:hover { background: rgba(0,0,0,0.24); transform: translateY(-50%) scale(1.02); }
+.nav-toggle:hover {
+    background: rgba(0, 0, 0, 0.24);
+    transform: scale(1.02);
+}
 
 .nav-toggle .bar {
     display: block;
@@ -218,12 +218,11 @@ body {
     transition: transform 220ms cubic-bezier(.2,.9,.3,1), opacity 160ms ease, background 120ms ease;
 }
 
-/* When menu opened, transform bars into X */
 .main-nav.open .nav-toggle .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .main-nav.open .nav-toggle .bar:nth-child(2) { opacity: 0; transform: scaleX(0.2); }
 .main-nav.open .nav-toggle .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Responsive: show burger on small screens and turn links into column */
+
 @media (max-width: 800px) {
     .nav-links {
         position: absolute;
@@ -251,7 +250,6 @@ body {
     .nav-links { display: flex !important; }
 }
 
-/* Off-canvas side frame */
 .frame-backdrop {
     display: none;
 }
@@ -272,15 +270,13 @@ body {
     box-shadow: -8px 0 18px rgba(0,0,0,0.4);
 }
 
-    .header-row {
-        --header-height: 56px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 8px 20px;
-        min-height: var(--header-height);
-        position: relative; /* allow absolute positioning inside header for consistent vertical alignment */
-    }
+ .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    min-height: 56px;
+}
 .side-frame .frame-nav {
     display: flex;
     flex-direction: column;
@@ -302,12 +298,19 @@ body {
 .frame-backdrop.open {
     display: block;
     position: fixed;
-    inset: 0; /* top:0;right:0;bottom:0;left:0; */
+    inset: 0; 
     background: rgba(0,0,0,0.45);
     z-index: 2500;
 }
 
-/* Hide the inline dropdown nav when using the side-frame on small screens */
 @media (max-width: 800px) {
     .nav-links { display: none !important; }
+}
+#chessimagesindex {
+    display: block;
+    margin: 20px auto;
+    max-width: 40%;
+    height: auto;
+    background-size: 40px;
+    border-radius: 20px;
 }
