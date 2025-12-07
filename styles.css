@@ -207,17 +207,6 @@ body {
     transform: scale(1.02);
 }
 
-.nav-toggle .bar {
-    display: block;
-    width: 26px;
-    height: 3px;
-    background: linear-gradient(90deg,#ffffff,#e8eef2);
-    margin: 4px 0;
-    border-radius: 3px;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
-    transition: transform 220ms cubic-bezier(.2,.9,.3,1), opacity 160ms ease, background 120ms ease;
-}
-
 .main-nav.open .nav-toggle .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .main-nav.open .nav-toggle .bar:nth-child(2) { opacity: 0; transform: scaleX(0.2); }
 .main-nav.open .nav-toggle .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
@@ -309,8 +298,56 @@ body {
 #chessimagesindex {
     display: block;
     margin: 20px auto;
-    max-width: 40%;
+    max-width: 100%;
     height: auto;
     background-size: 40px;
     border-radius: 20px;
+}
+#aubinframe {
+    color: blanchedalmond;
+    font-size: small;
+    text-align: center;
+    margin-top: 300px;
+}
+.nav-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.nav-toggle .bar {
+    background: #29668f;
+    padding: 1px;
+    height: 10px;
+    width: 30px;
+    margin: 3px 0;
+    border-radius: 5px;
+}
+.nav-toggle:hover .bar {
+    background: #408c99;
+}
+
+#side-frame {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-collapse: collapse;
+    border-radius: 30px 30px 0px 0px;
+}
+#side-frame .nav-link {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+#frame-link-base, #frame-link-specificite, #frame-link-home, #frame-link-ouvertures {
+    background-color: #599bb3;
+    border-radius: 42px;
+    border: 1px solid #29668f;
+    display: inline-flex;
+    align-items: center;
+    
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 17px;
+    padding: 0 22px; 
+    min-height: 40px; 
+    text-decoration: none;
+    text-shadow: 0px 1px 50px #3d768a;
 }
