@@ -90,12 +90,15 @@ body {
     background-color: #599bb3;
     border-radius: 42px;
     border: 1px solid #29668f;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    
     cursor: pointer;
     color: #ffffff;
     font-family: Arial;
     font-size: 17px;
-    padding: 5px 27px;
+    padding: 0 22px; /* keep horizontal padding, vertical centering via min-height */
+    min-height: 40px; /* match burger height for vertical alignment */
     text-decoration: none;
     text-shadow: 0px 1px 50px #3d768a;
 }
@@ -149,4 +152,162 @@ body {
     border-radius: 20px;
     margin: 20px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* Header / Navigation layout */
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    position: relative; /* allow absolute positioning inside header for consistent vertical alignment */
+}
+
+.brand h1 {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+.main-nav {
+    position: static; /* let header-row be the positioning context so the burger aligns with the title */
+    display: flex;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    white-space: nowrap;
+    margin-right: 64px; /* leave room for burger on the right */
+}
+
+.nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 40px;
+    background: rgba(0,0,0,0.18);
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 6px;
+    margin-left: 12px;
+    cursor: pointer;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: background 160ms ease, transform 160ms ease;
+}
+
+.nav-toggle:focus-visible {
+    outline: 3px solid rgba(90,150,200,0.25);
+}
+
+.nav-toggle:hover { background: rgba(0,0,0,0.24); transform: translateY(-50%) scale(1.02); }
+
+.nav-toggle .bar {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background: linear-gradient(90deg,#ffffff,#e8eef2);
+    margin: 4px 0;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+    transition: transform 220ms cubic-bezier(.2,.9,.3,1), opacity 160ms ease, background 120ms ease;
+}
+
+/* When menu opened, transform bars into X */
+.main-nav.open .nav-toggle .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.main-nav.open .nav-toggle .bar:nth-child(2) { opacity: 0; transform: scaleX(0.2); }
+.main-nav.open .nav-toggle .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Responsive: show burger on small screens and turn links into column */
+@media (max-width: 800px) {
+    .nav-links {
+        position: absolute;
+        right: 12px;
+        top: 58px;
+        background: rgba(0,0,0,0.6);
+        padding: 10px;
+        border-radius: 8px;
+        flex-direction: column;
+        align-items: flex-end;
+        display: none;
+        z-index: 2000;
+    }
+
+    .main-nav.open .nav-links {
+        display: flex;
+    }
+
+    .nav-toggle { display: inline-flex; }
+
+    .nav-link { padding: 8px 14px; }
+}
+
+@media (min-width: 801px) {
+    .nav-links { display: flex !important; }
+}
+
+/* Off-canvas side frame */
+.frame-backdrop {
+    display: none;
+}
+
+.side-frame {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 280px;
+    max-width: 85vw;
+    background: rgba(10, 20, 30, 0.95);
+    color: #fff;
+    transform: translateX(100%);
+    transition: transform 260ms cubic-bezier(.22,.9,.3,1);
+    z-index: 3000;
+    padding: 24px 18px;
+    box-shadow: -8px 0 18px rgba(0,0,0,0.4);
+}
+
+    .header-row {
+        --header-height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 20px;
+        min-height: var(--header-height);
+        position: relative; /* allow absolute positioning inside header for consistent vertical alignment */
+    }
+.side-frame .frame-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.side-frame .nav-link {
+    background: transparent;
+    border-radius: 6px;
+    padding: 10px 14px;
+    color: #fff;
+    text-align: left;
+}
+
+.side-frame.open {
+    transform: translateX(0);
+}
+
+.frame-backdrop.open {
+    display: block;
+    position: fixed;
+    inset: 0; /* top:0;right:0;bottom:0;left:0; */
+    background: rgba(0,0,0,0.45);
+    z-index: 2500;
+}
+
+/* Hide the inline dropdown nav when using the side-frame on small screens */
+@media (max-width: 800px) {
+    .nav-links { display: none !important; }
 }

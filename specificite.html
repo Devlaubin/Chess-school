@@ -13,19 +13,37 @@
   <div class="site-wrapper">
   <header id="spec-header" class="site-header card">
     <div class="header-row">
-      <div>
+      <div class="brand">
         <h1 id="spec-title">Chess School — Spécificités</h1>
       </div>
+
+      <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+        <div class="nav-links" id="main-nav-list">
+          <a class="nav-link" href="index.html">Accueil</a>
+          <a class="nav-link" href="base.html">Base</a>
+          <a class="nav-link active" href="specificite.html">Spécificités</a>
+          <a class="nav-link" href="ouverture.html">Ouvertures</a>
+        </div>
+
+        <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="main-nav-list" aria-label="Ouvrir le menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </nav>
     </div>
   </header>
-  <main>
-    <nav class="main-nav">
-      <a class="nav-link" href="index.html">Accueil</a>
-      <a class="nav-link" href="base.html">Base</a>
-      <a class="nav-link active" href="specificite.html">Spécificités</a>
+
+  <!-- Side frame (off-canvas menu) -->
+  <div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
+    <nav class="frame-nav">
+      <a class="nav-link" id="frame-link-home" href="index.html">Accueil</a>
+      <a class="nav-link" id="frame-link-base" href="base.html">Base</a>
+      <a class="nav-link" id="frame-link-specificite" href="specificite.html">Spécificités</a>
       <a class="nav-link" href="ouverture.html">Ouvertures</a>
     </nav>
-  </main>
+  </div>
+  <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
   <main id="mainbases" class="content-main card">
 
     <section id="section-roque" class="content-section card">
@@ -91,5 +109,6 @@
     <p>&copy; 2025 Chess School</p>
   </footer>
     <script src="theme.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

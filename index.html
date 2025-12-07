@@ -14,26 +14,47 @@
   <div class="site-wrapper">
     <header id="site-header" class="site-title">
       <div class="header-row">
-        <div>
+        <div class="brand">
           <h1 id="site-title">Chess School</h1>
         </div>
+
+        <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+          <div class="nav-links" id="main-nav-list">
+            <a class="nav-link active" id="link-home" href="index.html">Accueil</a>
+            <a class="nav-link" id="link-base" href="base.html">Base</a>
+            <a class="nav-link" id="link-specificite" href="specificite.html">Spécificités</a>
+            <a class="nav-link" href="ouverture.html">Ouvertures</a>
+          </div>
+
+          <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="main-nav-list" aria-label="Ouvrir le menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </button>
+        </nav>
       </div>
     </header>
+
+    <!-- Side frame (off-canvas menu) -->
+    <div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
+      <nav class="frame-nav">
+        <a class="nav-link" id="frame-link-home" href="index.html">Accueil</a>
+        <a class="nav-link" id="frame-link-base" href="base.html">Base</a>
+        <a class="nav-link" id="frame-link-specificite" href="specificite.html">Spécificités</a>
+        <a class="nav-link" href="ouverture.html">Ouvertures</a>
+      </nav>
+    </div>
+    <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
+
   <main class="site-wrapper">
-    <nav id="main-nav" class="main-nav">
-      <a class="nav-link active" id="link-home" href="index.html">Accueil</a>
-      <a class="nav-link" id="link-base" href="base.html">Base</a>
-      <a class="nav-link" id="link-specificite" href="specificite.html">Spécificités</a>
-      <a class="nav-link" href="ouverture.html">Ouvertures</a>
-    </nav>
 
     <section class="card">
       <h2 id="bienvenue-index">Bienvenue sur Chess School</h2>
       <p class="muted">Choisissez une page pour apprendre les bases ou les spécificités des règles d'échecs.</p>
     </section>
-
+    
     <footer class="site-footercard">
-      <p>&copy; 2025 Chess School. V3.0.3</p>
+      <p>&copy; 2025 Chess School. V3.0.3.2</p>
     </footer>
   </main>
   </div>
