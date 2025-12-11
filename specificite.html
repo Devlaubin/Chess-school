@@ -8,7 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/vnd.icon" href="images/favicon.png">
 </head>
+
 <body>
   <div class="site-wrapper">
   <header id="spec-header" class="site-header card">
@@ -34,21 +36,20 @@
     </div>
   </header>
 
-  <div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
-    <nav class="frame-nav">
-      <a class="nav-link" id="frame-link-home" href="index.html">Accueil</a>
-      <a class="nav-link" id="frame-link-base" href="base.html">Base</a>
-      <a class="nav-link" id="frame-link-specificite" href="specificite.html">Spécificités</a>
-      <a class="nav-link" id="frame-link-ouvertures" href="ouverture.html">Ouvertures</a>
-      <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school/commits/main/">log</a>
-      <a id="boutonframe" href="cgu.html">Condition d'utilisation</a>
-      <a id="boutonframe" href="Status/apropos.html">à propos</a>
-      <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school">Github</a>
-      <a id="boutonframe" href="https://discord.gg/93nMdtCX">Discord</a>
-      <p id="aubinframe">crée avec amour par Aubin</p>
-    </nav>
-  </div>
-  <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
+<div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
+  <nav class="frame-nav">
+    <a class="nav-link" id="frame-link-home" href="index.html">Accueil</a>
+    <a class="nav-link" id="frame-link-base" href="base.html">Base</a>
+    <a class="nav-link" id="frame-link-specificite" href="specificite.html">Spécificités</a>
+    <a class="nav-link" id="frame-link-ouvertures" href="ouverture.html">Ouvertures</a>
+    <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school/commits/main/">log</a>
+    <a id="boutonframe" href="Status/apropos.html">à propos</a>
+    <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school">Github</a>
+    <a id="boutonframe" href="https://discord.gg/93nMdtCX">Discord</a>
+  </nav>
+</div>
+<div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
+
   <main id="mainbases" class="content-main card">
 
     <section id="section-roque" class="content-section card">
@@ -111,7 +112,9 @@
   </main>
 
   <footer id="spec-footer">
-    <p>&copy; 2025 Chess School</p>
+    <p>&copy; 2025 Chess School |
+    <a href="cgu.html" style="color: #b9b0b0; text-decoration: underline;">CGU</a> |
+    <a href="mentions-legales.html" style="color: #b9b0b0; text-decoration: underline;">Mentions Légales</a></p>
   </footer>
     <script src="theme.js"></script>
     <script src="script.js"></script>
