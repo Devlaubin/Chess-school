@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Chess School — FAQ</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/vnd.icon" href="images/favicon.png">
+</head>
+
+<body>
+    <div class="site-wrapper">
+        <header id="base-header" class="site-header card">
+            <div class="header-row">
+                <div class="brand">
+                    <h1 id="base-title">Chess School — FAQ</h1>
+                </div>
+
+                <<nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+                    <div class="nav-links" id="main-nav-list">
+                        <a class="nav-link active" id="link-home" href="index.html">Accueil</a>
+                        <a class="nav-link" id="link-base" href="base.html">Base</a>
+                        <a class="nav-link" id="link-specificite" href="specificite.html">Spécificités</a>
+                        <a class="nav-link" href="ouverture.html">Ouvertures</a>
+                    </div>
+
+                    <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="main-nav-list"
+                        aria-label="Ouvrir le menu">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+    
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
+            <nav class="frame-nav">
+                <a class="nav-link" id="frame-link-home" href="index.html">Accueil</a>
+                <a class="nav-link" id="frame-link-base" href="base.html">Base</a>
+                <a class="nav-link" id="frame-link-specificite" href="specificite.html">Spécificités</a>
+                <a class="nav-link" id="frame-link-ouvertures" href="ouverture.html">Ouvertures</a>
+                <a class="nav-link" id="frame-link-videos" href="videos.html">Vidéos</a>
+                <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school/commits/main/">Log</a>
+                <a id="boutonframe" href="apropos.html">à propos</a>
+                <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school">Github</a>
+                <a id="boutonframe" href="https://discord.gg/93nMdtCX">Discord</a>
+            </nav>
+        </div>
+        <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
+
+        <main id="mainbases">
+            <div class="faq-container">
+                <div class="faq-intro">
+                    <h2>Questions Fréquentes</h2>
+                    <p>Trouvez rapidement des réponses à vos questions sur les échecs</p>
+                </div>
+
+                <div class="search-box">
+                    <input type="text" class="search-input" id="faq-search" placeholder="Rechercher une question...">
+                    <span class="search-icon"></span>
+                </div>
+
+                <!-- Catégories -->
+                <div class="faq-categories">
+                    <button class="category-btn active" data-category="all">Toutes</button>
+                    <button class="category-btn" data-category="regles">Règles de Base</button>
+                    <button class="category-btn" data-category="pieces">Pièces</button>
+                    <button class="category-btn" data-category="avance">Règles Avancées</button>
+                    <button class="category-btn" data-category="general">Général</button>
+                </div>
+
+                <div class="no-results" id="no-results">
+                    Aucune question ne correspond à votre recherche
+                </div>
+
+                <div class="faq-section" data-category="regles">
+                    <h2 class="faq-section-title">Règles de Base</h2>
+
+                    <div class="faq-item" data-keywords="echiquier cases orientation">
+                        <div class="faq-question">
+                            <p class="faq-question-text">Comment placer l'échiquier correctement ?</p>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>L'échiquier doit être orienté de manière à ce qu'il y ait <strong>une case blanche
+                                        dans le coin en bas à droite</strong> de chaque joueur. Cette règle est facile à
+                                    retenir : "blanc à droite" !</p>
+                                <p>L'échiquier contient 64 cases (8×8) alternant entre cases claires et foncées.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-keywords="blancs premier coup commencer">
+                        <div class="faq-question">
+                            <p class="faq-question-text">Qui joue en premier aux échecs ?</p>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p><strong>Les blancs jouent toujours en premier.</strong> C'est une règle universelle
+                                    des échecs. Dans les tournois, la couleur est déterminée par tirage au sort ou selon
+                                    l'appariement.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-keywords="objectif but gagner echec mat">
+                        <div class="faq-question">
+                            <p class="faq-question-text">Quel est l'objectif du jeu d'échecs ?</p>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>L'objectif est de mettre le <strong>roi adverse en échec et mat</strong>,
+                                    c'est-à-dire dans une position où :</p>
+                                <ul>
+                                    <li>Le roi est en échec (attaqué)</li>
+                                    <li>Il ne peut pas se déplacer sur une case sûre</li>
+                                    <li>Aucune pièce ne peut bloquer l'attaque</li>
+                                    <li>La pièce attaquante ne peut pas être capturée</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-keywords="passer tour skip">
+                        <div class="faq-question">
+                            <p class="faq-question-text">Peut-on passer son tour aux échecs ?</p>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p><strong>Non, il est impossible de passer son tour.</strong> Vous devez toujours jouer
+                                    un coup légal quand c'est votre tour. Si vous n'avez aucun coup légal et que votre
+                                    roi n'est pas en échec, c'est un <strong>pat</strong> (nulle).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-section" data-category="pieces">
+                    <h2 class="faq-section-title">Les Pièces</h2>
+
+                    <div class="faq-item" data-keywords="dame puissante valeur points">
+                        <div class="faq-question">
+                            <p class="faq-question-text">Quelle est la pièce la plus puissante ?</p>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p><strong>La Dame</strong> est la pièce la plus puissante. Elle peut se déplacer dans
+                                    toutes les directions (horizontale, verticale, diagonale) sur autant de cases que
+                                    souhaité.</p>
+                                <p>En termes de valeur relative : Dame = 9 points, Tour = 5 points, Fou = 3 points,
+                                    Cavalier = 3 points, Pion = 1 point.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-keywords="cavalier sauter pieces L">
+                        <div class="faq-question">
+                            <p class="faq-question-text">Le cavalier peut-il sauter par-dessus les autres pièces ?</p>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p><strong>Oui !</strong> Le cavalier est la seule pièce qui peut sauter par-dessus
+                                    d'autres pièces (alliées ou adverses). Il se déplace en forme de "L" : 2 cases dans
+                                    une direction puis 1 case perpendiculairement.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-keywords="pion reculer arriere">
+                        <div class="faq-question">
+                            <p class="faq-question-text">Un pion peut-il reculer ?</p>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p><strong>Non, jamais.</strong> Les pions ne peuvent se déplacer que vers l'avant. Ils
+                                    avancent d'une case (ou deux cases lors de leur premier mouvement) et capturent en
+                                    diagonale vers l'avant.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-keywords="roi combien cases deplacement">
+                        <div class="faq-question">
+                            <p class="faq-question-text">Sur combien de cases le roi peut-il se déplacer ?</p>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Le roi se déplace d'<strong>une seule case</strong> dans n'importe quelle direction
+                                    (horizontale, verticale, diagonale). Il ne peut jamais se mettre en échec
+                                    volontairement.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-section" data-category="avance">
+                    <h2 class="faq-section-title">Règles Avancées</h2>
+
+                    <div class="faq-item" data-keywords="roque conditions petit grand">
+                        <div class="faq-question">
+                            <p class="faq-question-text">Qu'est-ce que le roque et comment le réaliser ?</p>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Le roque est un coup spécial impliquant le roi et une tour. Conditions :</p>
+                                <ul>
+                                    <li>Ni le roi ni la tour n'ont bougé</li>
+                                    <li>Aucune pièce entre le roi et la tour</li>
+                                    <li>Le roi n'est pas en échec</li>
+                                    <li>Le roi ne traverse pas une case attaquée</li>
+                                </ul>
+                                <p><strong>Petit roque (O-O)</strong> : Le roi va vers la tour côté roi<br>
+                                    <strong>Grand roque (O-O-O)</strong> : Le roi va vers la tour côté dame
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-keywords="prise passant en passant pion">
+                        <div class="faq-question">
+                            <p class="faq-question-text">Comment fonctionne la prise en passant ?</p>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>La prise en passant est une capture spéciale de pion. Elle se produit quand :</p>
+                                <ul>
+                                    <li>Un pion adverse avance de 2 cases depuis sa position initiale</li>
+                                    <li>Il se retrouve à côté de votre pion</li>
+                                    <li>Vous pouvez le capturer comme s'il n'avait avancé que d'une case</li>
+                                </ul>
+                                <p><strong>Important :</strong> Cette capture doit se faire immédiatement, sinon le
+                                    droit est perdu.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-keywords="promotion pion huitieme dame">
+                        <div class="faq-question">
+                            <p class="faq-question-text">Que se passe-t-il quand un pion atteint la dernière rangée ?
+                            </p>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Le pion est <strong>immédiatement promu</strong> en une autre pièce (Dame, Tour, Fou
+                                    ou Cavalier) au choix du joueur. La plupart du temps, on choisit la Dame car c'est
+                                    la pièce la plus puissante.</p>
+                                <p>Vous pouvez avoir plusieurs Dames sur l'échiquier !</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-keywords="pat nulle match nul">
+                        <div class="faq-question">
+                            <p class="faq-question-text">Qu'est-ce qu'un pat ?</p>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Le <strong>pat</strong> est une situation où un joueur n'a aucun coup légal mais
+                                    n'est PAS en échec. Dans ce cas, la partie est déclarée <strong>nulle</strong>.</p>
+                                <p>C'est différent de l'échec et mat où le roi EST en échec et ne peut pas s'échapper.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-section" data-category="general">
+                    <h2 class="faq-section-title">Général</h2>
+
+                    <div class="faq-item" data-keywords="temps apprendre debutant">
+                        <div class="faq-question">
+                            <p class="faq-question-text">Combien de temps faut-il pour apprendre les échecs ?</p>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Les <strong>règles de base</strong> peuvent être apprises en quelques heures.
+                                    Cependant, maîtriser les échecs demande des années de pratique !</p>
+                                <p>Avec Chess School, vous pouvez apprendre les règles fondamentales en une session et
+                                    commencer à jouer immédiatement.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-keywords="notation algebrique pgn">
+                        <div class="faq-question">
+                            <p class="faq-question-text">Comment lire la notation algébrique ?</p>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>La notation algébrique utilise des lettres et des chiffres :</p>
+                                <ul>
+                                    <li><strong>Pièces :</strong> R (Roi), D (Dame), T (Tour), F (Fou), C (Cavalier)
+                                    </li>
+                                    <li><strong>Cases :</strong> Colonne (a-h) + Rangée (1-8), ex: e4</li>
+                                    <li><strong>Capture :</strong> x (ex: Cxe5)</li>
+                                    <li><strong>Échec :</strong> + | <strong>Mat :</strong> #</li>
+                                    <li><strong>Roque :</strong> O-O (petit) ou O-O-O (grand)</li>
+                                </ul>
+                                <p>Exemple : "e4" = pion en e4, "Cf3" = cavalier en f3</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-keywords="gratuit payant abonnement">
+                        <div class="faq-question">
+                            <p class="faq-question-text">Chess School est-il vraiment gratuit ?</p>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p><strong>Oui, 100% gratuit !</strong> Tout le contenu de Chess School est accessible
+                                    gratuitement, sans inscription, sans publicité intrusive et sans limite
+                                    d'utilisation.</p>
+                                <p>Notre mission est de rendre l'apprentissage des échecs accessible à tous.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <footer id="base-footer" class="site-footer">
+            <p>&copy; 2025 Chess School |
+                <a href="apropos.html" style="color: #b9b0b0; text-decoration: underline;">À Propos</a> |
+                <a href="cgu.html" style="color: #b9b0b0; text-decoration: underline;">CGU</a> |
+                <a href="mentions-legales.html" style="color: #b9b0b0; text-decoration: underline;">Mentions Légales</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="theme.js"></script>
+</body>
+
+</html>

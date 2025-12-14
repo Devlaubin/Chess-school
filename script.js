@@ -50,3 +50,93 @@ document.addEventListener('DOMContentLoaded', function () {
 		if (e.key === 'Escape') setOpen(false);
 	});
 });
+
+// FAQ Interactive Script
+document.addEventListener('DOMContentLoaded', function () {
+	const faqItems = document.querySelectorAll('.faq-item');
+	const searchInput = document.getElementById('faq-search');
+	const categoryBtns = document.querySelectorAll('.category-btn');
+	const noResults = document.getElementById('no-results');
+	let currentCategory = 'all';
+
+	// Toggle FAQ items
+	faqItems.forEach(item => {
+		const question = item.querySelector('.faq-question');
+		question.addEventListener('click', () => {
+			const isActive = item.classList.contains('active');
+
+			// Fermer tous les autres items
+			faqItems.forEach(i => i.classList.remove('active'));
+
+			// Toggle l'item actuel
+			if (!isActive) {
+				item.classList.add('active');
+			}
+		});
+	});
+
+	// Filtrage par catégorie
+	categoryBtns.forEach(btn => {
+		btn.addEventListener('click', () => {
+			// Update active button
+			categoryBtns.forEach(b => b.classList.remove('active'));
+			btn.classList.add('active');
+
+			currentCategory = btn.dataset.category;
+			filterFAQ();
+		});
+	});
+
+	// Recherche
+	searchInput.addEventListener('input', function () {
+		filterFAQ();
+	});
+
+	function filterFAQ() {
+		const searchTerm = searchInput.value.toLowerCase();
+		let visibleCount = 0;
+
+		// Filtrer les sections
+		document.querySelectorAll('.faq-section').forEach(section => {
+			const sectionCategory = section.dataset.category;
+			let sectionHasVisible = false;
+
+			if (currentCategory === 'all' || currentCategory === sectionCategory) {
+				section.style.display = 'block';
+
+				// Filtrer les items dans la section
+				section.querySelectorAll('.faq-item').forEach(item => {
+					const questionText = item.querySelector('.faq-question-text').textContent.toLowerCase();
+					const answerText = item.querySelector('.faq-answer-content').textContent.toLowerCase();
+					const keywords = item.dataset.keywords || '';
+
+					const matchesSearch = questionText.includes(searchTerm) ||
+						answerText.includes(searchTerm) ||
+						keywords.includes(searchTerm);
+
+					if (matchesSearch) {
+						item.style.display = 'block';
+						visibleCount++;
+						sectionHasVisible = true;
+					} else {
+						item.style.display = 'none';
+					}
+				});
+
+				// Cacher la section si aucun item visible
+				if (!sectionHasVisible) {
+					section.style.display = 'none';
+				}
+			} else {
+				section.style.display = 'none';
+			}
+		});
+
+		// Afficher message si aucun résultat
+		if (visibleCount === 0) {
+			noResults.classList.add('show');
+		} else {
+			noResults.classList.remove('show');
+		}
+	}
+});
