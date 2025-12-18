@@ -10,348 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&display=swap"
         rel="stylesheet">
-    <style>
-        .quiz-container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-
-        .quiz-header {
-            text-align: center;
-            padding: 40px 30px;
-            background: linear-gradient(135deg, rgba(89, 155, 179, 0.15), rgba(64, 140, 153, 0.15));
-            border-radius: 20px;
-            margin-bottom: 30px;
-            border-left: 4px solid #599bb3;
-        }
-
-        .quiz-header h2 {
-            margin: 0 0 12px 0;
-            font-size: 2.5em;
-            color: #333;
-        }
-
-        .quiz-header p {
-            margin: 0;
-            color: #666;
-            font-size: 1.1em;
-        }
-
-        .difficulty-selector {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-
-        .difficulty-btn {
-            padding: 14px 28px;
-            background: white;
-            border: 3px solid #599bb3;
-            border-radius: 30px;
-            color: #599bb3;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .difficulty-btn:hover {
-            background: #599bb3;
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(89, 155, 179, 0.3);
-        }
-
-        .difficulty-btn.active {
-            background: #599bb3;
-            color: white;
-        }
-
-        .progress-bar {
-            background: rgba(0, 0, 0, 0.1);
-            height: 12px;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 30px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #599bb3, #408c99);
-            transition: width 0.5s ease;
-            border-radius: 10px;
-        }
-
-        .question-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-            animation: slideIn 0.5s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .question-number {
-            color: #599bb3;
-            font-weight: bold;
-            font-size: 1em;
-            margin-bottom: 16px;
-        }
-
-        .question-text {
-            font-size: 1.4em;
-            font-weight: 600;
-            color: #333;
-            margin: 0 0 30px 0;
-            line-height: 1.5;
-        }
-
-        .answers-grid {
-            display: grid;
-            gap: 12px;
-        }
-
-        .answer-btn {
-            padding: 20px 24px;
-            background: white;
-            border: 3px solid rgba(89, 155, 179, 0.3);
-            border-radius: 16px;
-            text-align: left;
-            font-size: 1.05em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: #333;
-            font-weight: 500;
-        }
-
-        .answer-btn:hover:not(.correct):not(.incorrect) {
-            border-color: #599bb3;
-            background: rgba(89, 155, 179, 0.05);
-            transform: translateX(8px);
-        }
-
-        .answer-btn.correct {
-            background: linear-gradient(135deg, #4ade80, #22c55e);
-            border-color: #22c55e;
-            color: white;
-            animation: correctPulse 0.6s ease;
-        }
-
-        .answer-btn.incorrect {
-            background: linear-gradient(135deg, #f87171, #ef4444);
-            border-color: #ef4444;
-            color: white;
-            animation: shake 0.5s ease;
-        }
-
-        @keyframes correctPulse {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
-        @keyframes shake {
-
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-
-            25% {
-                transform: translateX(-10px);
-            }
-
-            75% {
-                transform: translateX(10px);
-            }
-        }
-
-        .answer-btn.disabled {
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-
-        .feedback {
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 12px;
-            display: none;
-            animation: slideIn 0.4s ease;
-        }
-
-        .feedback.show {
-            display: block;
-        }
-
-        .feedback.correct {
-            background: rgba(74, 222, 128, 0.1);
-            border-left: 4px solid #22c55e;
-            color: #166534;
-        }
-
-        .feedback.incorrect {
-            background: rgba(248, 113, 113, 0.1);
-            border-left: 4px solid #ef4444;
-            color: #991b1b;
-        }
-
-        .feedback-title {
-            font-weight: bold;
-            font-size: 1.1em;
-            margin-bottom: 8px;
-        }
-
-        .next-btn {
-            margin-top: 24px;
-            padding: 16px 40px;
-            background: linear-gradient(135deg, #599bb3, #408c99);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: none;
-        }
-
-        .next-btn.show {
-            display: inline-block;
-        }
-
-        .next-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(89, 155, 179, 0.4);
-        }
-
-        .score-card {
-            background: white;
-            border-radius: 20px;
-            padding: 50px 40px;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            animation: slideIn 0.5s ease;
-        }
-
-        .score-emoji {
-            font-size: 5em;
-            margin-bottom: 20px;
-        }
-
-        .score-title {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #333;
-            margin: 0 0 16px 0;
-        }
-
-        .score-value {
-            font-size: 4em;
-            font-weight: bold;
-            color: #599bb3;
-            margin: 20px 0;
-        }
-
-        .score-message {
-            font-size: 1.2em;
-            color: #666;
-            margin: 20px 0;
-        }
-
-        .score-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .score-stat {
-            padding: 20px;
-            background: rgba(89, 155, 179, 0.1);
-            border-radius: 12px;
-        }
-
-        .score-stat-value {
-            font-size: 2em;
-            font-weight: bold;
-            color: #599bb3;
-            margin-bottom: 8px;
-        }
-
-        .score-stat-label {
-            color: #666;
-            font-size: 0.9em;
-        }
-
-        .restart-btn {
-            padding: 16px 40px;
-            background: linear-gradient(135deg, #599bb3, #408c99);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.2em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-        }
-
-        .restart-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(89, 155, 179, 0.4);
-        }
-
-        .start-screen {
-            display: block;
-        }
-
-        .quiz-screen {
-            display: none;
-        }
-
-        .results-screen {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .quiz-header h2 {
-                font-size: 2em;
-            }
-
-            .question-card {
-                padding: 24px;
-            }
-
-            .question-text {
-                font-size: 1.2em;
-            }
-
-            .score-value {
-                font-size: 3em;
-            }
-        }
-    </style>
+    <link rel="icon" type="image/vnd.icon" href="images/favicon.png">
 </head>
 
 <body>
@@ -367,11 +26,9 @@
                         <a class="nav-link" href="index.html">Accueil</a>
                         <a class="nav-link" href="base.html">Base</a>
                         <a class="nav-link" href="specificite.html">Spécificités</a>
-                        <a class="nav-link" href="ouverture.html">Ouvertures</a>
-                        <a class="nav-link" href="videos.html">Vidéos</a>
-                        <a class="nav-link active" href="quiz.html">Quiz</a>
+                        <a class="nav-link active" href="ouverture.html">Ouvertures</a>
                     </div>
-
+                
                     <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="main-nav-list"
                         aria-label="Ouvrir le menu">
                         <span class="bar"></span>
@@ -379,39 +36,43 @@
                         <span class="bar"></span>
                     </button>
                 </nav>
-            </div>
-        </header>
-
-        <div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
-            <nav class="frame-nav">
-                <a class="nav-link" href="index.html">Accueil</a>
-                <a class="nav-link" href="base.html">Base</a>
-                <a class="nav-link" href="specificite.html">Spécificités</a>
-                <a class="nav-link" href="ouverture.html">Ouvertures</a>
-                <a class="nav-link" href="videos.html">Vidéos</a>
-                <a class="nav-link" href="quiz.html">Quiz</a>
-            </nav>
-        </div>
-        <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
+                </div>
+                </header>
+                
+                <div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
+                    <nav class="frame-nav">
+                        <a class="nav-link" id="frame-link-home" href="index.html">Accueil</a>
+                        <a class="nav-link" id="frame-link-base" href="base.html">Base</a>
+                        <a class="nav-link" id="frame-link-specificite" href="specificite.html">Spécificités</a>
+                        <a class="nav-link" id="frame-link-ouvertures" href="ouverture.html">Ouvertures</a>
+                        <a class="nav-link" id="frame-link-videos" href="videos.html">Vidéos</a>
+                        <a class="nav-link" id="frame-link-quiz" href="quiz.html">Quiz</a>
+                        <a class="nav-link" id="frame-link-glo" href="glossaire.html">Glossaire</a>
+                        <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school/commits/main/">Log</a>
+                        <a id="boutonframe" href="faq.html">FAQ</a>
+                        <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school">Github</a>
+                        <a id="boutonframe" href="https://discord.gg/93nMdtCX">Discord</a>
+                    </nav>
+                </div>
+                <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
 
         <main id="mainbases">
             <div class="quiz-container">
-                <!-- Écran de démarrage -->
                 <div class="start-screen" id="start-screen">
                     <div class="quiz-header">
-                        <h2>🎯 Quiz d'Échecs</h2>
+                        <h2>Quiz d'Échecs</h2>
                         <p>Testez vos connaissances des règles et stratégies</p>
                     </div>
 
                     <div class="difficulty-selector">
                         <button class="difficulty-btn active" data-difficulty="facile">
-                            😊 Facile<br><small>(10 questions)</small>
+                            Facile<br><small>(10 questions)</small>
                         </button>
                         <button class="difficulty-btn" data-difficulty="moyen">
-                            🤔 Moyen<br><small>(15 questions)</small>
+                            Moyen<br><small>(15 questions)</small>
                         </button>
                         <button class="difficulty-btn" data-difficulty="difficile">
-                            🧠 Difficile<br><small>(20 questions)</small>
+                            Difficile<br><small>(20 questions)</small>
                         </button>
                     </div>
 
@@ -469,299 +130,14 @@
 
         <footer id="base-footer" class="site-footer">
             <p>&copy; 2025 Chess School |
-                <a href="quiz.html" style="color: #b9b0b0; text-decoration: underline;">Quiz</a> |
-                <a href="faq.html" style="color: #b9b0b0; text-decoration: underline;">FAQ</a>
+                <a href="apropos.html" style="color: #b9b0b0; text-decoration: underline;">À Propos</a> |
+                <a href="cgu.html" style="color: #b9b0b0; text-decoration: underline;">CGU</a> |
+                <a href="mentions-legales.html" style="color: #b9b0b0; text-decoration: underline;">Mentions Légales</a>
             </p>
         </footer>
     </div>
 
     <script src="script.js"></script>
-    <script>
-        // Base de données de questions
-        const questionsDatabase = {
-            facile: [
-                {
-                    question: "Combien de cases comporte un échiquier ?",
-                    answers: ["32", "48", "64", "72"],
-                    correct: 2,
-                    explanation: "Un échiquier contient 64 cases (8 rangées × 8 colonnes)."
-                },
-                {
-                    question: "Quelle couleur joue toujours en premier ?",
-                    answers: ["Les noirs", "Les blancs", "Celui qui gagne le tirage", "Alternativement"],
-                    correct: 1,
-                    explanation: "Les blancs jouent toujours en premier aux échecs."
-                },
-                {
-                    question: "Quelle est la pièce la plus puissante ?",
-                    answers: ["Le roi", "La dame", "La tour", "Le fou"],
-                    correct: 1,
-                    explanation: "La dame est la pièce la plus puissante car elle peut se déplacer dans toutes les directions."
-                },
-                {
-                    question: "Un pion peut-il reculer ?",
-                    answers: ["Oui", "Non", "Seulement après promotion", "Seulement au premier coup"],
-                    correct: 1,
-                    explanation: "Un pion ne peut jamais reculer, il avance toujours vers l'avant."
-                },
-                {
-                    question: "Quelle pièce peut sauter par-dessus les autres ?",
-                    answers: ["Le fou", "Le cavalier", "La tour", "Aucune"],
-                    correct: 1,
-                    explanation: "Le cavalier est la seule pièce qui peut sauter par-dessus les autres pièces."
-                },
-                {
-                    question: "Qu'est-ce qu'un échec et mat ?",
-                    answers: ["Le roi est en échec et ne peut pas s'échapper", "Capture du roi", "Pat", "Nulle"],
-                    correct: 0,
-                    explanation: "L'échec et mat signifie que le roi est en échec et ne peut échapper par aucun moyen."
-                },
-                {
-                    question: "Combien de pions possède chaque joueur au début ?",
-                    answers: ["6", "7", "8", "10"],
-                    correct: 2,
-                    explanation: "Chaque joueur commence avec 8 pions."
-                },
-                {
-                    question: "Le roi peut se déplacer de combien de cases ?",
-                    answers: ["1 case", "2 cases", "3 cases", "Autant que souhaité"],
-                    correct: 0,
-                    explanation: "Le roi ne peut se déplacer que d'une seule case dans n'importe quelle direction."
-                },
-                {
-                    question: "Peut-on passer son tour aux échecs ?",
-                    answers: ["Oui", "Non", "Seulement en finale", "Avec accord de l'adversaire"],
-                    correct: 1,
-                    explanation: "On ne peut jamais passer son tour aux échecs, il faut toujours jouer un coup légal."
-                },
-                {
-                    question: "Quelle case doit être dans le coin droit de chaque joueur ?",
-                    answers: ["Une case noire", "Une case blanche", "N'importe", "Cela dépend"],
-                    correct: 1,
-                    explanation: "Une case blanche doit toujours être dans le coin en bas à droite de chaque joueur."
-                }
-            ],
-            moyen: [
-                {
-                    question: "Qu'est-ce que le roque ?",
-                    answers: ["Un mouvement de la dame", "Un coup spécial avec le roi et une tour", "Une promotion", "Une tactique"],
-                    correct: 1,
-                    explanation: "Le roque est un coup spécial où le roi et une tour se déplacent simultanément."
-                },
-                {
-                    question: "Que se passe-t-il quand un pion atteint la dernière rangée ?",
-                    answers: ["Il est retiré", "Il est promu", "Il recule", "Rien"],
-                    correct: 1,
-                    explanation: "Le pion est immédiatement promu en une autre pièce (Dame, Tour, Fou ou Cavalier)."
-                },
-                {
-                    question: "Qu'est-ce qu'un pat ?",
-                    answers: ["Échec et mat", "Nulle car aucun coup légal sans être en échec", "Victoire", "Abandon"],
-                    correct: 1,
-                    explanation: "Le pat est une situation où un joueur n'a aucun coup légal mais n'est pas en échec. C'est une nulle."
-                },
-                {
-                    question: "Comment s'appelle la capture spéciale des pions ?",
-                    answers: ["Promotion", "Prise en passant", "Roque", "Clouage"],
-                    correct: 1,
-                    explanation: "La prise en passant est une capture spéciale où un pion capture un pion adverse qui vient d'avancer de deux cases."
-                },
-                {
-                    question: "Qu'est-ce qu'une fourchette ?",
-                    answers: ["Un sacrifice", "Attaque simultanée de deux pièces", "Une promotion", "Un mat"],
-                    correct: 1,
-                    explanation: "Une fourchette est une tactique où une pièce attaque simultanément deux pièces adverses ou plus."
-                }
-            ],
-            difficile: [
-                {
-                    question: "Qu'est-ce que le zugzwang ?",
-                    answers: ["Un mat", "Situation où jouer aggrave sa position", "Une ouverture", "Un titre"],
-                    correct: 1,
-                    explanation: "Le zugzwang est une situation où avoir le trait est un désavantage car tout coup aggrave la position."
-                },
-                {
-                    question: "Combien de coups sans prise ni mouvement de pion déclenchent la nulle ?",
-                    answers: ["30", "40", "50", "75"],
-                    correct: 2,
-                    explanation: "La règle des 50 coups déclare la partie nulle après 50 coups consécutifs sans capture ni mouvement de pion."
-                }
-            ]
-        };
-
-        // Variables globales
-        let currentDifficulty = 'facile';
-        let currentQuestions = [];
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let answered = false;
-
-        // Éléments DOM
-        const startScreen = document.getElementById('start-screen');
-        const quizScreen = document.getElementById('quiz-screen');
-        const resultsScreen = document.getElementById('results-screen');
-        const startBtn = document.getElementById('start-btn');
-        const restartBtn = document.getElementById('restart-btn');
-        const difficultyBtns = document.querySelectorAll('.difficulty-btn');
-        const questionNumber = document.getElementById('question-number');
-        const questionText = document.getElementById('question-text');
-        const answersGrid = document.getElementById('answers-grid');
-        const feedback = document.getElementById('feedback');
-        const feedbackTitle = document.getElementById('feedback-title');
-        const feedbackText = document.getElementById('feedback-text');
-        const nextBtn = document.getElementById('next-btn');
-        const progressFill = document.getElementById('progress-fill');
-
-        // Sélection de la difficulté
-        difficultyBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                difficultyBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentDifficulty = btn.dataset.difficulty;
-            });
-        });
-
-        // Démarrer le quiz
-        startBtn.addEventListener('click', startQuiz);
-        restartBtn.addEventListener('click', () => {
-            resultsScreen.style.display = 'none';
-            startScreen.style.display = 'block';
-        });
-
-        function startQuiz() {
-            // Charger les questions selon la difficulté
-            let allQuestions = [...questionsDatabase.facile];
-            if (currentDifficulty === 'moyen') {
-                allQuestions = [...questionsDatabase.facile, ...questionsDatabase.moyen];
-            } else if (currentDifficulty === 'difficile') {
-                allQuestions = [...questionsDatabase.facile, ...questionsDatabase.moyen, ...questionsDatabase.difficile];
-            }
-
-            // Mélanger et sélectionner le bon nombre de questions
-            currentQuestions = shuffleArray(allQuestions).slice(0, getQuestionCount());
-
-            currentQuestionIndex = 0;
-            score = 0;
-
-            startScreen.style.display = 'none';
-            quizScreen.style.display = 'block';
-
-            displayQuestion();
-        }
-
-        function getQuestionCount() {
-            if (currentDifficulty === 'facile') return 10;
-            if (currentDifficulty === 'moyen') return 15;
-            return 20;
-        }
-
-        function shuffleArray(array) {
-            const newArray = [...array];
-            for (let i = newArray.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-            }
-            return newArray;
-        }
-
-        function displayQuestion() {
-            answered = false;
-            const question = currentQuestions[currentQuestionIndex];
-
-            questionNumber.textContent = `Question ${currentQuestionIndex + 1}/${currentQuestions.length}`;
-            questionText.textContent = question.question;
-
-            // Mise à jour de la barre de progression
-            const progress = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
-            progressFill.style.width = progress + '%';
-
-            // Réinitialiser le feedback
-            feedback.classList.remove('show', 'correct', 'incorrect');
-            nextBtn.classList.remove('show');
-
-            // Afficher les réponses
-            answersGrid.innerHTML = '';
-            question.answers.forEach((answer, index) => {
-                const btn = document.createElement('button');
-                btn.className = 'answer-btn';
-                btn.textContent = answer;
-                btn.addEventListener('click', () => checkAnswer(index));
-                answersGrid.appendChild(btn);
-            });
-        }
-
-        function checkAnswer(selectedIndex) {
-            if (answered) return;
-
-            answered = true;
-            const question = currentQuestions[currentQuestionIndex];
-            const answerBtns = document.querySelectorAll('.answer-btn');
-
-            // Désactiver tous les boutons
-            answerBtns.forEach(btn => btn.classList.add('disabled'));
-
-            // Marquer la réponse correcte et incorrecte
-            if (selectedIndex === question.correct) {
-                answerBtns[selectedIndex].classList.add('correct');
-                score++;
-                feedback.classList.add('show', 'correct');
-                feedbackTitle.textContent = '✅ Correct !';
-            } else {
-                answerBtns[selectedIndex].classList.add('incorrect');
-                answerBtns[question.correct].classList.add('correct');
-                feedback.classList.add('show', 'incorrect');
-                feedbackTitle.textContent = '❌ Incorrect';
-            }
-
-            feedbackText.textContent = question.explanation;
-            nextBtn.classList.add('show');
-        }
-
-        nextBtn.addEventListener('click', () => {
-            currentQuestionIndex++;
-
-            if (currentQuestionIndex < currentQuestions.length) {
-                displayQuestion();
-            } else {
-                showResults();
-            }
-        });
-
-        function showResults() {
-            quizScreen.style.display = 'none';
-            resultsScreen.style.display = 'block';
-
-            const percentage = Math.round((score / currentQuestions.length) * 100);
-            const correctCount = score;
-            const incorrectCount = currentQuestions.length - score;
-
-            document.getElementById('score-value').textContent = `${score}/${currentQuestions.length}`;
-            document.getElementById('correct-count').textContent = correctCount;
-            document.getElementById('incorrect-count').textContent = incorrectCount;
-            document.getElementById('percentage').textContent = percentage + '%';
-
-            // Message et emoji selon le score
-            let message = '';
-            let emoji = '';
-
-            if (percentage >= 90) {
-                emoji = '🏆';
-                message = 'Excellent ! Vous maîtrisez parfaitement les règles des échecs !';
-            } else if (percentage >= 70) {
-                emoji = '🎉';
-                message = 'Très bien ! Vous avez de bonnes connaissances des échecs.';
-            } else if (percentage >= 50) {
-                emoji = '👍';
-                message = 'Pas mal ! Continuez à vous entraîner pour progresser.';
-            } else {
-                emoji = '📚';
-                message = 'Continuez à apprendre ! Consultez nos sections pour réviser.';
-            }
-
-            document.getElementById('score-emoji').textContent = emoji;
-            document.getElementById('score-message').textContent = message;
-        }
-    </script>
 </body>
 
 </html>
