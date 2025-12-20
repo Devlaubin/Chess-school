@@ -1,0 +1,134 @@
+
+        <!doctype html>
+        <html lang="fr">
+
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <title>Chess School — Échiquier Interactif</title>
+            <link rel="stylesheet" href="styles.css">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&display=swap"
+                rel="stylesheet">
+            <link rel="icon" type="image/vnd.icon" href="images/favicon.png">
+        </head>
+
+        <body>
+            <div class="site-wrapper">
+                <header id="base-header" class="site-header card">
+                    <div class="header-row">
+                        <div class="brand">
+                            <h1 id="base-title">Chess School — Échiquier</h1>
+                        </div>
+
+                        <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+                            <div class="nav-links" id="main-nav-list">
+                                <a class="nav-link active" id="link-home" href="index.html">Accueil</a>
+                                <a class="nav-link" id="link-base" href="base.html">Base</a>
+                                <a class="nav-link" id="link-specificite" href="specificite.html">Spécificités</a>
+                                <a class="nav-link" href="ouverture.html">Ouvertures</a>
+                            </div>
+                        
+                            <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="main-nav-list"
+                                aria-label="Ouvrir le menu">
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                        
+                            </button>
+                        </nav>
+                    </div>
+                </header>
+
+                <div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
+                    <nav class="frame-nav">
+                        <a class="nav-link" id="frame-link-home" href="index.html">Accueil</a>
+                        <a class="nav-link" id="frame-link-base" href="base.html">Base</a>
+                        <a class="nav-link" id="frame-link-specificite" href="specificite.html">Spécificités</a>
+                        <a class="nav-link" id="frame-link-ouvertures" href="ouverture.html">Ouvertures</a>
+                        <a class="nav-link" id="frame-link-videos" href="videos.html">Vidéos</a>
+                        <a class="nav-link" id="frame-link-chessboard" href="chessboard.html">Echiquier</a>
+                        <a class="nav-link" id="frame-link-quiz" href="quiz.html">Quiz</a>
+                        <a class="nav-link" id="frame-link-glo" href="glossaire.html">Glossaire</a>
+                        <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school/commits/main/">Log</a>
+                        <a id="boutonframe" href="faq.html">FAQ</a>
+                        <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school">Github</a>
+                        <a id="boutonframe" href="https://discord.gg/93nMdtCX">Discord</a>
+                    </nav>
+                </div>
+                <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
+
+                <main id="mainbases">
+                    <div class="board-container">
+                        <div class="board-header">
+                            <h2>♟️ Échiquier Interactif</h2>
+                            <p>Sélectionnez une pièce et cliquez sur l'échiquier pour voir ses mouvements possibles</p>
+                        </div>
+
+                        <div class="board-layout">
+                            <!-- Panneau de contrôles -->
+                            <div class="controls-panel">
+                                <h3>Informations</h3>
+
+                                <div class="info-box" id="turn-info">
+                                    <h4>🎯 Tour des Blancs</h4>
+                                    <p>Cliquez sur une pièce pour la sélectionner, puis sur une case verte pour la
+                                        déplacer.</p>
+                                </div>
+
+                                <div class="info-box" id="game-status">
+                                    <h4>État du jeu</h4>
+                                    <p id="status-text">Partie en cours</p>
+                                </div>
+
+                                <div class="info-box">
+                                    <h4>📋 Historique des coups</h4>
+                                    <div id="move-history"
+                                        style="max-height: 200px; overflow-y: auto; font-family: monospace; font-size: 0.9em;">
+                                        <p style="color: #999; font-style: italic;">Aucun coup joué</p>
+                                    </div>
+                                </div>
+
+                                <div class="action-buttons">
+                                    <button class="action-btn" id="new-game">Nouvelle partie</button>
+                                    <button class="action-btn secondary" id="undo-move">↶ Annuler le coup</button>
+                                </div>
+                            </div>
+
+                            <!-- Échiquier -->
+                            <div class="board-wrapper">
+                                <div class="chessboard" id="chessboard"></div>
+                                <div class="coordinates">
+                                    <span>a</span><span>b</span><span>c</span><span>d</span>
+                                    <span>e</span><span>f</span><span>g</span><span>h</span>
+                                </div>
+                                <div class="legend">
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background: rgba(89, 155, 179, 0.3);"></div>
+                                        <span>Pièce sélectionnée</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background: rgba(124, 252, 0, 0.4);"></div>
+                                        <span>Mouvements possibles</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+
+                <footer id="base-footer" class="site-footer">
+                    <p>&copy; 2025 Chess School |
+                        <a href="apropos.html" style="color: #b9b0b0; text-decoration: underline;">À Propos</a> |
+                        <a href="cgu.html" style="color: #b9b0b0; text-decoration: underline;">CGU</a> |
+                        <a href="mentions-legales.html" style="color: #b9b0b0; text-decoration: underline;">Mentions Légales</a>
+                    </p>
+                </footer>
+            </div>
+
+            <script src="script.js"></script>                
+            <script src="chessboard.js"></script>
+        </body>
+
+        </html>
