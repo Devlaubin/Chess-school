@@ -1732,7 +1732,7 @@ Op
 }
 
 .square.possible-move {
-    background-color: rgba(124, 252, 0, 0.4) !important;
+    background-color: rgba(0, 118, 252, 0.4) !important;
 }
 
 .square.possible-move::after {
@@ -1740,7 +1740,7 @@ Op
     position: absolute;
     width: 20px;
     height: 20px;
-    background: rgba(0, 128, 0, 0.5);
+    background: rgba(21, 145, 167, 0.5);
     border-radius: 50%;
 }
 
