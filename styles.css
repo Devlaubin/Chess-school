@@ -1963,4 +1963,10 @@ body.dark-mode .progress-circle::before {
         width: 40px;
         height: 40px;
     }
+
+}
+/* Améliorer la fermeture du menu mobile */
+.side-frame .nav-link {
+    width: 100%;
+    text-align: left;
 }
