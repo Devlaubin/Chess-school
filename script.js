@@ -359,4 +359,4 @@ function showResults() {
 
 	document.getElementById('score-emoji').textContent = emoji;
 	document.getElementById('score-message').textContent = message;
-}
+};

@@ -1880,3 +1880,87 @@ Op
 #noelpara{
     text-align: center;
 }
+
+@media (max-width: 600px) {
+    .cavalier-noel, .pion-noel {
+        width: 60px;
+        height: 70px;
+    }
+}
+/* ========== BARRE DE PROGRESSION DE LECTURE ========== */
+
+.reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background: linear-gradient(90deg, #599bb3, #4ade80);
+    z-index: 9999;
+    transition: width 0.1s ease;
+    box-shadow: 0 2px 8px rgba(89, 155, 179, 0.5);
+}
+
+body.dark-mode .reading-progress {
+    background: linear-gradient(90deg, #408c99, #22c55e);
+}
+
+/* Indicateur de progression circulaire */
+.progress-circle {
+    position: fixed;
+    bottom: 90px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: conic-gradient(#599bb3 0%, #599bb3 var(--progress), #e5e7eb var(--progress), #e5e7eb 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.progress-circle.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.progress-circle::before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: white;
+    z-index: -1;
+}
+
+body.dark-mode .progress-circle {
+    color: #e0e0e0;
+}
+
+body.dark-mode .progress-circle::before {
+    background: #2d2d2d;
+}
+
+@media (max-width: 768px) {
+    .progress-circle {
+        bottom: 80px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 0.8em;
+    }
+
+    .progress-circle::before {
+        width: 40px;
+        height: 40px;
+    }
+}
