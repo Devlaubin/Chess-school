@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Chess School — Profil</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/vnd.icon" href="images/favicon.png">
+    <script src="progress-tracker.js"></script>
+    <style>
+        .profile-container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, rgba(89, 155, 179, 0.15), rgba(64, 140, 153, 0.15));
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border-left: 4px solid #599bb3;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #599bb3, #408c99);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: white;
+            box-shadow: 0 4px 20px rgba(89, 155, 179, 0.3);
+            flex-shrink: 0;
+        }
+
+        .profile-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .profile-name {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+            margin: 0 0 10px 0;
+        }
+
+        .profile-username {
+            color: #599bb3;
+            font-size: 1.1em;
+            margin: 0 0 15px 0;
+        }
+
+        .profile-stats-quick {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-quick {
+            text-align: center;
+        }
+
+        .stat-quick-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #599bb3;
+            display: block;
+        }
+
+        .stat-quick-label {
+            font-size: 0.9em;
+            color: #666;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .profile-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            margin: 0 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #599bb3;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: rgba(89, 155, 179, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border-left: 4px solid #599bb3;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #599bb3;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .progress-container {
+            margin: 20px 0;
+        }
+
+        .progress-item {
+            margin-bottom: 20px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .progress-value {
+            font-weight: bold;
+            color: #599bb3;
+        }
+
+        .progress-bar {
+            background: rgba(0, 0, 0, 0.1);
+            height: 12px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #599bb3, #408c99);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 16px;
+        }
+
+        .achievement-card {
+            background: white;
+            border: 2px solid rgba(89, 155, 179, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-5px);
+            border-color: #599bb3;
+            box-shadow: 0 4px 16px rgba(89, 155, 179, 0.3);
+        }
+
+        .achievement-card.locked {
+            opacity: 0.4;
+            filter: grayscale(100%);
+        }
+
+        .achievement-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .achievement-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .achievement-desc {
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        .recent-activity {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .activity-item {
+            padding: 15px;
+            border-left: 3px solid #599bb3;
+            background: rgba(89, 155, 179, 0.05);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .activity-icon {
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            color: #333;
+            font-weight: 500;
+            margin: 0 0 4px 0;
+        }
+
+        .activity-time {
+            color: #999;
+            font-size: 0.85em;
+        }
+
+        .edit-profile-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #599bb3, #408c99);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .edit-profile-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(89, 155, 179, 0.4);
+        }
+
+        .badges-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(89, 155, 179, 0.1);
+            color: #599bb3;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .learning-path {
+            display: grid;
+            gap: 15px;
+        }
+
+        .path-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(89, 155, 179, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid #599bb3;
+        }
+
+        .path-check {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #599bb3;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+
+        .path-check.incomplete {
+            background: rgba(89, 155, 179, 0.2);
+            color: #999;
+        }
+
+        .path-content {
+            flex: 1;
+        }
+
+        .path-title {
+            font-weight: 600;
+            color: #333;
+            margin: 0 0 5px 0;
+        }
+
+        .path-desc {
+            color: #666;
+            font-size: 0.9em;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-stats-quick {
+                justify-content: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .achievement-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="site-wrapper">
+        <header id="base-header" class="site-header card">
+            <div class="header-row">
+                <div class="brand">
+                    <h1 id="base-title">Chess School — Profil</h1>
+                </div>
+
+                <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+                    <div class="nav-links" id="main-nav-list">
+                        <a class="nav-link" href="index.html">Accueil</a>
+                        <a class="nav-link" href="base.html">Base</a>
+                        <a class="nav-link" href="specificite.html">Spécificités</a>
+                        <a class="nav-link" href="ouverture.html">Ouvertures</a>
+                        <a class="nav-link" href="videos.html">Vidéos</a>
+                    </div>
+
+                    <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="main-nav-list"
+                        aria-label="Ouvrir le menu">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
+            <nav class="frame-nav">
+                <a class="nav-link" id="frame-link-home" href="index.html">Accueil</a>
+                <a class="nav-link" id="frame-link-base" href="base.html">Base</a>
+                <a class="nav-link" id="frame-link-specificite" href="specificite.html">Spécificités</a>
+                <a class="nav-link" id="frame-link-ouvertures" href="ouverture.html">Ouvertures</a>
+                <a class="nav-link" id="frame-link-videos" href="videos.html">Vidéos</a>
+                <a class="nav-link" id="frame-link-chessboard" href="chessboard.html">Echiquier</a>
+                <a class="nav-link" id="frame-link-quiz" href="quiz.html">Quiz</a>
+                <a class="nav-link" id="frame-link-glo" href="glossaire.html">Glossaire</a>
+                <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school/commits/main/">Log</a>
+                <a id="boutonframe" href="faq.html">FAQ</a>
+                <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school">Github</a>
+                <a id="boutonframe" href="https://discord.gg/C4q8Cae4Ju">Discord</a>
+            </nav>
+        </div>
+        <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
+
+        <img src="images-noel/cavalier-noel.png" alt="cavalier de noel" class="cavalier-noel">
+        <img src="images-noel/pion-noel.png" alt="pion-noel" class="pion-noel">
+
+        <main id="mainbases">
+            <div class="profile-container">
+                <!-- En-tête du profil -->
+                <div class="profile-header">
+                    <div class="profile-avatar">♔</div>
+                    <div class="profile-info">
+                        <h1 class="profile-name">Joueur d'Échecs</h1>
+                        <p class="profile-username">@ChessLearner2025</p>
+                        <div class="badges-container">
+                            <span class="badge">🎓 Élève Actif</span>
+                            <span class="badge">📚 100 Leçons</span>
+                            <span class="badge">🏆 Quiz Master</span>
+                        </div>
+                    </div>
+                    <div class="profile-stats-quick">
+                        <div class="stat-quick">
+                            <span class="stat-quick-value">1247</span>
+                            <span class="stat-quick-label">ELO Estimé</span>
+                        </div>
+                        <div class="stat-quick">
+                            <span class="stat-quick-value">42</span>
+                            <span class="stat-quick-label">Jours actifs</span>
+                        </div>
+                        <div class="stat-quick">
+                            <span class="stat-quick-value">15</span>
+                            <span class="stat-quick-label">Trophées</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistiques détaillées -->
+                <div class="profile-section">
+                    <h2 class="section-title">📊 Statistiques d'Apprentissage</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">156</div>
+                            <div class="stat-label">Pages visitées</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">23h 45m</div>
+                            <div class="stat-label">Temps d'étude</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">87%</div>
+                            <div class="stat-label">Taux de réussite quiz</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">34</div>
+                            <div class="stat-label">Parties jouées</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progression -->
+                <div class="profile-section">
+                    <h2 class="section-title">📈 Progression par Section</h2>
+                    <div class="progress-container">
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-name">Les Bases</span>
+                                <span class="progress-value">100%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 100%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-name">Spécificités</span>
+                                <span class="progress-value">85%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-name">Ouvertures</span>
+                                <span class="progress-value">60%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-name">Vidéos Visionnées</span>
+                                <span class="progress-value">45%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Parcours d'apprentissage -->
+                <div class="profile-section">
+                    <h2 class="section-title">🎯 Parcours d'Apprentissage</h2>
+                    <div class="learning-path">
+                        <div class="path-item">
+                            <div class="path-check">✓</div>
+                            <div class="path-content">
+                                <h3 class="path-title">Règles Fondamentales</h3>
+                                <p class="path-desc">Maîtriser les mouvements de toutes les pièces</p>
+                            </div>
+                        </div>
+                        <div class="path-item">
+                            <div class="path-check">✓</div>
+                            <div class="path-content">
+                                <h3 class="path-title">Coups Spéciaux</h3>
+                                <p class="path-desc">Comprendre le roque, la prise en passant et la promotion</p>
+                            </div>
+                        </div>
+                        <div class="path-item">
+                            <div class="path-check incomplete">○</div>
+                            <div class="path-content">
+                                <h3 class="path-title">Tactiques de Base</h3>
+                                <p class="path-desc">Apprendre les fourchettes, clouages et enfilades</p>
+                            </div>
+                        </div>
+                        <div class="path-item">
+                            <div class="path-check incomplete">○</div>
+                            <div class="path-content">
+                                <h3 class="path-title">Répertoire d'Ouvertures</h3>
+                                <p class="path-desc">Développer un répertoire d'ouvertures solides</p>
+                            </div>
+                        </div>
+                        <div class="path-item">
+                            <div class="path-check incomplete">○</div>
+                            <div class="path-content">
+                                <h3 class="path-title">Finales Essentielles</h3>
+                                <p class="path-desc">Maîtriser les finales de base</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trophées et réalisations -->
+                <div class="profile-section">
+                    <h2 class="section-title">🏆 Trophées et Réalisations</h2>
+                    <div class="achievement-grid">
+                        <div class="achievement-card">
+                            <div class="achievement-icon">🎓</div>
+                            <div class="achievement-name">Premier Pas</div>
+                            <div class="achievement-desc">Première visite</div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-icon">📚</div>
+                            <div class="achievement-name">Lecteur Assidu</div>
+                            <div class="achievement-desc">100 pages lues</div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-icon">🎯</div>
+                            <div class="achievement-name">Quiz Master</div>
+                            <div class="achievement-desc">10 quiz parfaits</div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-icon">⚡</div>
+                            <div class="achievement-name">Rapide</div>
+                            <div class="achievement-desc">Quiz en < 2min</div>
+                            </div>
+                            <div class="achievement-card">
+                                <div class="achievement-icon">🔥</div>
+                                <div class="achievement-name">En Feu</div>
+                                <div class="achievement-desc">7 jours consécutifs</div>
+                            </div>
+                            <div class="achievement-card">
+                                <div class="achievement-icon">♟️</div>
+                                <div class="achievement-name">Tacticien</div>
+                                <div class="achievement-desc">50 exercices</div>
+                            </div>
+                            <div class="achievement-card locked">
+                                <div class="achievement-icon">👑</div>
+                                <div class="achievement-name">Grand Maître</div>
+                                <div class="achievement-desc">Tout compléter</div>
+                            </div>
+                            <div class="achievement-card locked">
+                                <div class="achievement-icon">🌟</div>
+                                <div class="achievement-name">Perfectionniste</div>
+                                <div class="achievement-desc">100% partout</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activité récente -->
+                    <div class="profile-section">
+                        <h2 class="section-title">📅 Activité Récente</h2>
+                        <ul class="recent-activity">
+                            <li class="activity-item">
+                                <span class="activity-icon">✅</span>
+                                <div class="activity-content">
+                                    <p class="activity-text">Quiz "Niveau Moyen" complété avec 95%</p>
+                                    <span class="activity-time">Il y a 2 heures</span>
+                                </div>
+                            </li>
+                            <li class="activity-item">
+                                <span class="activity-icon">📖</span>
+                                <div class="activity-content">
+                                    <p class="activity-text">Section "Ouvertures" - Gambit Dame étudiée</p>
+                                    <span class="activity-time">Il y a 5 heures</span>
+                                </div>
+                            </li>
+                            <li class="activity-item">
+                                <span class="activity-icon">🎥</span>
+                                <div class="activity-content">
+                                    <p class="activity-text">Vidéo "Tactiques Intermédiaires" visionnée</p>
+                                    <span class="activity-time">Hier</span>
+                                </div>
+                            </li>
+                            <li class="activity-item">
+                                <span class="activity-icon">♟️</span>
+                                <div class="activity-content">
+                                    <p class="activity-text">5 parties jouées sur l'échiquier interactif</p>
+                                    <span class="activity-time">Hier</span>
+                                </div>
+                            </li>
+                            <li class="activity-item">
+                                <span class="activity-icon">🏆</span>
+                                <div class="activity-content">
+                                    <p class="activity-text">Nouveau trophée débloqué : "Quiz Master"</p>
+                                    <span class="activity-time">Il y a 2 jours</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button class="edit-profile-btn">✏️ Modifier le profil</button>
+                    </div>
+                </div>
+        </main>
+
+        <footer id="base-footer" class="site-footer">
+            <p>&copy; 2025 Chess School |
+                <a href="apropos.html" style="color: #b9b0b0; text-decoration: underline;">À Propos</a> |
+                <a href="cgu.html" style="color: #b9b0b0; text-decoration: underline;">CGU</a> |
+                <a href="mentions-legales.html" style="color: #b9b0b0; text-decoration: underline;">Mentions
+                    Légales</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Menu burger
+        document.addEventListener('DOMContentLoaded', function () {
+            const nav = document.getElementById('main-nav');
+            const toggle = document.getElementById('nav-toggle');
+            const navList = document.getElementById('main-nav-list');
+            const sideFrame = document.getElementById('side-frame');
+            const backdrop = document.getElementById('frame-backdrop');
+
+            if (!nav || !toggle || !navList) return;
+
+            function setOpen(open) {
+                if (open) {
+                    nav.classList.add('open');
+                    if (sideFrame) sideFrame.classList.add('open');
+                    if (backdrop) backdrop.classList.add('open');
+                    toggle.setAttribute('aria-expanded', 'true');
+                    if (sideFrame) sideFrame.setAttribute('aria-hidden', 'false');
+                    if (backdrop) backdrop.setAttribute('aria-hidden', 'false');
+                } else {
+                    nav.classList.remove('open');
+                    if (sideFrame) sideFrame.classList.remove('open');
+                    if (backdrop) backdrop.classList.remove('open');
+                    toggle.setAttribute('aria-expanded', 'false');
+                    if (sideFrame) sideFrame.setAttribute('aria-hidden', 'true');
+                    if (backdrop) backdrop.setAttribute('aria-hidden', 'true');
+                }
+            }
+
+            toggle.addEventListener('click', function (e) {
+                const isOpen = nav.classList.contains('open');
+                setOpen(!isOpen);
+                e.stopPropagation();
+            });
+
+            if (backdrop) {
+                backdrop.addEventListener('click', function () {
+                    setOpen(false);
+                });
+            }
+
+            document.addEventListener('click', function (e) {
+                if (!nav.contains(e.target) && !sideFrame?.contains(e.target)) {
+                    setOpen(false);
+                }
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') setOpen(false);
+            });
+        });
+
+        // Animation des cartes de trophées
+        document.querySelectorAll('.achievement-card').forEach(card => {
+            card.addEventListener('click', function () {
+                if (!this.classList.contains('locked')) {
+                    this.style.transform = 'scale(1.05) rotate(5deg)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 300);
+                }
+            });
+        });
+    </script>
+    <script src="profile-display.js"></script>
+</body>
+
+</html>

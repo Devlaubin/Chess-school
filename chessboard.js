@@ -275,6 +275,7 @@ function movePiece(from, to, piece) {
     // Déplacer la pièce
     board[to.row][to.col] = piece;
     board[from.row][from.col] = null;
+    currentGameMoves++;
 
     // Mise à jour des flags de mouvement
     if (piece.type === 'king') {
@@ -620,12 +621,24 @@ function checkGameStatus() {
         isGameOver = true;
         const winner = currentTurn === 'white' ? 'Blancs' : 'Noirs';
         statusText.textContent = `Échec et mat ! Les ${winner} ont gagné !`;
+
+        // ✨ NOUVEAU : Sauvegarder la partie
+        if (window.ChessSchoolProgress) {
+            window.ChessSchoolProgress.saveGamePlayed(true, currentGameMoves);
+        }
+
         setTimeout(() => {
             alert(`Échec et mat ! Les ${winner} ont gagné la partie !`);
         }, 500);
     } else if (isStalemate(opponentColor)) {
         isGameOver = true;
         statusText.textContent = 'Pat ! Partie nulle.';
+
+        // ✨ NOUVEAU : Sauvegarder la partie (nulle)
+        if (window.ChessSchoolProgress) {
+            window.ChessSchoolProgress.saveGamePlayed(false, currentGameMoves);
+        }
+
         setTimeout(() => {
             alert('Pat ! La partie est nulle.');
         }, 500);
@@ -707,9 +720,17 @@ newGameBtn.addEventListener('click', () => {
         if (!confirm('Voulez-vous vraiment recommencer une nouvelle partie ?')) {
             return;
         }
+
+        // ✨ NOUVEAU : Sauvegarder la partie abandonnée
+        if (window.ChessSchoolProgress && !isGameOver) {
+            window.ChessSchoolProgress.saveGamePlayed(false, currentGameMoves);
+        }
     }
+
+    currentGameMoves = 0; // ✨ NOUVEAU : Réinitialiser le compteur
     initStartPosition();
 });
+
 
 // Annuler le dernier coup
 undoBtn.addEventListener('click', () => {
@@ -729,6 +750,9 @@ undoBtn.addEventListener('click', () => {
         statusText.textContent = 'Partie en cours';
     }
 });
+
+// Compteur de coups pour la partie en cours
+let currentGameMoves = 0;
 
 // Initialiser l'échiquier
 createBoard();

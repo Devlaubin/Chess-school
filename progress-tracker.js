@@ -1,0 +1,451 @@
+// ========================================
+// SYSTÈME DE PROGRESSION CHESS SCHOOL
+// Fichier: progress-tracker.js
+// ========================================
+
+const ChessSchoolProgress = {
+    // Clé de stockage principale
+    STORAGE_KEY: 'chessSchoolProgress',
+
+    // Initialiser le système
+    init() {
+        this.ensureDataStructure();
+        this.trackPageVisit();
+        this.startSessionTimer();
+        console.log('Chess School Progress Tracker initialisé');
+    },
+
+    // Structure de données initiale
+    getDefaultData() {
+        return {
+            user: {
+                username: 'ChessLearner2025',
+                name: 'Joueur d\'Échecs',
+                avatar: '♔',
+                joinDate: new Date().toISOString(),
+                lastVisit: new Date().toISOString()
+            },
+            stats: {
+                totalPages: 0,
+                studyTime: 0, // en minutes
+                currentSession: 0,
+                quizzesTaken: 0,
+                quizzesCorrect: 0,
+                gamesPlayed: 0,
+                videosWatched: 0,
+                daysActive: 0,
+                streak: 0,
+                estimatedElo: 800
+            },
+            progression: {
+                base: 0,
+                specificites: 0,
+                ouvertures: 0,
+                videos: 0
+            },
+            pagesVisited: {},
+            quizResults: [],
+            achievements: {
+                firstVisit: false,
+                reader100: false,
+                quizMaster: false,
+                speedRunner: false,
+                onFire: false,
+                tactician: false,
+                grandmaster: false,
+                perfectionist: false
+            },
+            learningPath: {
+                fundamentalRules: false,
+                specialMoves: false,
+                basicTactics: false,
+                openingRepertoire: false,
+                essentialEndgames: false
+            },
+            recentActivity: [],
+            badges: []
+        };
+    },
+
+    // Vérifier et créer la structure si nécessaire
+    ensureDataStructure() {
+        let data = this.loadData();
+        if (!data) {
+            data = this.getDefaultData();
+            this.saveData(data);
+        }
+        // Vérifier la dernière visite pour les jours actifs
+        this.updateDaysActive(data);
+        return data;
+    },
+
+    // Charger les données
+    loadData() {
+        try {
+            const stored = localStorage.getItem(this.STORAGE_KEY);
+            return stored ? JSON.parse(stored) : null;
+        } catch (e) {
+            console.error('Erreur chargement données:', e);
+            return null;
+        }
+    },
+
+    // Sauvegarder les données
+    saveData(data) {
+        try {
+            localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+            return true;
+        } catch (e) {
+            console.error('Erreur sauvegarde données:', e);
+            return false;
+        }
+    },
+
+    // Mettre à jour les jours actifs
+    updateDaysActive(data) {
+        const today = new Date().toDateString();
+        const lastVisit = new Date(data.user.lastVisit).toDateString();
+
+        if (today !== lastVisit) {
+            data.stats.daysActive++;
+
+            // Vérifier le streak
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayStr = yesterday.toDateString();
+
+            if (lastVisit === yesterdayStr) {
+                data.stats.streak++;
+            } else {
+                data.stats.streak = 1;
+            }
+
+            data.user.lastVisit = new Date().toISOString();
+            this.saveData(data);
+        }
+    },
+
+    // Suivre la visite d'une page
+    trackPageVisit() {
+        const data = this.loadData();
+        const pageName = this.getCurrentPageName();
+
+        if (!data.pagesVisited[pageName]) {
+            data.pagesVisited[pageName] = {
+                visits: 0,
+                firstVisit: new Date().toISOString(),
+                lastVisit: new Date().toISOString(),
+                timeSpent: 0
+            };
+            data.stats.totalPages++;
+        }
+
+        data.pagesVisited[pageName].visits++;
+        data.pagesVisited[pageName].lastVisit = new Date().toISOString();
+
+        // Mettre à jour la progression par section
+        this.updateSectionProgress(data, pageName);
+
+        // Vérifier les achievements
+        this.checkAchievements(data);
+
+        this.saveData(data);
+    },
+
+    // Obtenir le nom de la page actuelle
+    getCurrentPageName() {
+        const path = window.location.pathname;
+        const page = path.split('/').pop() || 'index.html';
+        return page.replace('.html', '');
+    },
+
+    // Mettre à jour la progression des sections
+    updateSectionProgress(data, pageName) {
+        const sectionPages = {
+            base: ['base', 'echiquier', 'pieces', 'deplacements'],
+            specificites: ['specificite', 'roque', 'passant', 'promotion'],
+            ouvertures: ['ouverture', 'italienne', 'sicilienne', 'gambit'],
+            videos: ['videos']
+        };
+
+        for (const [section, pages] of Object.entries(sectionPages)) {
+            const visitedInSection = pages.filter(p => data.pagesVisited[p]);
+            const progress = Math.round((visitedInSection.length / pages.length) * 100);
+            data.progression[section] = progress;
+        }
+    },
+
+    // Timer de session
+    startSessionTimer() {
+        const data = this.loadData();
+        const pageName = this.getCurrentPageName();
+
+        // Sauvegarder le temps passé toutes les 30 secondes
+        setInterval(() => {
+            const currentData = this.loadData();
+            currentData.stats.studyTime += 0.5; // 30 secondes = 0.5 minutes
+
+            if (currentData.pagesVisited[pageName]) {
+                currentData.pagesVisited[pageName].timeSpent += 0.5;
+            }
+
+            this.saveData(currentData);
+        }, 30000);
+    },
+
+    // Enregistrer un résultat de quiz
+    saveQuizResult(difficulty, score, total, timeSeconds) {
+        const data = this.loadData();
+
+        const result = {
+            date: new Date().toISOString(),
+            difficulty: difficulty,
+            score: score,
+            total: total,
+            percentage: Math.round((score / total) * 100),
+            time: timeSeconds
+        };
+
+        data.quizResults.push(result);
+        data.stats.quizzesTaken++;
+        data.stats.quizzesCorrect += score;
+
+        // Ajouter à l'activité récente
+        this.addActivity(data, `Quiz "${difficulty}" complété avec ${result.percentage}%`, '✅');
+
+        // Vérifier les achievements
+        this.checkAchievements(data);
+
+        // Mettre à jour l'ELO estimé
+        this.updateEstimatedElo(data);
+
+        this.saveData(data);
+    },
+
+    // Mettre à jour l'ELO estimé
+    updateEstimatedElo(data) {
+        const avgQuizScore = data.stats.quizzesCorrect / (data.stats.quizzesTaken * 10) || 0;
+        const progressAvg = (data.progression.base + data.progression.specificites +
+            data.progression.ouvertures + data.progression.videos) / 4;
+
+        // Formule simple d'estimation
+        const baseElo = 800;
+        const quizBonus = avgQuizScore * 500;
+        const progressBonus = progressAvg * 5;
+
+        data.stats.estimatedElo = Math.round(baseElo + quizBonus + progressBonus);
+    },
+
+    // Enregistrer une partie jouée
+    saveGamePlayed(won, movesCount) {
+        const data = this.loadData();
+        data.stats.gamesPlayed++;
+
+        this.addActivity(data,
+            won ? `Partie gagnée en ${movesCount} coups` : `Partie jouée (${movesCount} coups)`,
+            '♟️'
+        );
+
+        this.checkAchievements(data);
+        this.saveData(data);
+    },
+
+    // Enregistrer une vidéo regardée
+    saveVideoWatched(videoTitle) {
+        const data = this.loadData();
+        data.stats.videosWatched++;
+
+        this.addActivity(data, `Vidéo "${videoTitle}" visionnée`, '🎥');
+
+        // Mettre à jour la progression vidéos
+        data.progression.videos = Math.min(100, data.stats.videosWatched * 10);
+
+        this.saveData(data);
+    },
+
+    // Ajouter une activité récente
+    addActivity(data, text, icon) {
+        const activity = {
+            date: new Date().toISOString(),
+            text: text,
+            icon: icon
+        };
+
+        data.recentActivity.unshift(activity);
+
+        // Garder seulement les 10 dernières activités
+        if (data.recentActivity.length > 10) {
+            data.recentActivity = data.recentActivity.slice(0, 10);
+        }
+    },
+
+    // Vérifier et débloquer les achievements
+    checkAchievements(data) {
+        const achievements = data.achievements;
+
+        // Premier Pas
+        if (!achievements.firstVisit && data.stats.totalPages > 0) {
+            achievements.firstVisit = true;
+            this.unlockAchievement(data, 'Premier Pas', '🎓');
+        }
+
+        // Lecteur Assidu (100 pages)
+        if (!achievements.reader100 && data.stats.totalPages >= 100) {
+            achievements.reader100 = true;
+            this.unlockAchievement(data, 'Lecteur Assidu', '📚');
+        }
+
+        // Quiz Master (10 quiz parfaits)
+        const perfectQuizzes = data.quizResults.filter(q => q.percentage === 100).length;
+        if (!achievements.quizMaster && perfectQuizzes >= 10) {
+            achievements.quizMaster = true;
+            this.unlockAchievement(data, 'Quiz Master', '🎯');
+        }
+
+        // Speed Runner (quiz en moins de 2 minutes)
+        const fastQuizzes = data.quizResults.filter(q => q.time < 120).length;
+        if (!achievements.speedRunner && fastQuizzes >= 5) {
+            achievements.speedRunner = true;
+            this.unlockAchievement(data, 'Rapide', '⚡');
+        }
+
+        // En Feu (7 jours consécutifs)
+        if (!achievements.onFire && data.stats.streak >= 7) {
+            achievements.onFire = true;
+            this.unlockAchievement(data, 'En Feu', '🔥');
+        }
+
+        // Tacticien (50 parties)
+        if (!achievements.tactician && data.stats.gamesPlayed >= 50) {
+            achievements.tactician = true;
+            this.unlockAchievement(data, 'Tacticien', '♟️');
+        }
+
+        // Perfectionniste (100% partout)
+        const allComplete = Object.values(data.progression).every(p => p === 100);
+        if (!achievements.perfectionist && allComplete) {
+            achievements.perfectionist = true;
+            this.unlockAchievement(data, 'Perfectionniste', '🌟');
+        }
+
+        // Grand Maître (tout complété + tous les achievements)
+        const allAchievements = Object.entries(achievements)
+            .filter(([key]) => key !== 'grandmaster')
+            .every(([_, value]) => value === true);
+        if (!achievements.grandmaster && allAchievements && allComplete) {
+            achievements.grandmaster = true;
+            this.unlockAchievement(data, 'Grand Maître', '👑');
+        }
+    },
+
+    // Débloquer un achievement
+    unlockAchievement(data, name, icon) {
+        this.addActivity(data, `Nouveau trophée débloqué : "${name}"`, '🏆');
+
+        // Ajouter un badge si nécessaire
+        if (!data.badges.includes(name)) {
+            data.badges.push(name);
+        }
+    },
+
+    // Mettre à jour le parcours d'apprentissage
+    updateLearningPath(pathKey, completed) {
+        const data = this.loadData();
+        data.learningPath[pathKey] = completed;
+
+        if (completed) {
+            const pathNames = {
+                fundamentalRules: 'Règles Fondamentales',
+                specialMoves: 'Coups Spéciaux',
+                basicTactics: 'Tactiques de Base',
+                openingRepertoire: 'Répertoire d\'Ouvertures',
+                essentialEndgames: 'Finales Essentielles'
+            };
+
+            this.addActivity(data, `✓ ${pathNames[pathKey]} complété`, '🎯');
+        }
+
+        this.saveData(data);
+    },
+
+    // Obtenir toutes les données pour le profil
+    getProfileData() {
+        return this.loadData();
+    },
+
+    // Réinitialiser toutes les données
+    resetAllData() {
+        if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes vos données ?')) {
+            localStorage.removeItem(this.STORAGE_KEY);
+            const newData = this.getDefaultData();
+            this.saveData(newData);
+            alert('Données réinitialisées !');
+            window.location.reload();
+        }
+    },
+
+    // Exporter les données
+    exportData() {
+        const data = this.loadData();
+        const dataStr = JSON.stringify(data, null, 2);
+        const blob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `chess-school-progress-${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+
+        URL.revokeObjectURL(url);
+    },
+
+    // Importer les données
+    importData(file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const data = JSON.parse(e.target.result);
+                this.saveData(data);
+                alert('Données importées avec succès !');
+                window.location.reload();
+            } catch (error) {
+                alert('Erreur lors de l\'importation des données');
+                console.error(error);
+            }
+        };
+        reader.readAsText(file);
+    }
+};
+
+// Initialiser automatiquement au chargement de la page
+if (typeof window !== 'undefined') {
+    window.ChessSchoolProgress = ChessSchoolProgress;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        ChessSchoolProgress.init();
+    });
+}
+
+// ========================================
+// INTÉGRATIONS SPÉCIFIQUES
+// ========================================
+
+// Pour les quiz (à ajouter dans quiz.html)
+function onQuizComplete(difficulty, score, total, timeSeconds) {
+    window.ChessSchoolProgress.saveQuizResult(difficulty, score, total, timeSeconds);
+}
+
+// Pour l'échiquier (à ajouter dans chessboard.js)
+function onGameComplete(won, movesCount) {
+    window.ChessSchoolProgress.saveGamePlayed(won, movesCount);
+}
+
+// Pour les vidéos (à ajouter dans videos.html)
+function onVideoWatched(videoTitle) {
+    window.ChessSchoolProgress.saveVideoWatched(videoTitle);
+}
+
+// Pour le parcours d'apprentissage
+function markPathComplete(pathKey) {
+    window.ChessSchoolProgress.updateLearningPath(pathKey, true);
+}

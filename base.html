@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&display=swap" rel="stylesheet">
   <link rel="icon" type="image/vnd.icon" href="images/favicon.png">
+  <script src="progress-tracker.js"></script>
 </head>
 <body>
   <!-- Barre de progression -->
@@ -137,5 +138,42 @@
   </div>
     <script src="script.js"></script>
     <script src="save-system.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Déterminer quelle étape du parcours valider
+        const pageName = window.location.pathname.split('/').pop().replace('.html', '');
+
+        // Vérifier si l'utilisateur a lu toute la page (scroll jusqu'en bas)
+        let hasScrolledToBottom = false;
+
+        window.addEventListener('scroll', function () {
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          const scrollHeight = document.documentElement.scrollHeight;
+          const clientHeight = document.documentElement.clientHeight;
+
+          if (scrollTop + clientHeight >= scrollHeight - 100) {
+            if (!hasScrolledToBottom) {
+              hasScrolledToBottom = true;
+              markPathProgress(pageName);
+            }
+          }
+        });
+
+        function markPathProgress(page) {
+          if (!window.ChessSchoolProgress) return;
+
+          // Mapper les pages aux étapes du parcours
+          const pathMapping = {
+            'base': 'fundamentalRules',
+            'specificite': 'specialMoves'
+          };
+
+          const pathKey = pathMapping[page];
+          if (pathKey) {
+            window.ChessSchoolProgress.updateLearningPath(pathKey, true);
+          }
+        }
+      });
+    </script>
 </body>
 </html>

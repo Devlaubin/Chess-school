@@ -1,3 +1,4 @@
+let quizStartTime = 0;
 document.addEventListener('DOMContentLoaded', function () {
 	const nav = document.getElementById('main-nav');
 	const toggle = document.getElementById('nav-toggle');
@@ -246,6 +247,8 @@ function startQuiz() {
 	quizScreen.style.display = 'block';
 
 	displayQuestion();
+	// ✨ NOUVEAU : Démarrer le chronomètre du quiz
+	quizStartTime = Date.now();
 }
 
 function getQuestionCount() {
@@ -359,4 +362,15 @@ function showResults() {
 
 	document.getElementById('score-emoji').textContent = emoji;
 	document.getElementById('score-message').textContent = message;
-};
+
+	// ✨ NOUVEAU : Sauvegarder le résultat du quiz
+	if (window.ChessSchoolProgress) {
+		const quizTime = Math.floor((Date.now() - quizStartTime) / 1000); // en secondes
+		window.ChessSchoolProgress.saveQuizResult(
+			currentDifficulty,
+			score,
+			currentQuestions.length,
+			quizTime
+		);
+	}
+}

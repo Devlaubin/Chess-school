@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&display=swap"
         rel="stylesheet">
+    <script src="progress-tracker.js"></script>
 </head>
 
 <body>
@@ -269,6 +270,46 @@
         <script src="script.js"></script>
         <script src="theme.js"></script>
         <script src="save-system.js"></script>
+        <script>
+            // Détecter quand une vidéo est visionnée (au moins 30 secondes)
+            document.addEventListener('DOMContentLoaded', function () {
+                const videoCards = document.querySelectorAll('.video-card');
+
+                videoCards.forEach(card => {
+                    const iframe = card.querySelector('iframe');
+                    const title = card.querySelector('.video-title').textContent;
+                    let watchTime = 0;
+                    let watchInterval = null;
+
+                    // Observer quand l'iframe est visible
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                // Vidéo visible, commencer à compter
+                                watchInterval = setInterval(() => {
+                                    watchTime++;
+
+                                    // Après 30 secondes, considérer comme "visionnée"
+                                    if (watchTime >= 30 && window.ChessSchoolProgress) {
+                                        window.ChessSchoolProgress.saveVideoWatched(title);
+                                        clearInterval(watchInterval);
+                                        observer.unobserve(entry.target);
+                                    }
+                                }, 1000);
+                            } else {
+                                // Vidéo plus visible, arrêter le compteur
+                                if (watchInterval) {
+                                    clearInterval(watchInterval);
+                                    watchInterval = null;
+                                }
+                            }
+                        });
+                    }, { threshold: 0.5 });
+
+                    observer.observe(card);
+                });
+            });
+        </script>
         </body>
         
 </html>
