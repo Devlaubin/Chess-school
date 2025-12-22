@@ -374,3 +374,45 @@ function showResults() {
 		);
 	}
 }
+function goToProfile() {
+	window.location.href = "/profil.html";
+}
+
+// Afficher un badge si l'utilisateur a débloqué un nouveau trophée
+	document.addEventListener('DOMContentLoaded', function() {
+		updateProfileBadge();
+
+	// Vérifier toutes les 10 secondes
+	setInterval(updateProfileBadge, 10000);
+});
+
+	function updateProfileBadge() {
+    if (!window.ChessSchoolProgress) return;
+
+	const data = window.ChessSchoolProgress.getProfileData();
+	if (!data) return;
+
+	// Compter les nouveaux trophées (débloqués aujourd'hui)
+	const today = new Date().toDateString();
+    const newAchievements = data.recentActivity.filter(activity => {
+        const activityDate = new Date(activity.date).toDateString();
+	return activity.icon === '🏆' && activityDate === today;
+    }).length;
+
+	// Afficher le badge si nouveaux trophées
+	const profileLinks = document.querySelectorAll('.nav-link-profile');
+    profileLinks.forEach(link => {
+        // Supprimer l'ancien badge
+        const oldBadge = link.querySelector('.profile-notification');
+	if (oldBadge) oldBadge.remove();
+
+        // Ajouter le nouveau badge si nécessaire
+        if (newAchievements > 0) {
+            const badge = document.createElement('span');
+	badge.className = 'profile-notification';
+	badge.textContent = newAchievements;
+	badge.title = `${newAchievements} nouveau${newAchievements > 1 ? 'x' : ''} trophée${newAchievements > 1 ? 's' : ''}`;
+	link.appendChild(badge);
+        }
+    });
+}
