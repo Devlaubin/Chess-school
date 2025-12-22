@@ -619,18 +619,18 @@ function checkGameStatus() {
     if (isCheckmate(opponentColor)) {
         isGameOver = true;
         const winner = currentTurn === 'white' ? 'Blancs' : 'Noirs';
-        statusText.textContent = `🏆 Échec et mat ! Les ${winner} ont gagné !`;
+        statusText.textContent = `Échec et mat ! Les ${winner} ont gagné !`;
         setTimeout(() => {
             alert(`Échec et mat ! Les ${winner} ont gagné la partie !`);
         }, 500);
     } else if (isStalemate(opponentColor)) {
         isGameOver = true;
-        statusText.textContent = '🤝 Pat ! Partie nulle.';
+        statusText.textContent = 'Pat ! Partie nulle.';
         setTimeout(() => {
             alert('Pat ! La partie est nulle.');
         }, 500);
     } else if (isInCheck(opponentColor)) {
-        statusText.textContent = '⚠️ Échec !';
+        statusText.textContent = 'Échec !';
     } else {
         statusText.textContent = 'Partie en cours';
     }
@@ -671,10 +671,9 @@ function isValidSquare(row, col) {
 // Mise à jour des informations de tour
 function updateTurnInfo() {
     const turnColor = currentTurn === 'white' ? 'Blancs' : 'Noirs';
-    const emoji = currentTurn === 'white' ? '⚪' : '⚫';
+    const emoji = currentTurn === 'white' ? '' : '';
     turnInfo.innerHTML = `
         <h4>${emoji} Tour des ${turnColor}</h4>
-        <p>Cliquez sur une pièce ${turnColor.toLowerCase()} pour la sélectionner.</p>
       `;
 }
 

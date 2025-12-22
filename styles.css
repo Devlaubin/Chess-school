@@ -105,8 +105,8 @@ body {
     text-shadow: 0px 1px 50px #3d768a;
 }
 
-.nv-link:hover {
-    background-color: #408c99;
+.nav-link:hover {
+    border: 1px solid #ffffff;
 }
 
 .nav-link:active {
@@ -265,9 +265,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-Op
-
- .header-row {
+.header-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -301,7 +299,7 @@ Op
 }
 
 @media (max-width: 800px) {
-    .nav-links { display: none !important; }
+    .nav-links { display: none; }
 }
 #chessimagesindex {
     display: block;
@@ -353,6 +351,32 @@ Op
     text-decoration: none;
     text-shadow: 0px 1px 50px #3d768a;
 }
+#frame-link-base:hover,
+#frame-link-specificite:hover,
+#frame-link-home:hover,
+#frame-link-ouvertures:hover,
+#frame-link-videos:hover,
+#frame-link-faq:hover,
+#frame-link-glo:hover,
+#frame-link-quiz:hover,
+#frame-link-chessboard:hover {
+    border: 1px solid #ffffff;
+}
+
+#frame-link-base:active,
+#frame-link-specificite:active,
+#frame-link-home:active,
+#frame-link-ouvertures:active,
+#frame-link-videos:active,
+#frame-link-faq:active,
+#frame-link-glo:active,
+#frame-link-quiz:active,
+#frame-link-chessboard:active {
+    position: relative;
+    top: 1px;
+}
+
+
 #boutonframe {
     color: #599bb3;
     text-decoration: none;
