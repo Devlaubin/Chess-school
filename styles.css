@@ -335,7 +335,7 @@ body {
 #side-frame .nav-link {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-#frame-link-base, #frame-link-specificite, #frame-link-home, #frame-link-ouvertures, #frame-link-videos, #frame-link-faq, #frame-link-glo, #frame-link-quiz, #frame-link-chessboard {
+#frame-link-base, #frame-link-specificite, #frame-link-home, #frame-link-ouvertures, #frame-link-videos, #frame-link-faq, #frame-link-glo, #frame-link-quiz, #frame-link-chessboard, #frame-link-profil {
     background-color: #599bb3;
     border-radius: 42px;
     border: 1px solid #29668f;
