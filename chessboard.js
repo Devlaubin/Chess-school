@@ -539,8 +539,8 @@ function isSquareAttacked(row, col, byColor) {
         for (let c = 0; c < 8; c++) {
             const piece = board[r][c];
             if (piece && piece.color === byColor) {
-                // Utiliser getPossibleMoves mais exclure les mouvements de roque
-                const moves = getPossibleMoves(piece.type, r, c, byColor);
+                // Utiliser getAttackMoves (non-récursif) pour éviter récursion infinie
+                const moves = getAttackMoves(piece.type, r, c, byColor);
                 // Filtrer les mouvements de roque (roi se déplaçant de 2 colonnes)
                 const legalAttackMoves = moves.filter(([mr, mc]) => {
                     if (piece.type === 'king' && Math.abs(mc - c) === 2) {
@@ -555,6 +555,46 @@ function isSquareAttacked(row, col, byColor) {
         }
     }
     return false;
+}
+
+// Obtenir les cases attaquées par une pièce sans utiliser isSquareAttacked (évite récursion)
+function getAttackMoves(pieceType, row, col, color) {
+    const moves = [];
+    switch (pieceType) {
+        case 'king':
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    if (dr === 0 && dc === 0) continue;
+                    const newRow = row + dr;
+                    const newCol = col + dc;
+                    if (isValidSquare(newRow, newCol)) moves.push([newRow, newCol]);
+                }
+            }
+            break;
+        case 'queen':
+            addLinearMoves(moves, row, col, [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]], color);
+            break;
+        case 'rook':
+            addLinearMoves(moves, row, col, [[1,0],[-1,0],[0,1],[0,-1]], color);
+            break;
+        case 'bishop':
+            addLinearMoves(moves, row, col, [[1,1],[1,-1],[-1,1],[-1,-1]], color);
+            break;
+        case 'knight':
+            [[2,1],[2,-1],[-2,1],[-2,-1],[1,2],[1,-2],[-1,2],[-1,-2]].forEach(([dr, dc]) => {
+                const newRow = row + dr;
+                const newCol = col + dc;
+                if (isValidSquare(newRow, newCol)) moves.push([newRow, newCol]);
+            });
+            break;
+        case 'pawn':
+            const forward = color === 'white' ? 1 : -1;
+            const r1 = row + forward;
+            if (isValidSquare(r1, col - 1)) moves.push([r1, col - 1]);
+            if (isValidSquare(r1, col + 1)) moves.push([r1, col + 1]);
+            break;
+    }
+    return moves;
 }
 
 // Trouver le roi

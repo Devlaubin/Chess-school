@@ -91,7 +91,7 @@
         <header id="site-header" class="site-title">
             <div class="header-row">
                 <div class="brand">
-                    <h1 id="site-title">Chess School</h1>
+                    <h1 id="site-title">Chess School — Puzzle</h1>
                 </div>
 
                 <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
@@ -140,10 +140,9 @@
 
                 <main id="mainpuzzle">   
                 <div class="quiz-header">
-                    <h2>Quiz d'Échecs</h2>
-                    <p>Testez vos connaissances des règles et stratégies</p>
+                    <h2>Problèmes d'Échecs</h2>
+                    <p>Tenter de resoudre tout les Problèmes.</p>
                 </div>
-                <div id="puzzle-list" class="puzzle-list" aria-label="Liste de puzzles"></div>
                 </main>
 
                 <div class="board-layout">
@@ -185,9 +184,12 @@
                 </div>
             </div>
         </main>
+        <main id="mainpuzzle">
+            <div id="puzzle-list" class="puzzle-list" aria-label="Liste de puzzles"></div>
+        </main>
 
         <footer id="index-footer" class="site-footer">
-            <p>&copy; 2025 Chess School v4.0.5 |
+            <p>&copy; 2025 Chess School |
                 <a href="apropos.html" style="color: #b9b0b0; text-decoration: underline;">À Propos</a> |
                 <a href="cgu.html" style="color: #b9b0b0; text-decoration: underline;">CGU</a> |
                 <a href="mentions-legales.html" style="color: #b9b0b0; text-decoration: underline;">Mentions Légales</a>
@@ -204,7 +206,7 @@
             const puzzles = [
                 { name: 'PUZZLE 1', fen: 'r1bqkbnr/ppp2ppp/2np4/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w - - 0 1', turn: 'white', desc: 'Mat du Berger', hint: 'Commencez par attaquer le roi avec la dame.' },
                 { name: 'PUZZLE 2', fen: '6k1/1R6/R7/8/8/8/8/8 w - - 0 1', turn: 'white', desc: 'Mat du Couloir', hint: 'La tour en b7 couvre des cases clés.' },
-                { name: 'PUZZLE 3', fen: '6k1/5Q2/8/8/8/8/8/6K1 w - - 0 1', turn: 'white', desc: 'Position simple pour repérer le mat.', hint: 'La dame peut donner mat sur la colonne.' }
+                { name: 'PUZZLE 3', fen: '5k2/8/5K2/8/2Q5/8/8/8 w - - 0 1', turn: 'white', desc: 'Mat du Baiser de la Mort', hint: 'La dame peut donner mat en f8' }
             ];
 
             const listEl = document.getElementById('puzzle-list');
@@ -227,7 +229,7 @@
                         </div>
                         <div class="puzzle-actions">
                             <button class="puzzle-btn" data-idx="${i}">Charger</button>
-                            <button class="puzzle-btn secondary" data-idx="${i}">Voir FEN</button>
+                            <button class="puzzle-btn secondary" data-idx="${i}">FEN</button>
                         </div>
                     `;
 
@@ -239,10 +241,16 @@
                                 alert(`FEN: ${sel.fen}`);
                                 return;
                             }
+                            console.log('Puzzle card click', idx, sel.fen, 'loadPuzzle=', !!window.loadPuzzle, 'chessboardReady=', !!window.chessboardReady);
                             currentPuzzleIndex = idx;
                             if (hintEl) hintEl.textContent = '';
-                            if (window.loadPuzzle) window.loadPuzzle(sel.fen, sel.turn);
-                            if (instr) instr.textContent = `${sel.name} — ${sel.turn === 'white' ? 'Blancs' : 'Noirs'} jouent`;
+                            // If chessboard not ready yet, wait for event
+                            function doLoad() {
+                                if (window.loadPuzzle) window.loadPuzzle(sel.fen, sel.turn);
+                                if (instr) instr.textContent = `${sel.name} — ${sel.turn === 'white' ? 'Blancs' : 'Noirs'} jouent`;
+                            }
+                            if (window.chessboardReady) doLoad();
+                            else document.addEventListener('chessboardReady', doLoad, { once: true });
                         });
                     });
 
