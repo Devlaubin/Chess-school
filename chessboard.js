@@ -63,16 +63,18 @@ const pieceDescriptions = {
     pawn: 'Le Pion avance d\'une case vers l\'avant (ou deux cases lors de son premier mouvement). Il capture en diagonale.'
 };
 
-// Éléments DOM
-const chessboard = document.getElementById('chessboard');
-const turnInfo = document.getElementById('turn-info');
-const statusText = document.getElementById('status-text');
-const moveHistoryEl = document.getElementById('move-history');
-const newGameBtn = document.getElementById('new-game');
-const undoBtn = document.getElementById('undo-move');
+// Éléments DOM (initialisés après le chargement du DOM)
+let chessboard = null;
+let turnInfo = null;
+let statusText = null;
+let moveHistoryEl = null;
+let newGameBtn = null;
+let undoBtn = null;
 
 // Créer l'échiquier
 function createBoard() {
+    console.log('createBoard called, chessboard element:', chessboard);
+    if (!chessboard) return;
     chessboard.innerHTML = '';
     for (let row = 7; row >= 0; row--) {
         for (let col = 0; col < 8; col++) {
@@ -146,6 +148,7 @@ function initStartPosition() {
 
 // Clic sur une case
 function handleSquareClick(row, col) {
+    console.log('square click', row, col, 'currentTurn=', currentTurn, 'isGameOver=', isGameOver);
     if (isGameOver) {
         alert('La partie est terminée ! Cliquez sur "Nouvelle partie" pour recommencer.');
         return;
@@ -714,46 +717,132 @@ function updateMoveHistory() {
     }
 }
 
-// Nouvelle partie
-newGameBtn.addEventListener('click', () => {
-    if (moveHistory.length > 0) {
-        if (!confirm('Voulez-vous vraiment recommencer une nouvelle partie ?')) {
-            return;
-        }
-
-        // ✨ NOUVEAU : Sauvegarder la partie abandonnée
-        if (window.ChessSchoolProgress && !isGameOver) {
-            window.ChessSchoolProgress.saveGamePlayed(false, currentGameMoves);
-        }
-    }
-
-    currentGameMoves = 0; // ✨ NOUVEAU : Réinitialiser le compteur
-    initStartPosition();
-});
-
-
-// Annuler le dernier coup
-undoBtn.addEventListener('click', () => {
-    if (gameHistory.length > 0) {
-        const lastState = gameHistory.pop();
-        board = lastState.board;
-        hasMoved = lastState.hasMoved;
-        enPassantTarget = lastState.enPassantTarget;
-        moveHistory.pop();
-        currentTurn = currentTurn === 'white' ? 'black' : 'white';
-        selectedSquare = null;
-        isGameOver = false;
-        clearHighlights();
-        updateBoard();
-        updateTurnInfo();
-        updateMoveHistory();
-        statusText.textContent = 'Partie en cours';
-    }
-});
-
 // Compteur de coups pour la partie en cours
 let currentGameMoves = 0;
 
-// Initialiser l'échiquier
-createBoard();
-initStartPosition();
+// Charger une position depuis une chaîne FEN (format standard)
+function setBoardFromFEN(fen) {
+    const parts = fen.split(' ');
+    const placement = parts[0];
+    const activeColor = parts[1] || 'w';
+
+    const rows = placement.split('/');
+    if (rows.length !== 8) return;
+
+    // Réinitialiser le tableau
+    board = Array(8).fill(null).map(() => Array(8).fill(null));
+
+    for (let r = 0; r < 8; r++) {
+        const fenRank = rows[r];
+        let c = 0;
+        for (let i = 0; i < fenRank.length; i++) {
+            const ch = fenRank[i];
+            if (/[1-8]/.test(ch)) {
+                const empties = parseInt(ch, 10);
+                for (let k = 0; k < empties; k++) {
+                    board[7 - r][c] = null;
+                    c++;
+                }
+            } else {
+                const isLower = ch === ch.toLowerCase();
+                const color = isLower ? 'black' : 'white';
+                const letter = ch.toLowerCase();
+                let type = null;
+                switch (letter) {
+                    case 'p': type = 'pawn'; break;
+                    case 'r': type = 'rook'; break;
+                    case 'n': type = 'knight'; break;
+                    case 'b': type = 'bishop'; break;
+                    case 'q': type = 'queen'; break;
+                    case 'k': type = 'king'; break;
+                }
+                if (type) {
+                    board[7 - r][c] = { type: type, color: color };
+                } else {
+                    board[7 - r][c] = null;
+                }
+                c++;
+            }
+        }
+    }
+
+    currentTurn = activeColor === 'b' ? 'black' : 'white';
+    selectedSquare = null;
+    gameHistory = [];
+    moveHistory = [];
+    enPassantTarget = null;
+    isGameOver = false;
+    hasMoved = {
+        whiteKing: false,
+        blackKing: false,
+        whiteRookLeft: false,
+        whiteRookRight: false,
+        blackRookLeft: false,
+        blackRookRight: false
+    };
+    updateBoard();
+    updateTurnInfo();
+    updateMoveHistory();
+}
+
+// Fonction publique pour charger un puzzle (FEN)
+function loadPuzzle(fen, turn) {
+    setBoardFromFEN(fen);
+    if (turn) currentTurn = turn === 'black' ? 'black' : 'white';
+    updateBoard();
+    updateTurnInfo();
+    statusText.textContent = 'Position du problème';
+}
+
+// Rendre disponible pour d'autres pages
+window.loadPuzzle = loadPuzzle;
+
+// Initialisation après chargement du DOM : lier les éléments, attacher les listeners et initialiser l'échiquier
+document.addEventListener('DOMContentLoaded', () => {
+    chessboard = document.getElementById('chessboard');
+    turnInfo = document.getElementById('turn-info');
+    statusText = document.getElementById('status-text');
+    moveHistoryEl = document.getElementById('move-history');
+    newGameBtn = document.getElementById('new-game');
+    undoBtn = document.getElementById('undo-move');
+
+    if (newGameBtn) {
+        newGameBtn.addEventListener('click', () => {
+            if (moveHistory.length > 0) {
+                if (!confirm('Voulez-vous vraiment recommencer une nouvelle partie ?')) return;
+                if (window.ChessSchoolProgress && !isGameOver) {
+                    window.ChessSchoolProgress.saveGamePlayed(false, currentGameMoves);
+                }
+            }
+            currentGameMoves = 0;
+            initStartPosition();
+        });
+    }
+
+    if (undoBtn) {
+        undoBtn.addEventListener('click', () => {
+            if (gameHistory.length > 0) {
+                const lastState = gameHistory.pop();
+                board = lastState.board;
+                hasMoved = lastState.hasMoved;
+                enPassantTarget = lastState.enPassantTarget;
+                moveHistory.pop();
+                currentTurn = currentTurn === 'white' ? 'black' : 'white';
+                selectedSquare = null;
+                isGameOver = false;
+                clearHighlights();
+                updateBoard();
+                updateTurnInfo();
+                updateMoveHistory();
+                statusText.textContent = 'Partie en cours';
+            }
+        });
+    }
+
+    // Créer l'échiquier et position initiale
+    createBoard();
+    initStartPosition();
+    // Indiquer que l'échiquier est prêt pour que d'autres scripts puissent charger des puzzles
+    window.chessboardReady = true;
+    document.dispatchEvent(new Event('chessboardReady'));
+});

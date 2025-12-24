@@ -335,7 +335,7 @@ body {
 #side-frame .nav-link {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-#frame-link-base, #frame-link-specificite, #frame-link-home, #frame-link-ouvertures, #frame-link-videos, #frame-link-faq, #frame-link-glo, #frame-link-quiz, #frame-link-chessboard, #frame-link-profil {
+#frame-link-base, #frame-link-specificite, #frame-link-home, #frame-link-ouvertures, #frame-link-videos, #frame-link-faq, #frame-link-glo, #frame-link-quiz, #frame-link-chessboard, #frame-link-profil, #frame-link-probleme {
     background-color: #599bb3;
     border-radius: 42px;
     border: 1px solid #29668f;
@@ -360,7 +360,8 @@ body {
 #frame-link-glo:hover,
 #frame-link-quiz:hover,
 #frame-link-chessboard:hover,
-#frame-link-profil:hover {
+#frame-link-profil:hover,
+#frame-link-probleme:hover {
     border: 1px solid #ffffff;
 }
 
@@ -373,7 +374,8 @@ body {
 #frame-link-glo:active,
 #frame-link-quiz:active,
 #frame-link-chessboard:active,
-#frame-link-profil:active {
+#frame-link-profil:active,
+#frame-link-probleme:active {
     position: relative;
     top: 1px;
 }

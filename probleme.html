@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Chess School — Ouvertures</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/vnd.icon" href="images/favicon.png">
+    <script src="progress-tracker.js"></script>
+    <style>
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #181a1b;
+            margin: 0;
+            padding: 0;
+        }
+
+        .puzzle-list {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .puzzle-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 12px;
+            width: 220px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .puzzle-card h4 {
+            margin: 0 0 8px 0;
+            font-size: 1rem;
+        }
+
+        .puzzle-card p {
+            margin: 0 0 12px 0;
+            color: #666;
+            font-size: 0.9rem;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        h4, h3{
+            font-family: 'arial black', sans-serif;
+        }
+
+        .puzzle-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .puzzle-btn {
+            background: #599bb3;
+            color: white;
+            border: none;
+            padding: 8px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .puzzle-btn.secondary {
+            background: #edf2f7;
+            color: #333;
+            font-weight: 500;
+        }
+        #mainpuzzle{
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="site-wrapper">
+        <header id="site-header" class="site-title">
+            <div class="header-row">
+                <div class="brand">
+                    <h1 id="site-title">Chess School</h1>
+                </div>
+
+                <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+                    <div class="nav-links" id="main-nav-list">
+                        <a class="nav-link" href="index.html">Accueil</a>
+                        <a class="nav-link" href="base.html">Base</a>
+                        <a class="nav-link" href="specificite.html">Spécificités</a>
+                        <a class="nav-link" href="ouverture.html">Ouvertures</a>
+                        <a class="nav-link" href="videos.html">Vidéos</a>
+                        <a class="nav-link" href="profil.html">Profil</a>
+                    </div>
+
+                    <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="main-nav-list"
+                        aria-label="Ouvrir le menu">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+
+                    </button>
+                </nav>
+            </div>
+
+        </header>
+
+        <div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
+            <nav class="frame-nav">
+                <a class="nav-link" id="frame-link-home" href="index.html">Accueil</a>
+                <a class="nav-link" id="frame-link-base" href="base.html">Base</a>
+                <a class="nav-link" id="frame-link-specificite" href="specificite.html">Spécificités</a>
+                <a class="nav-link" id="frame-link-ouvertures" href="ouverture.html">Ouvertures</a>
+                <a class="nav-link" id="frame-link-videos" href="videos.html">Vidéos</a>
+                <a class="nav-link" id="frame-link-chessboard" href="chessboard.html">Echiquier</a>
+                <a class="nav-link" id="frame-link-probleme" href="probleme.html">Puzzle</a>
+                <a class="nav-link" id="frame-link-quiz" href="quiz.html">Quiz</a>
+                <a class="nav-link" id="frame-link-glo" href="glossaire.html">Glossaire</a>
+                <a class="nav-link" id="frame-link-profil" href="profil.html">Profil</a>
+                <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school/commits/main/">Log</a>
+                <a id="boutonframe" href="faq.html">FAQ</a>
+                <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school">Github</a>
+                <a id="boutonframe" href="https://discord.gg/C4q8Cae4Ju">Discord</a>
+            </nav>
+        </div>
+        <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
+
+            <div class="board-container">
+
+                <main id="mainpuzzle">   
+                <div class="quiz-header">
+                    <h2>Quiz d'Échecs</h2>
+                    <p>Testez vos connaissances des règles et stratégies</p>
+                </div>
+                <div id="puzzle-list" class="puzzle-list" aria-label="Liste de puzzles"></div>
+                </main>
+
+                <div class="board-layout">
+                    <div class="controls-panel">
+                        <h3>Informations</h3>
+                        <div class="info-box" id="turn-info">
+                            <h4>Tour</h4>
+                        </div>
+                        <div class="info-box" id="game-status">
+                            <h4>État du jeu</h4>
+                            <p id="status-text">Position de problème</p>
+                        </div>
+                        <div class="info-box">
+                            <h4>Puzzle</h4>
+                            <p id="puzzle-instructions">Choisissez un puzzle ci‑dessous.</p>
+                            <p id="puzzle-hint" class="muted" style="margin-top:6px;color:#2b6cb0;"></p>
+                        </div>
+                        <div class="info-box">
+                            <h4>Historique des coups</h4>
+                            <div id="move-history" style="max-height:200px; overflow-y:auto; font-family:monospace; font-size:0.9em;">
+                                <p style="color:#999; font-style:italic;">Aucun coup</p>
+                            </div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" id="hint-btn">Indice</button>
+                            <button class="action-btn" id="next-btn">Suivant</button>
+                            <button class="action-btn secondary" id="undo-move">Annuler le coup</button>
+                        </div>
+                    </div>
+
+                    <div class="board-wrapper">
+                        <div class="chessboard" id="chessboard"></div>
+                        <div class="coordinates">
+                            <span>a</span><span>b</span><span>c</span><span>d</span>
+                            <span>e</span><span>f</span><span>g</span><span>h</span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </main>
+
+        <footer id="index-footer" class="site-footer">
+            <p>&copy; 2025 Chess School v4.0.5 |
+                <a href="apropos.html" style="color: #b9b0b0; text-decoration: underline;">À Propos</a> |
+                <a href="cgu.html" style="color: #b9b0b0; text-decoration: underline;">CGU</a> |
+                <a href="mentions-legales.html" style="color: #b9b0b0; text-decoration: underline;">Mentions Légales</a>
+            </p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+    <script src="theme.js"></script>
+    <script src="save-system.js"></script>
+    <script src="chessboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Liste de puzzles (titre, FEN, couleur à jouer, description, hint)
+            const puzzles = [
+                { name: 'PUZZLE 1', fen: 'r1bqkbnr/ppp2ppp/2np4/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w - - 0 1', turn: 'white', desc: 'Mat du Berger', hint: 'Commencez par attaquer le roi avec la dame.' },
+                { name: 'PUZZLE 2', fen: '6k1/1R6/R7/8/8/8/8/8 w - - 0 1', turn: 'white', desc: 'Mat du Couloir', hint: 'La tour en b7 couvre des cases clés.' },
+                { name: 'PUZZLE 3', fen: '6k1/5Q2/8/8/8/8/8/6K1 w - - 0 1', turn: 'white', desc: 'Position simple pour repérer le mat.', hint: 'La dame peut donner mat sur la colonne.' }
+            ];
+
+            const listEl = document.getElementById('puzzle-list');
+            const instr = document.getElementById('puzzle-instructions');
+            const hintEl = document.getElementById('puzzle-hint');
+            const hintBtn = document.getElementById('hint-btn');
+            const nextBtn = document.getElementById('next-btn');
+            let currentPuzzleIndex = 0;
+
+            function renderPuzzleCards() {
+                if (!listEl) return;
+                listEl.innerHTML = '';
+                puzzles.forEach((p, i) => {
+                    const card = document.createElement('div');
+                    card.className = 'puzzle-card';
+                    card.innerHTML = `
+                        <div>
+                            <h4>${p.name}</h4>
+                            <p>${p.desc}</p>
+                        </div>
+                        <div class="puzzle-actions">
+                            <button class="puzzle-btn" data-idx="${i}">Charger</button>
+                            <button class="puzzle-btn secondary" data-idx="${i}">Voir FEN</button>
+                        </div>
+                    `;
+
+                    card.querySelectorAll('.puzzle-btn').forEach(btn => {
+                        btn.addEventListener('click', (ev) => {
+                            const idx = parseInt(ev.currentTarget.dataset.idx, 10);
+                            const sel = puzzles[idx];
+                            if (ev.currentTarget.classList.contains('secondary')) {
+                                alert(`FEN: ${sel.fen}`);
+                                return;
+                            }
+                            currentPuzzleIndex = idx;
+                            if (hintEl) hintEl.textContent = '';
+                            if (window.loadPuzzle) window.loadPuzzle(sel.fen, sel.turn);
+                            if (instr) instr.textContent = `${sel.name} — ${sel.turn === 'white' ? 'Blancs' : 'Noirs'} jouent`;
+                        });
+                    });
+
+                    listEl.appendChild(card);
+                });
+            }
+
+            console.log('Puzzle selector script initialized');
+            renderPuzzleCards();
+
+            // Charger le puzzle initial une fois que l'échiquier est prêt
+            function loadInitial() {
+                if (window.loadPuzzle && puzzles.length > 0) {
+                    window.loadPuzzle(puzzles[0].fen, puzzles[0].turn);
+                    if (instr) instr.textContent = `${puzzles[0].name} — ${puzzles[0].turn === 'white' ? 'Blancs' : 'Noirs'} jouent`;
+                }
+            }
+
+            if (window.chessboardReady) {
+                loadInitial();
+            } else {
+                document.addEventListener('chessboardReady', loadInitial, { once: true });
+            }
+
+            // Hint button
+            if (hintBtn) {
+                hintBtn.addEventListener('click', () => {
+                    console.log('Hint button clicked, currentPuzzleIndex=', currentPuzzleIndex);
+                    const p = puzzles[currentPuzzleIndex] || puzzles[0];
+                    if (hintEl) {
+                        hintEl.textContent = p.hint || 'Aucun indice disponible.';
+                        hintBtn.textContent = 'Indice (affiché)';
+                        setTimeout(() => { hintBtn.textContent = 'Indice'; }, 3000);
+                    }
+                });
+            }
+
+            // Next button
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    console.log('Next button clicked, before=', currentPuzzleIndex);
+                    currentPuzzleIndex = (currentPuzzleIndex + 1) % puzzles.length;
+                    console.log('Next button new index=', currentPuzzleIndex);
+                    const p = puzzles[currentPuzzleIndex];
+                    if (window.loadPuzzle) window.loadPuzzle(p.fen, p.turn);
+                    if (instr) instr.textContent = `${p.name} — ${p.turn === 'white' ? 'Blancs' : 'Noirs'} jouent`;
+                    if (hintEl) hintEl.textContent = '';
+                });
+            }
+            }
+        );
+    </script>
+</body>
+
+</html>
