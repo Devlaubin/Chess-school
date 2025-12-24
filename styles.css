@@ -359,7 +359,8 @@ body {
 #frame-link-faq:hover,
 #frame-link-glo:hover,
 #frame-link-quiz:hover,
-#frame-link-chessboard:hover {
+#frame-link-chessboard:hover
+#frame-link-profil:hover {
     border: 1px solid #ffffff;
 }
 
@@ -371,7 +372,8 @@ body {
 #frame-link-faq:active,
 #frame-link-glo:active,
 #frame-link-quiz:active,
-#frame-link-chessboard:active {
+#frame-link-chessboard:active 
+#frame-link-profil:active {
     position: relative;
     top: 1px;
 }
