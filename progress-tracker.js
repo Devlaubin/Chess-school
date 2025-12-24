@@ -1,5 +1,5 @@
 // ========================================
-// SYSTÈME DE PROGRESSION CHESS SCHOOL
+// SYSTÈME DE PROGRESSION CHESS SCHOOL - VERSION CORRIGÉE
 // Fichier: progress-tracker.js
 // ========================================
 
@@ -31,6 +31,7 @@ const ChessSchoolProgress = {
                 currentSession: 0,
                 quizzesTaken: 0,
                 quizzesCorrect: 0,
+                quizzesTotalQuestions: 0, // ✨ NOUVEAU : Total des questions
                 gamesPlayed: 0,
                 videosWatched: 0,
                 daysActive: 0,
@@ -47,11 +48,11 @@ const ChessSchoolProgress = {
             quizResults: [],
             achievements: {
                 firstVisit: false,
-                reader100: false,
-                quizMaster: false,
-                speedRunner: false,
-                onFire: false,
-                tactician: false,
+                reader10: false,        // ✨ CORRIGÉ : 10 pages au lieu de 100
+                quizMaster: false,      // 3 quiz parfaits
+                speedRunner: false,     // 1 quiz rapide
+                onFire: false,          // 3 jours consécutifs
+                tactician: false,       // 10 parties
                 grandmaster: false,
                 perfectionist: false
             },
@@ -73,6 +74,10 @@ const ChessSchoolProgress = {
         if (!data) {
             data = this.getDefaultData();
             this.saveData(data);
+        }
+        // S'assurer que les nouvelles propriétés existent
+        if (!data.stats.quizzesTotalQuestions) {
+            data.stats.quizzesTotalQuestions = 0;
         }
         // Vérifier la dernière visite pour les jours actifs
         this.updateDaysActive(data);
@@ -159,19 +164,38 @@ const ChessSchoolProgress = {
         return page.replace('.html', '');
     },
 
-    // Mettre à jour la progression des sections
+    // ✨ CORRIGÉ : Meilleure logique de progression des sections
     updateSectionProgress(data, pageName) {
         const sectionPages = {
-            base: ['base', 'echiquier', 'pieces', 'deplacements'],
-            specificites: ['specificite', 'roque', 'passant', 'promotion'],
-            ouvertures: ['ouverture', 'italienne', 'sicilienne', 'gambit'],
+            base: ['base', 'index'],
+            specificites: ['specificite'],
+            ouvertures: ['ouverture'],
             videos: ['videos']
         };
 
         for (const [section, pages] of Object.entries(sectionPages)) {
-            const visitedInSection = pages.filter(p => data.pagesVisited[p]);
-            const progress = Math.round((visitedInSection.length / pages.length) * 100);
-            data.progression[section] = progress;
+            // Vérifier si la page appartient à cette section
+            if (pages.includes(pageName)) {
+                // Calculer la progression basée sur :
+                // 1. Visite de la page (40%)
+                // 2. Temps passé (30%)
+                // 3. Scroll complet (30%)
+
+                let progress = 40; // Base pour avoir visité
+
+                const pageData = data.pagesVisited[pageName];
+                if (pageData) {
+                    // Bonus temps (max 30% si > 2 minutes)
+                    const timeBonus = Math.min(30, (pageData.timeSpent / 2) * 30);
+                    progress += timeBonus;
+
+                    // Bonus visites multiples (max 30%)
+                    const visitBonus = Math.min(30, pageData.visits * 10);
+                    progress += visitBonus;
+                }
+
+                data.progression[section] = Math.min(100, Math.round(progress));
+            }
         }
     },
 
@@ -189,11 +213,14 @@ const ChessSchoolProgress = {
                 currentData.pagesVisited[pageName].timeSpent += 0.5;
             }
 
+            // Mettre à jour la progression de la section
+            this.updateSectionProgress(currentData, pageName);
+
             this.saveData(currentData);
         }, 30000);
     },
 
-    // Enregistrer un résultat de quiz
+    // ✨ CORRIGÉ : Enregistrer un résultat de quiz
     saveQuizResult(difficulty, score, total, timeSeconds) {
         const data = this.loadData();
 
@@ -209,6 +236,7 @@ const ChessSchoolProgress = {
         data.quizResults.push(result);
         data.stats.quizzesTaken++;
         data.stats.quizzesCorrect += score;
+        data.stats.quizzesTotalQuestions += total; // ✨ NOUVEAU : Compter le total des questions
 
         // Ajouter à l'activité récente
         this.addActivity(data, `Quiz "${difficulty}" complété avec ${result.percentage}%`, '✅');
@@ -224,7 +252,11 @@ const ChessSchoolProgress = {
 
     // Mettre à jour l'ELO estimé
     updateEstimatedElo(data) {
-        const avgQuizScore = data.stats.quizzesCorrect / (data.stats.quizzesTaken * 10) || 0;
+        // ✨ CORRIGÉ : Calcul basé sur le total réel des questions
+        const avgQuizScore = data.stats.quizzesTotalQuestions > 0
+            ? data.stats.quizzesCorrect / data.stats.quizzesTotalQuestions
+            : 0;
+
         const progressAvg = (data.progression.base + data.progression.specificites +
             data.progression.ouvertures + data.progression.videos) / 4;
 
@@ -257,7 +289,7 @@ const ChessSchoolProgress = {
 
         this.addActivity(data, `Vidéo "${videoTitle}" visionnée`, '🎥');
 
-        // Mettre à jour la progression vidéos
+        // Mettre à jour la progression vidéos (10% par vidéo, max 100%)
         data.progression.videos = Math.min(100, data.stats.videosWatched * 10);
 
         this.saveData(data);
@@ -279,44 +311,44 @@ const ChessSchoolProgress = {
         }
     },
 
-    // Vérifier et débloquer les achievements
+    // ✨ CORRIGÉ : Vérifier et débloquer les achievements (plus faciles)
     checkAchievements(data) {
         const achievements = data.achievements;
 
-        // Premier Pas
-        if (!achievements.firstVisit && data.stats.totalPages > 0) {
+        // Premier Pas (dès la première page)
+        if (!achievements.firstVisit && data.stats.totalPages >= 1) {
             achievements.firstVisit = true;
             this.unlockAchievement(data, 'Premier Pas', '🎓');
         }
 
-        // Lecteur Assidu (100 pages)
-        if (!achievements.reader100 && data.stats.totalPages >= 100) {
-            achievements.reader100 = true;
+        // Lecteur Assidu (10 pages au lieu de 100)
+        if (!achievements.reader10 && data.stats.totalPages >= 10) {
+            achievements.reader10 = true;
             this.unlockAchievement(data, 'Lecteur Assidu', '📚');
         }
 
-        // Quiz Master (10 quiz parfaits)
+        // Quiz Master (3 quiz parfaits au lieu de 10)
         const perfectQuizzes = data.quizResults.filter(q => q.percentage === 100).length;
-        if (!achievements.quizMaster && perfectQuizzes >= 10) {
+        if (!achievements.quizMaster && perfectQuizzes >= 3) {
             achievements.quizMaster = true;
             this.unlockAchievement(data, 'Quiz Master', '🎯');
         }
 
-        // Speed Runner (quiz en moins de 2 minutes)
+        // Speed Runner (1 quiz rapide au lieu de 5)
         const fastQuizzes = data.quizResults.filter(q => q.time < 120).length;
-        if (!achievements.speedRunner && fastQuizzes >= 5) {
+        if (!achievements.speedRunner && fastQuizzes >= 1) {
             achievements.speedRunner = true;
             this.unlockAchievement(data, 'Rapide', '⚡');
         }
 
-        // En Feu (7 jours consécutifs)
-        if (!achievements.onFire && data.stats.streak >= 7) {
+        // En Feu (3 jours consécutifs au lieu de 7)
+        if (!achievements.onFire && data.stats.streak >= 3) {
             achievements.onFire = true;
             this.unlockAchievement(data, 'En Feu', '🔥');
         }
 
-        // Tacticien (50 parties)
-        if (!achievements.tactician && data.stats.gamesPlayed >= 50) {
+        // Tacticien (10 parties au lieu de 50)
+        if (!achievements.tactician && data.stats.gamesPlayed >= 10) {
             achievements.tactician = true;
             this.unlockAchievement(data, 'Tacticien', '♟️');
         }
@@ -346,6 +378,8 @@ const ChessSchoolProgress = {
         if (!data.badges.includes(name)) {
             data.badges.push(name);
         }
+
+        console.log(`🏆 Trophée débloqué : ${name}`);
     },
 
     // Mettre à jour le parcours d'apprentissage

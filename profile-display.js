@@ -1,5 +1,5 @@
 // ========================================
-// AFFICHAGE DU PROFIL CHESS SCHOOL
+// AFFICHAGE DU PROFIL CHESS SCHOOL - VERSION CORRIGÉE
 // Fichier: profile-display.js
 // À ajouter dans profil.html
 // ========================================
@@ -84,28 +84,33 @@ function updateBadges(data) {
     const badges = [];
 
     // Badge jours actifs
-    if (data.stats.daysActive >= 7) {
+    if (data.stats.daysActive >= 3) {
         badges.push({ icon: '🎓', text: 'Élève Actif' });
     }
 
     // Badge pages lues
-    if (data.stats.totalPages >= 50) {
+    if (data.stats.totalPages >= 5) {
         badges.push({ icon: '📚', text: `${data.stats.totalPages} Pages` });
     }
 
     // Badge quiz
-    if (data.stats.quizzesTaken >= 5) {
+    if (data.stats.quizzesTaken >= 1) {
         badges.push({ icon: '🏆', text: 'Quiz Master' });
     }
 
     // Badge streak
-    if (data.stats.streak >= 7) {
+    if (data.stats.streak >= 3) {
         badges.push({ icon: '🔥', text: `${data.stats.streak} jours` });
     }
 
     // Badge vidéos
-    if (data.stats.videosWatched >= 10) {
+    if (data.stats.videosWatched >= 3) {
         badges.push({ icon: '🎥', text: 'Cinéphile' });
+    }
+
+    // Badge parties
+    if (data.stats.gamesPlayed >= 5) {
+        badges.push({ icon: '♟️', text: 'Joueur' });
     }
 
     badges.forEach(badge => {
@@ -116,7 +121,7 @@ function updateBadges(data) {
     });
 }
 
-// Mettre à jour les statistiques détaillées
+// ✨ CORRIGÉ : Mettre à jour les statistiques détaillées
 function updateDetailedStats(data) {
     const stats = data.stats;
 
@@ -132,12 +137,15 @@ function updateDetailedStats(data) {
         timeEl.textContent = `${hours}h ${minutes}m`;
     }
 
-    // Taux de réussite quiz
+    // ✨ CORRIGÉ : Taux de réussite quiz (basé sur le total réel)
     const successEl = document.querySelector('.stat-card:nth-child(3) .stat-value');
-    if (successEl && stats.quizzesTaken > 0) {
-        const totalQuestions = stats.quizzesTaken * 10; // Supposons 10 questions par quiz
-        const percentage = Math.round((stats.quizzesCorrect / totalQuestions) * 100);
-        successEl.textContent = `${percentage}%`;
+    if (successEl) {
+        if (stats.quizzesTotalQuestions > 0) {
+            const percentage = Math.round((stats.quizzesCorrect / stats.quizzesTotalQuestions) * 100);
+            successEl.textContent = `${percentage}%`;
+        } else {
+            successEl.textContent = '0%';
+        }
     }
 
     // Parties jouées
@@ -199,25 +207,43 @@ function updateLearningPath(data) {
     });
 }
 
-// Mettre à jour les achievements
+// ✨ CORRIGÉ : Mettre à jour les achievements (nouvelles conditions)
 function updateAchievements(data) {
     const achievements = data.achievements;
     const achievementCards = document.querySelectorAll('.achievement-card');
 
     const achievementKeys = [
-        'firstVisit',      // 0
-        'reader100',       // 1
-        'quizMaster',      // 2
-        'speedRunner',     // 3
-        'onFire',          // 4
-        'tactician',       // 5
-        'grandmaster',     // 6
-        'perfectionist'    // 7
+        'firstVisit',      // 0 - 1 page
+        'reader10',        // 1 - 10 pages (était reader100)
+        'quizMaster',      // 2 - 3 quiz parfaits (était 10)
+        'speedRunner',     // 3 - 1 quiz rapide (était 5)
+        'onFire',          // 4 - 3 jours consécutifs (était 7)
+        'tactician',       // 5 - 10 parties (était 50)
+        'grandmaster',     // 6 - Tout compléter
+        'perfectionist'    // 7 - 100% partout
+    ];
+
+    // Mettre à jour les noms et descriptions des cartes
+    const achievementData = [
+        { name: 'Premier Pas', desc: '1 page visitée' },
+        { name: 'Lecteur Assidu', desc: '10 pages lues' },
+        { name: 'Quiz Master', desc: '3 quiz parfaits' },
+        { name: 'Rapide', desc: 'Quiz en < 2min' },
+        { name: 'En Feu', desc: '3 jours consécutifs' },
+        { name: 'Tacticien', desc: '10 parties jouées' },
+        { name: 'Grand Maître', desc: 'Tout compléter' },
+        { name: 'Perfectionniste', desc: '100% partout' }
     ];
 
     achievementCards.forEach((card, index) => {
         const key = achievementKeys[index];
         const isUnlocked = achievements[key];
+
+        // Mettre à jour le texte
+        const nameEl = card.querySelector('.achievement-name');
+        const descEl = card.querySelector('.achievement-desc');
+        if (nameEl) nameEl.textContent = achievementData[index].name;
+        if (descEl) descEl.textContent = achievementData[index].desc;
 
         if (isUnlocked) {
             card.classList.remove('locked');
@@ -287,7 +313,7 @@ function setupProfileActions() {
         });
     }
 
-    // Ajouter bouton d'export/import (optionnel)
+    // Ajouter bouton d'export/import
     addDataManagementButtons();
 }
 
@@ -386,11 +412,18 @@ function addDataManagementButtons() {
             <button class="action-btn secondary" onclick="document.getElementById('import-file').click()">
                 📤 Importer des données
             </button>
-            <button class="action-btn secondary" onclick="window.ChessSchoolProgress.resetAllData()" style="background: #ef4444; color: white;">
+            <button class="action-btn secondary" onclick="window.ChessSchoolProgress.resetAllData()" style="background: #ef4444; color: white; border-color: #ef4444;">
                 🗑️ Réinitialiser
             </button>
         </div>
         <input type="file" id="import-file" accept=".json" style="display: none;">
+        
+        <div style="margin-top: 20px; padding: 15px; background: rgba(89, 155, 179, 0.1); border-radius: 8px;">
+            <p style="margin: 0; color: #666; font-size: 0.9em;">
+                💡 <strong>Astuce :</strong> Les données sont sauvegardées automatiquement dans votre navigateur.
+                Exportez-les régulièrement pour ne pas les perdre !
+            </p>
+        </div>
     `;
 
     container.appendChild(section);
