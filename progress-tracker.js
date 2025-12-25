@@ -31,12 +31,26 @@ const ChessSchoolProgress = {
                 currentSession: 0,
                 quizzesTaken: 0,
                 quizzesCorrect: 0,
-                quizzesTotalQuestions: 0, // ✨ NOUVEAU : Total des questions
+                quizzesTotalQuestions: 0,
                 gamesPlayed: 0,
                 videosWatched: 0,
                 daysActive: 0,
                 streak: 0,
                 estimatedElo: 800
+            },
+            puzzleStats: {
+                totalAttempts: 0,
+                totalSolved: 0,
+                currentStreak: 0,
+                bestStreak: 0,
+                solvedPuzzles: [],
+                totalHintsUsed: 0,
+                averageTime: 0,
+                byDifficulty: {
+                    facile: { solved: 0, attempted: 0 },
+                    moyen: { solved: 0, attempted: 0 },
+                    difficile: { solved: 0, attempted: 0 }
+                }
             },
             progression: {
                 base: 0,
@@ -48,11 +62,15 @@ const ChessSchoolProgress = {
             quizResults: [],
             achievements: {
                 firstVisit: false,
-                reader10: false,        // ✨ CORRIGÉ : 10 pages au lieu de 100
-                quizMaster: false,      // 3 quiz parfaits
-                speedRunner: false,     // 1 quiz rapide
-                onFire: false,          // 3 jours consécutifs
-                tactician: false,       // 10 parties
+                reader10: false,
+                quizMaster: false,
+                speedRunner: false,
+                onFire: false,
+                tactician: false,
+                puzzleSolver: false,    // ✨ NOUVEAU : 10 puzzles résolus
+                puzzleMaster: false,    // ✨ NOUVEAU : 50 puzzles résolus
+                perfectPuzzle: false,   // ✨ NOUVEAU : Puzzle sans indice
+                speedPuzzler: false,    // ✨ NOUVEAU : Puzzle en < 30s
                 grandmaster: false,
                 perfectionist: false
             },
@@ -244,6 +262,77 @@ const ChessSchoolProgress = {
         // Vérifier les achievements
         this.checkAchievements(data);
 
+        // ✨ NOUVEAU : Sauvegarder un résultat de puzzle
+        savePuzzleResult(puzzleData) {
+            const data = this.loadData();
+
+            if (!data.puzzleStats) {
+                data.puzzleStats = {
+                    totalAttempts: 0,
+                    totalSolved: 0,
+                    currentStreak: 0,
+                    bestStreak: 0,
+                    solvedPuzzles: [],
+                    totalHintsUsed: 0,
+                    averageTime: 0,
+                    byDifficulty: {
+                        facile: { solved: 0, attempted: 0 },
+                        moyen: { solved: 0, attempted: 0 },
+                        difficile: { solved: 0, attempted: 0 }
+                    }
+                };
+            }
+
+            data.puzzleStats.totalAttempts++;
+            data.puzzleStats.byDifficulty[puzzleData.difficulty].attempted++;
+
+            if (puzzleData.solved) {
+                data.puzzleStats.totalSolved++;
+                data.puzzleStats.byDifficulty[puzzleData.difficulty].solved++;
+
+                // Ajouter à la liste des puzzles résolus
+                if (!data.puzzleStats.solvedPuzzles.includes(puzzleData.puzzleId)) {
+                    data.puzzleStats.solvedPuzzles.push(puzzleData.puzzleId);
+                }
+
+                // Streak
+                data.puzzleStats.currentStreak++;
+                if (data.puzzleStats.currentStreak > data.puzzleStats.bestStreak) {
+                    data.puzzleStats.bestStreak = data.puzzleStats.currentStreak;
+                }
+
+                // Activité
+                this.addActivity(data,
+                    `Puzzle #${puzzleData.puzzleId} résolu en ${puzzleData.timeSpent}s`,
+                    '🧩'
+                );
+            } else {
+                data.puzzleStats.currentStreak = 0;
+            }
+
+            // Compteurs
+            data.puzzleStats.totalHintsUsed += puzzleData.hintsUsed || 0;
+
+            // Temps moyen
+            const times = data.recentActivity
+                .filter(a => a.icon === '🧩')
+                .map(a => {
+                    const match = a.text.match(/(\d+)s/);
+                    return match ? parseInt(match[1]) : 0;
+                });
+
+            if (times.length > 0) {
+                data.puzzleStats.averageTime = Math.round(
+                    times.reduce((a, b) => a + b, 0) / times.length
+                );
+            }
+
+            // Vérifier achievements
+            this.checkAchievements(data);
+
+            this.saveData(data);
+        }
+
         // Mettre à jour l'ELO estimé
         this.updateEstimatedElo(data);
 
@@ -353,6 +442,42 @@ const ChessSchoolProgress = {
             this.unlockAchievement(data, 'Tacticien', '♟️');
         }
 
+        // ✨ NOUVEAU : Puzzle Solver (10 puzzles)
+        if (!achievements.puzzleSolver && data.puzzleStats && data.puzzleStats.totalSolved >= 10) {
+            achievements.puzzleSolver = true;
+            this.unlockAchievement(data, 'Puzzle Solver', '🧩');
+        }
+
+        // ✨ NOUVEAU : Puzzle Master (50 puzzles)
+        if (!achievements.puzzleMaster && data.puzzleStats && data.puzzleStats.totalSolved >= 50) {
+            achievements.puzzleMaster = true;
+            this.unlockAchievement(data, 'Puzzle Master', '🎯');
+        }
+
+        // ✨ NOUVEAU : Perfect Puzzle (résolu sans indice)
+        if (!achievements.perfectPuzzle && data.puzzleStats) {
+            const perfectSolves = data.recentActivity.filter(a =>
+                a.icon === '🧩' && a.text.includes('sans indice')
+            ).length;
+            if (perfectSolves >= 5) {
+                achievements.perfectPuzzle = true;
+                this.unlockAchievement(data, 'Puzzle Parfait', '💎');
+            }
+        }
+
+        // ✨ NOUVEAU : Speed Puzzler (résolu en moins de 30s)
+        if (!achievements.speedPuzzler && data.puzzleStats) {
+            const fastSolves = data.recentActivity.filter(a => {
+                if (a.icon !== '🧩') return false;
+                const match = a.text.match(/(\d+)s/);
+                return match && parseInt(match[1]) < 30;
+            }).length;
+            if (fastSolves >= 10) {
+                achievements.speedPuzzler = true;
+                this.unlockAchievement(data, 'Éclair', '⚡');
+            }
+        }
+
         // Perfectionniste (100% partout)
         const allComplete = Object.values(data.progression).every(p => p === 100);
         if (!achievements.perfectionist && allComplete) {
@@ -458,25 +583,6 @@ if (typeof window !== 'undefined') {
     document.addEventListener('DOMContentLoaded', () => {
         ChessSchoolProgress.init();
     });
-}
-
-// ========================================
-// INTÉGRATIONS SPÉCIFIQUES
-// ========================================
-
-// Pour les quiz (à ajouter dans quiz.html)
-function onQuizComplete(difficulty, score, total, timeSeconds) {
-    window.ChessSchoolProgress.saveQuizResult(difficulty, score, total, timeSeconds);
-}
-
-// Pour l'échiquier (à ajouter dans chessboard.js)
-function onGameComplete(won, movesCount) {
-    window.ChessSchoolProgress.saveGamePlayed(won, movesCount);
-}
-
-// Pour les vidéos (à ajouter dans videos.html)
-function onVideoWatched(videoTitle) {
-    window.ChessSchoolProgress.saveVideoWatched(videoTitle);
 }
 
 // Pour le parcours d'apprentissage

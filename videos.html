@@ -313,6 +313,10 @@
                     observer.observe(card);
                 });
             });
+            
+            function onVideoWatched(videoTitle) {
+                    window.ChessSchoolProgress.saveVideoWatched(videoTitle);
+                }
         </script>
         </body>
         

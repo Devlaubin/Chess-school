@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Chess School — Puzzles</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/vnd.icon" href="images/favicon.png">
+    <style>
+        .puzzle-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .puzzle-header {
+            text-align: center;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, rgba(89, 155, 179, 0.15), rgba(64, 140, 153, 0.15));
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border-left: 4px solid #599bb3;
+        }
+
+        .puzzle-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #599bb3;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .difficulty-selector {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .difficulty-btn {
+            padding: 12px 24px;
+            background: white;
+            border: 3px solid #599bb3;
+            border-radius: 25px;
+            color: #599bb3;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .difficulty-btn:hover {
+            background: #599bb3;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .difficulty-btn.active {
+            background: #599bb3;
+            color: white;
+        }
+
+        .puzzle-board-container {
+            display: grid;
+            grid-template-columns: 600px 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .puzzle-board {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .chess-position {
+            display: grid;
+            grid-template-columns: repeat(8, 60px);
+            grid-template-rows: repeat(8, 60px);
+            border: 4px solid #333;
+            margin: 0 auto;
+            width: fit-content;
+        }
+
+        .chess-square {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .chess-square.light {
+            background-color: #f0d9b5;
+        }
+
+        .chess-square.dark {
+            background-color: #b58863;
+        }
+
+        .chess-square:hover {
+            filter: brightness(0.9);
+        }
+
+        .chess-square.selected {
+            box-shadow: inset 0 0 0 4px #599bb3;
+        }
+
+        .chess-square.hint {
+            background-color: rgba(255, 215, 0, 0.5) !important;
+        }
+
+        .puzzle-info {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .puzzle-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            margin: 0 0 10px 0;
+        }
+
+        .puzzle-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .puzzle-objective {
+            background: rgba(89, 155, 179, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 4px solid #599bb3;
+            margin-bottom: 20px;
+        }
+
+        .puzzle-actions {
+            display: grid;
+            gap: 12px;
+        }
+
+        .action-button {
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-button.primary {
+            background: linear-gradient(135deg, #599bb3, #408c99);
+            color: white;
+        }
+
+        .action-button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(89, 155, 179, 0.4);
+        }
+
+        .action-button.secondary {
+            background: white;
+            color: #599bb3;
+            border: 2px solid #599bb3;
+        }
+
+        .action-button.secondary:hover {
+            background: rgba(89, 155, 179, 0.1);
+        }
+
+        .move-input {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            width: 100%;
+        }
+
+        .move-input:focus {
+            outline: none;
+            border-color: #599bb3;
+        }
+
+        .feedback-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .feedback-box.success {
+            background: rgba(34, 197, 94, 0.1);
+            border-left: 4px solid #22c55e;
+            color: #166534;
+            display: block;
+        }
+
+        .feedback-box.error {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+            color: #991b1b;
+            display: block;
+        }
+
+        .puzzle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .puzzle-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .puzzle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 16px rgba(89, 155, 179, 0.3);
+        }
+
+        .puzzle-card.solved {
+            border: 2px solid #22c55e;
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .puzzle-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .puzzle-number {
+            font-weight: bold;
+            color: #599bb3;
+        }
+
+        .puzzle-difficulty-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .puzzle-difficulty-badge.facile {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .puzzle-difficulty-badge.moyen {
+            background: #fef3c7;
+            color: #854d0e;
+        }
+
+        .puzzle-difficulty-badge.difficile {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        @media (max-width: 1024px) {
+            .puzzle-board-container {
+                grid-template-columns: 1fr;
+            }
+
+            .chess-position {
+                grid-template-columns: repeat(8, 50px);
+                grid-template-rows: repeat(8, 50px);
+            }
+
+            .chess-square {
+                width: 50px;
+                height: 50px;
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chess-position {
+                grid-template-columns: repeat(8, 40px);
+                grid-template-rows: repeat(8, 40px);
+            }
+
+            .chess-square {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="site-wrapper">
+        <header id="base-header" class="site-header card">
+            <div class="header-row">
+                <div class="brand">
+                    <h1 id="base-title">Chess School — Puzzles</h1>
+                </div>
+
+                <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+                    <div class="nav-links" id="main-nav-list">
+                        <a class="nav-link" href="index.html">Accueil</a>
+                        <a class="nav-link" href="base.html">Base</a>
+                        <a class="nav-link" href="specificite.html">Spécificités</a>
+                        <a class="nav-link" href="ouverture.html">Ouvertures</a>
+                        <a class="nav-link" href="videos.html">Vidéos</a>
+                        <a class="nav-link nav-link-profile" href="profil.html" title="Mon Profil">
+                            <span class="profile-icon">👤</span>
+                            <span class="profile-text">Profil</span>
+                        </a>
+                    </div>
+
+                    <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="main-nav-list"
+                        aria-label="Ouvrir le menu">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
+            <nav class="frame-nav">
+                <a class="nav-link" href="index.html">Accueil</a>
+                <a class="nav-link" href="base.html">Base</a>
+                <a class="nav-link" href="specificite.html">Spécificités</a>
+                <a class="nav-link" href="ouverture.html">Ouvertures</a>
+                <a class="nav-link" href="videos.html">Vidéos</a>
+
+                <div style="border-top: 2px solid rgba(255,255,255,0.2); margin: 12px 0;"></div>
+                <a class="nav-link nav-link-profile" href="profil.html">
+                    <span class="profile-icon">👤</span>
+                    <span class="profile-text">Mon Profil</span>
+                </a>
+
+                <a class="nav-link" href="chessboard.html">Echiquier</a>
+                <a class="nav-link" href="quiz.html">Quiz</a>
+                <a class="nav-link" href="puzzles.html">Puzzles</a>
+                <a class="nav-link" href="glossaire.html">Glossaire</a>
+                <a id="boutonframe" href="faq.html">FAQ</a>
+                <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school">Github</a>
+                <a id="boutonframe" href="https://discord.gg/C4q8Cae4Ju">Discord</a>
+            </nav>
+        </div>
+        <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
+
+        <img src="images-noel/cavalier-noel.png" alt="cavalier de noel" class="cavalier-noel">
+        <img src="images-noel/pion-noel.png" alt="pion-noel" class="pion-noel">
+
+        <main id="mainbases">
+            <div class="puzzle-container">
+                <div class="puzzle-header">
+                    <h2 style="margin: 0 0 10px 0;">🧩 Puzzles & Problèmes d'Échecs</h2>
+                    <p style="margin: 0; color: #666;">Entraînez votre vision tactique avec nos puzzles quotidiens</p>
+                </div>
+
+                <!-- Statistiques -->
+                <div class="puzzle-stats">
+                    <div class="stat-box">
+                        <div class="stat-number" id="total-solved">0</div>
+                        <div class="stat-label">Puzzles résolus</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="success-rate">0%</div>
+                        <div class="stat-label">Taux de réussite</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="current-streak">0</div>
+                        <div class="stat-label">Série actuelle</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="best-streak">0</div>
+                        <div class="stat-label">Meilleure série</div>
+                    </div>
+                </div>
+
+                <!-- Sélection difficulté -->
+                <div class="difficulty-selector">
+                    <button class="difficulty-btn active" data-difficulty="facile">Facile</button>
+                    <button class="difficulty-btn" data-difficulty="moyen">Moyen</button>
+                    <button class="difficulty-btn" data-difficulty="difficile">Difficile</button>
+                </div>
+
+                <!-- Puzzle actuel -->
+                <div class="puzzle-board-container" id="puzzle-view" style="display: none;">
+                    <div class="puzzle-board">
+                        <div class="chess-position" id="chess-position"></div>
+                    </div>
+
+                    <div class="puzzle-info">
+                        <h3 class="puzzle-title" id="puzzle-title">Puzzle #1</h3>
+                        <p class="puzzle-description" id="puzzle-description"></p>
+
+                        <div class="puzzle-objective">
+                            <strong>🎯 Objectif :</strong>
+                            <p id="puzzle-objective" style="margin: 5px 0 0 0;"></p>
+                        </div>
+
+                        <div class="puzzle-actions">
+                            <input type="text" class="move-input" id="move-input"
+                                placeholder="Entrez votre coup (ex: e2-e4)">
+                            <button class="action-button primary" id="submit-move">Vérifier</button>
+                            <button class="action-button secondary" id="hint-btn">💡 Indice</button>
+                            <button class="action-button secondary" id="solution-btn">🔍 Voir la solution</button>
+                            <button class="action-button secondary" id="next-puzzle-btn">Puzzle suivant →</button>
+                        </div>
+
+                        <div class="feedback-box" id="feedback"></div>
+                    </div>
+                </div>
+
+                <!-- Liste des puzzles -->
+                <div id="puzzle-list">
+                    <h3 style="margin-top: 30px; color: #333;">Choisissez un puzzle</h3>
+                    <div class="puzzle-grid" id="puzzle-grid"></div>
+                </div>
+            </div>
+        </main>
+
+        <footer id="base-footer" class="site-footer">
+            <p>&copy; 2025 Chess School |
+                <a href="apropos.html" style="color: #b9b0b0; text-decoration: underline;">À Propos</a> |
+                <a href="cgu.html" style="color: #b9b0b0; text-decoration: underline;">CGU</a> |
+                <a href="mentions-legales.html" style="color: #b9b0b0; text-decoration: underline;">Mentions Légales</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="progress-tracker.js"></script>
+    <script src="puzzles.js"></script>
+</body>
+
+</html>

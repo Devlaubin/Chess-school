@@ -886,3 +886,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.chessboardReady = true;
     document.dispatchEvent(new Event('chessboardReady'));
 });
+
+function onGameComplete(won, movesCount) {
+    window.ChessSchoolProgress.saveGamePlayed(won, movesCount);
+}

@@ -30,6 +30,9 @@ function loadProfileData() {
     // Statistiques détaillées
     updateDetailedStats(data);
 
+    // Statistiques puzzles
+    updatePuzzleStats(data);
+
     // Barres de progression
     updateProgressBars(data);
 
@@ -153,6 +156,109 @@ function updateDetailedStats(data) {
     if (gamesEl) gamesEl.textContent = stats.gamesPlayed;
 }
 
+// ✨ NOUVEAU : Afficher les statistiques des puzzles
+function updatePuzzleStats(data) {
+    // Vérifier si la section puzzles existe dans le profil
+    let puzzleSection = document.querySelector('#puzzle-stats-section');
+
+    if (!puzzleSection && data.puzzleStats && data.puzzleStats.totalAttempts > 0) {
+        // Créer la section puzzles si elle n'existe pas
+        const container = document.querySelector('.profile-container');
+        const progressSection = Array.from(container.children).find(el =>
+            el.querySelector('h2')?.textContent.includes('Progression')
+        );
+
+        puzzleSection = document.createElement('div');
+        puzzleSection.className = 'profile-section';
+        puzzleSection.id = 'puzzle-stats-section';
+        puzzleSection.innerHTML = `
+            <h2 class="section-title">🧩 Statistiques Puzzles</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="puzzles-solved">0</div>
+                    <div class="stat-label">Puzzles résolus</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="puzzles-success-rate">0%</div>
+                    <div class="stat-label">Taux de réussite</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="puzzles-best-streak">0</div>
+                    <div class="stat-label">Meilleure série</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="puzzles-avg-time">0s</div>
+                    <div class="stat-label">Temps moyen</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <h3 style="color: #333; margin-bottom: 15px;">Par difficulté</h3>
+                <div class="progress-container">
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-name">Facile</span>
+                            <span class="progress-value" id="puzzle-facile-stat">0/0</span>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-name">Moyen</span>
+                            <span class="progress-value" id="puzzle-moyen-stat">0/0</span>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-name">Difficile</span>
+                            <span class="progress-value" id="puzzle-difficile-stat">0/0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        container.insertBefore(puzzleSection, progressSection);
+    }
+
+    if (data.puzzleStats && puzzleSection) {
+        const ps = data.puzzleStats;
+
+        // Mettre à jour les stats
+        const solvedEl = document.getElementById('puzzles-solved');
+        if (solvedEl) solvedEl.textContent = ps.totalSolved;
+
+        const rateEl = document.getElementById('puzzles-success-rate');
+        if (rateEl && ps.totalAttempts > 0) {
+            const rate = Math.round((ps.totalSolved / ps.totalAttempts) * 100);
+            rateEl.textContent = rate + '%';
+        }
+
+        const streakEl = document.getElementById('puzzles-best-streak');
+        if (streakEl) streakEl.textContent = ps.bestStreak;
+
+        const timeEl = document.getElementById('puzzles-avg-time');
+        if (timeEl) timeEl.textContent = (ps.averageTime || 0) + 's';
+
+        // Par difficulté
+        if (ps.byDifficulty) {
+            const facileEl = document.getElementById('puzzle-facile-stat');
+            if (facileEl) {
+                facileEl.textContent = `${ps.byDifficulty.facile.solved}/${ps.byDifficulty.facile.attempted}`;
+            }
+
+            const moyenEl = document.getElementById('puzzle-moyen-stat');
+            if (moyenEl) {
+                moyenEl.textContent = `${ps.byDifficulty.moyen.solved}/${ps.byDifficulty.moyen.attempted}`;
+            }
+
+            const difficileEl = document.getElementById('puzzle-difficile-stat');
+            if (difficileEl) {
+                difficileEl.textContent = `${ps.byDifficulty.difficile.solved}/${ps.byDifficulty.difficile.attempted}`;
+            }
+        }
+    }
+}
+
 // Mettre à jour les barres de progression
 function updateProgressBars(data) {
     const progression = data.progression;
@@ -214,13 +320,17 @@ function updateAchievements(data) {
 
     const achievementKeys = [
         'firstVisit',      // 0 - 1 page
-        'reader10',        // 1 - 10 pages (était reader100)
-        'quizMaster',      // 2 - 3 quiz parfaits (était 10)
-        'speedRunner',     // 3 - 1 quiz rapide (était 5)
-        'onFire',          // 4 - 3 jours consécutifs (était 7)
-        'tactician',       // 5 - 10 parties (était 50)
-        'grandmaster',     // 6 - Tout compléter
-        'perfectionist'    // 7 - 100% partout
+        'reader10',        // 1 - 10 pages
+        'quizMaster',      // 2 - 3 quiz parfaits
+        'speedRunner',     // 3 - 1 quiz rapide
+        'onFire',          // 4 - 3 jours consécutifs
+        'tactician',       // 5 - 10 parties
+        'puzzleSolver',    // 6 - 10 puzzles ✨ NOUVEAU
+        'puzzleMaster',    // 7 - 50 puzzles ✨ NOUVEAU
+        'perfectPuzzle',   // 8 - 5 puzzles parfaits ✨ NOUVEAU
+        'speedPuzzler',    // 9 - 10 puzzles rapides ✨ NOUVEAU
+        'grandmaster',     // 10 - Tout compléter
+        'perfectionist'    // 11 - 100% partout
     ];
 
     // Mettre à jour les noms et descriptions des cartes
@@ -231,6 +341,10 @@ function updateAchievements(data) {
         { name: 'Rapide', desc: 'Quiz en < 2min' },
         { name: 'En Feu', desc: '3 jours consécutifs' },
         { name: 'Tacticien', desc: '10 parties jouées' },
+        { name: 'Puzzle Solver', desc: '10 puzzles résolus' }, // ✨ NOUVEAU
+        { name: 'Puzzle Master', desc: '50 puzzles résolus' }, // ✨ NOUVEAU
+        { name: 'Puzzle Parfait', desc: '5 puzzles sans indice' }, // ✨ NOUVEAU
+        { name: 'Éclair', desc: '10 puzzles < 30s' }, // ✨ NOUVEAU
         { name: 'Grand Maître', desc: 'Tout compléter' },
         { name: 'Perfectionniste', desc: '100% partout' }
     ];

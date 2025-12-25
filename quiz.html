@@ -142,6 +142,11 @@
             </p>
         </footer>
     </div>
+    <script>
+       function onQuizComplete(difficulty, score, total, timeSeconds) {
+            window.ChessSchoolProgress.saveQuizResult(difficulty, score, total, timeSeconds);
+    }
+    </script>
 
     <script src="script.js"></script>
     <script src="theme.js"></script>
