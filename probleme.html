@@ -206,6 +206,7 @@
             </div>
         </main>
         <main id="mainpuzzle">
+            <h3>Mat en 1, 2 ou 3 coups. Sélectionnez un puzzle pour commencer à jouer.</h3>
             <div id="puzzle-list" class="puzzle-list" aria-label="Liste de puzzles"></div>
         </main>
 
@@ -227,7 +228,10 @@
             const puzzles = [
                 { name: 'PUZZLE 1', fen: 'r1bqkbnr/ppp2ppp/2np4/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w - - 0 1', turn: 'white', desc: 'Mat du Berger', hint: 'Commencez par attaquer le roi avec la dame.' },
                 { name: 'PUZZLE 2', fen: '6k1/1R6/R7/8/8/8/8/8 w - - 0 1', turn: 'white', desc: 'Mat du Couloir', hint: 'La tour en b7 couvre des cases clés.' },
-                { name: 'PUZZLE 3', fen: '5k2/8/5K2/8/2Q5/8/8/8 w - - 0 1', turn: 'white', desc: 'Mat du Baiser de la Mort', hint: 'La dame peut donner mat en f8' }
+                { name: 'PUZZLE 3', fen: '5k2/8/5K2/8/2Q5/8/8/8 w - - 0 1', turn: 'white', desc: 'Mat du Baiser de la Mort', hint: 'La dame peut donner mat en f8' },
+                { name: 'PUZZLE 4', fen: '6rk/1ppq4/1p3pQp/4p3/8/1P4RP/r1P3PK/8 w - - 0 1', turn: 'white', desc: 'Attaque Décisive', hint: 'Utilisez votre dame et votre tour pour chercher le mat.' },
+                { name: 'PUZZLE 5', fen: '6k1/5ppp/8/2R5/8/8/5PPP/6K1 w - - 0 1', turn: 'white', desc: 'Mat du couloir', hint: 'Utilisez votre tour pour chercher le mat.' },
+                { name: 'PUZZLE 6', fen: '2r5/1p3p1p/p3p3/1N2kp2/2P5/1P1K2P1/P2B3P/8 w - - 0 1', turn: 'white', desc: 'Fin de Partie Simple', hint: 'Utiliser votre fou.' }
             ];
 
             const listEl = document.getElementById('puzzle-list');
