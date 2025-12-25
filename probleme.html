@@ -54,28 +54,48 @@
         h4, h3{
             font-family: 'arial black', sans-serif;
         }
-
+        
         .puzzle-actions {
             display: flex;
             gap: 8px;
-            justify-content: flex-end;
         }
+       
 
         .puzzle-btn {
             background: #599bb3;
             color: white;
+            padding: 14px;
             border: none;
-            padding: 8px 10px;
-            border-radius: 6px;
+            border-radius: 12px;
+            font-size: 1em;
+            font-weight: bold;
             cursor: pointer;
-            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .puzzle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(89, 155, 179, 0.4);
         }
 
         .puzzle-btn.secondary {
-            background: #edf2f7;
-            color: #333;
-            font-weight: 500;
+            background: white;
+            color: #599bb3;
+            border: 2px solid #599bb3;
         }
+
+        .puzzle-btn.secondary:hover {
+            background: rgba(89, 155, 179, 0.1);
+        }
+        .puzzle-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+        .puzzle-btn:focus {
+            outline: 3px solid #2b6cb0;
+            outline-offset: 2px;
+        }
+        
+        
         #mainpuzzle{
             background-color: #ffffff;
             padding: 20px;

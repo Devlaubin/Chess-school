@@ -262,8 +262,14 @@ const ChessSchoolProgress = {
         // Vérifier les achievements
         this.checkAchievements(data);
 
-        // ✨ NOUVEAU : Sauvegarder un résultat de puzzle
-        savePuzzleResult(puzzleData) {
+        // Mettre à jour l'ELO estimé
+        this.updateEstimatedElo(data);
+
+        this.saveData(data);
+    },
+
+    // ✨ NOUVEAU : Sauvegarder un résultat de puzzle
+    savePuzzleResult(puzzleData) {
             const data = this.loadData();
 
             if (!data.puzzleStats) {
@@ -331,12 +337,6 @@ const ChessSchoolProgress = {
             this.checkAchievements(data);
 
             this.saveData(data);
-        }
-
-        // Mettre à jour l'ELO estimé
-        this.updateEstimatedElo(data);
-
-        this.saveData(data);
     },
 
     // Mettre à jour l'ELO estimé
