@@ -29,30 +29,7 @@ header {
     font-style: normal;
 }
 
-.site-title {
-    color: white;
-    font-family: "Sora", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 800;
-    font-style: normal;
-}
 #titre-page {
-    color: white;
-    font-family: "Sora", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 800;
-    font-style: normal;
-}
-
-#spec-title {
-    color: white;
-    font-family: "Sora", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 800;
-    font-style: normal;
-}
-
-#base-title {
     color: white;
     font-family: "Sora", sans-serif;
     font-optical-sizing: auto;
@@ -210,6 +187,7 @@ body {
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
+    z-index: 3001;
 }
 .nav-toggle .bar {
     background: linear-gradient(90deg, #599bb3, #408c99);
@@ -286,7 +264,7 @@ body {
     box-shadow: -8px 0 24px rgba(0, 0, 0, 0.5);
     border-radius: 24px 0 0 24px;
     border-left: 2px solid rgba(255, 255, 255, 0.1);
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'sora', sans-serif;
 }
 
 .header-row {
@@ -314,6 +292,7 @@ body {
     font-weight: 500;
     position: relative;
     overflow: hidden;
+    font-family: "Sora", sans-serif;
 }
 
 .side-frame .nav-link::before {
@@ -378,7 +357,7 @@ body {
 }
 
 #side-frame .nav-link {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'sora', sans-serif;
 }
 #frame-link-base, #frame-link-specificite, #frame-link-home, #frame-link-ouvertures, #frame-link-videos, #frame-link-faq, #frame-link-glo, #frame-link-quiz, #frame-link-chessboard, #frame-link-profil, #frame-link-probleme {
     background-color: #599bb3;
@@ -389,12 +368,13 @@ body {
     
     cursor: pointer;
     color: #ffffff;
-    font-family: Arial;
+    font-family: 'sora', sans-serif;
     font-size: 17px;
     padding: 0 22px; 
     min-height: 40px; 
     text-decoration: none;
     text-shadow: 0px 1px 50px #3d768a;
+
 }
 #frame-link-base:hover,
 #frame-link-specificite:hover,
@@ -434,7 +414,8 @@ body {
     display: inline-block;
     font-size: 0.95em;
     font-weight: 500;
-    margin-top: -10px;
+    margin-top: 1px;
+    margin-bottom: -10px;
 }
 
 #boutonframe:hover {
@@ -2008,6 +1989,9 @@ body.dark-mode .reading-progress {
     visibility: hidden;
     transition: all 0.3s ease;
 }
+p.progress-circle {
+    font-family: "Sora", sans-serif;
+}
 
 .progress-circle.show {
     opacity: 1;
@@ -2503,6 +2487,7 @@ body.dark-mode .progress-circle::before {
     display: inline-block;
     font-size: 0.95em;
     font-weight: 500;
+    margin-top: 5px;
 }
 
 #boutonframe:hover {
