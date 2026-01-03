@@ -1,402 +1,418 @@
 // ========================================
 // AFFICHAGE DU PROFIL CHESS SCHOOL - VERSION CORRIGÉE
 // Fichier: profile-display.js
-// À ajouter dans profil.html
 // ========================================
 
+// Attendre que le système de progression soit disponible
+function waitForProgress(callback, maxWait = 5000) {
+    const startTime = Date.now();
+
+    const checkProgress = () => {
+        if (window.ChessSchoolProgress && window.ChessSchoolProgress.getProfileData) {
+            console.log('✅ ChessSchoolProgress disponible!');
+            callback();
+        } else if (Date.now() - startTime < maxWait) {
+            setTimeout(checkProgress, 100);
+        } else {
+            console.error('❌ Timeout: ChessSchoolProgress non disponible');
+        }
+    };
+
+    checkProgress();
+}
+
+// Démarrer après que le DOM soit chargé ET que le progrès soit disponible
 document.addEventListener('DOMContentLoaded', function () {
-    loadProfileData();
-    setupProfileActions();
+    console.log('🔄 DOMContentLoaded déclenché');
+
+    waitForProgress(() => {
+        console.log('📊 Initialisation du profil...');
+        loadProfileData();
+        setupProfileActions();
+    });
 });
 
 // Charger et afficher toutes les données du profil
 function loadProfileData() {
-    const data = window.ChessSchoolProgress.getProfileData();
+    console.log('📊 Chargement des données du profil...');
 
-    if (!data) {
-        console.error('Aucune donnée de profil trouvée');
+    if (!window.ChessSchoolProgress) {
+        console.error('❌ ChessSchoolProgress non disponible');
         return;
     }
 
-    // Informations utilisateur
-    updateUserInfo(data);
+    try {
+        const data = window.ChessSchoolProgress.getProfileData();
 
-    // Statistiques rapides
-    updateQuickStats(data);
+        if (!data) {
+            console.error('❌ Aucune donnée de profil trouvée');
+            return;
+        }
 
-    // Badges
-    updateBadges(data);
+        console.log('✅ Données trouvées:', data);
 
-    // Statistiques détaillées
-    updateDetailedStats(data);
+        // Informations utilisateur
+        updateUserInfo(data);
 
-    // Statistiques puzzles
-    updatePuzzleStats(data);
+        // Statistiques rapides
+        updateQuickStats(data);
 
-    // Barres de progression
-    updateProgressBars(data);
+        // Badges
+        updateBadges(data);
 
-    // Parcours d'apprentissage
-    updateLearningPath(data);
+        // Statistiques détaillées
+        updateDetailedStats(data);
 
-    // Achievements
-    updateAchievements(data);
+        // Statistiques puzzles
+        updatePuzzleStats(data);
 
-    // Activité récente
-    updateRecentActivity(data);
+        // Barres de progression
+        updateProgressBars(data);
+
+        // Parcours d'apprentissage
+        updateLearningPath(data);
+
+        // Achievements
+        updateAchievements(data);
+
+        // Activité récente
+        updateRecentActivity(data);
+
+        console.log('✅ Profil complètement chargé');
+    } catch (error) {
+        console.error('❌ Erreur lors du chargement du profil:', error);
+    }
 }
 
 // Mettre à jour les informations utilisateur
 function updateUserInfo(data) {
-    const nameEl = document.querySelector('.profile-name');
-    const usernameEl = document.querySelector('.profile-username');
-    const avatarEl = document.querySelector('.profile-avatar');
+    try {
+        const nameEl = document.querySelector('.profile-name');
+        const usernameEl = document.querySelector('.profile-username');
+        const avatarEl = document.querySelector('.profile-avatar');
 
-    if (nameEl) nameEl.textContent = data.user.name;
-    if (usernameEl) usernameEl.textContent = `@${data.user.username}`;
-    if (avatarEl) avatarEl.textContent = data.user.avatar;
+        if (nameEl) nameEl.textContent = data.user.name || 'Joueur d\'Échecs';
+        if (usernameEl) usernameEl.textContent = '@' + (data.user.username || 'ChessLearner2025');
+        if (avatarEl) avatarEl.textContent = data.user.avatar || '♔';
+
+        console.log('✅ Infos utilisateur mises à jour');
+    } catch (error) {
+        console.error('❌ Erreur updateUserInfo:', error);
+    }
 }
 
 // Mettre à jour les statistiques rapides
 function updateQuickStats(data) {
-    const stats = data.stats;
+    try {
+        const stats = data.stats;
 
-    // ELO estimé
-    const eloEl = document.querySelector('.stat-quick:nth-child(1) .stat-quick-value');
-    if (eloEl) eloEl.textContent = stats.estimatedElo;
+        // ELO estimé
+        const eloEl = document.querySelector('.stat-quick:nth-child(1) .stat-quick-value');
+        if (eloEl) eloEl.textContent = stats.estimatedElo || 800;
 
-    // Jours actifs
-    const daysEl = document.querySelector('.stat-quick:nth-child(2) .stat-quick-value');
-    if (daysEl) daysEl.textContent = stats.daysActive;
+        // Jours actifs
+        const daysEl = document.querySelector('.stat-quick:nth-child(2) .stat-quick-value');
+        if (daysEl) daysEl.textContent = stats.daysActive || 0;
 
-    // Trophées
-    const trophiesEl = document.querySelector('.stat-quick:nth-child(3) .stat-quick-value');
-    if (trophiesEl) {
-        const unlockedCount = Object.values(data.achievements).filter(a => a === true).length;
-        trophiesEl.textContent = unlockedCount;
+        // Trophées
+        const trophiesEl = document.querySelector('.stat-quick:nth-child(3) .stat-quick-value');
+        if (trophiesEl) {
+            const unlockedCount = Object.values(data.achievements || {}).filter(a => a === true).length;
+            trophiesEl.textContent = unlockedCount || 0;
+        }
+
+        console.log('✅ Stats rapides mises à jour');
+    } catch (error) {
+        console.error('❌ Erreur updateQuickStats:', error);
     }
 }
 
 // Mettre à jour les badges
 function updateBadges(data) {
-    const badgesContainer = document.querySelector('.badges-container');
-    if (!badgesContainer) return;
-
-    badgesContainer.innerHTML = '';
-
-    const badges = [];
-
-    // Badge jours actifs
-    if (data.stats.daysActive >= 3) {
-        badges.push({ icon: '🎓', text: 'Élève Actif' });
-    }
-
-    // Badge pages lues
-    if (data.stats.totalPages >= 5) {
-        badges.push({ icon: '📚', text: `${data.stats.totalPages} Pages` });
-    }
-
-    // Badge quiz
-    if (data.stats.quizzesTaken >= 1) {
-        badges.push({ icon: '🏆', text: 'Quiz Master' });
-    }
-
-    // Badge streak
-    if (data.stats.streak >= 3) {
-        badges.push({ icon: '🔥', text: `${data.stats.streak} jours` });
-    }
-
-    // Badge vidéos
-    if (data.stats.videosWatched >= 3) {
-        badges.push({ icon: '🎥', text: 'Cinéphile' });
-    }
-
-    // Badge parties
-    if (data.stats.gamesPlayed >= 5) {
-        badges.push({ icon: '♟️', text: 'Joueur' });
-    }
-
-    badges.forEach(badge => {
-        const badgeEl = document.createElement('span');
-        badgeEl.className = 'badge';
-        badgeEl.innerHTML = `${badge.icon} ${badge.text}`;
-        badgesContainer.appendChild(badgeEl);
-    });
-}
-
-// ✨ CORRIGÉ : Mettre à jour les statistiques détaillées
-function updateDetailedStats(data) {
-    const stats = data.stats;
-
-    // Pages visitées
-    const pagesEl = document.querySelector('.stat-card:nth-child(1) .stat-value');
-    if (pagesEl) pagesEl.textContent = stats.totalPages;
-
-    // Temps d'étude
-    const timeEl = document.querySelector('.stat-card:nth-child(2) .stat-value');
-    if (timeEl) {
-        const hours = Math.floor(stats.studyTime / 60);
-        const minutes = Math.floor(stats.studyTime % 60);
-        timeEl.textContent = `${hours}h ${minutes}m`;
-    }
-
-    // ✨ CORRIGÉ : Taux de réussite quiz (basé sur le total réel)
-    const successEl = document.querySelector('.stat-card:nth-child(3) .stat-value');
-    if (successEl) {
-        if (stats.quizzesTotalQuestions > 0) {
-            const percentage = Math.round((stats.quizzesCorrect / stats.quizzesTotalQuestions) * 100);
-            successEl.textContent = `${percentage}%`;
-        } else {
-            successEl.textContent = '0%';
+    try {
+        const badgesContainer = document.querySelector('.badges-container');
+        if (!badgesContainer) {
+            console.warn('⚠️ .badges-container introuvable');
+            return;
         }
-    }
 
-    // Parties jouées
-    const gamesEl = document.querySelector('.stat-card:nth-child(4) .stat-value');
-    if (gamesEl) gamesEl.textContent = stats.gamesPlayed;
+        badgesContainer.innerHTML = '';
+
+        const badges = [];
+
+        // Badge jours actifs
+        if ((data.stats.daysActive || 0) >= 3) {
+            badges.push({ icon: '🎓', text: 'Élève Actif' });
+        }
+
+        // Badge pages lues
+        if ((data.stats.totalPages || 0) >= 5) {
+            badges.push({ icon: '📚', text: `${data.stats.totalPages} Pages` });
+        }
+
+        // Badge quiz
+        if ((data.stats.quizzesTaken || 0) >= 1) {
+            badges.push({ icon: '🏆', text: 'Quiz Master' });
+        }
+
+        // Badge streak
+        if ((data.stats.streak || 0) >= 3) {
+            badges.push({ icon: '🔥', text: `${data.stats.streak} jours` });
+        }
+
+        // Badge vidéos
+        if ((data.stats.videosWatched || 0) >= 3) {
+            badges.push({ icon: '🎥', text: 'Cinéphile' });
+        }
+
+        // Badge parties
+        if ((data.stats.gamesPlayed || 0) >= 5) {
+            badges.push({ icon: '♟️', text: 'Joueur' });
+        }
+
+        badges.forEach(badge => {
+            const badgeEl = document.createElement('span');
+            badgeEl.className = 'badge';
+            badgeEl.innerHTML = `${badge.icon} ${badge.text}`;
+            badgesContainer.appendChild(badgeEl);
+        });
+
+        console.log('✅ Badges mises à jour');
+    } catch (error) {
+        console.error('❌ Erreur updateBadges:', error);
+    }
 }
 
-// ✨ NOUVEAU : Afficher les statistiques des puzzles
-function updatePuzzleStats(data) {
-    // Vérifier si la section puzzles existe dans le profil
-    let puzzleSection = document.querySelector('#puzzle-stats-section');
+// Mettre à jour les statistiques détaillées
+function updateDetailedStats(data) {
+    try {
+        const stats = data.stats;
 
-    if (!puzzleSection && data.puzzleStats && data.puzzleStats.totalAttempts > 0) {
-        // Créer la section puzzles si elle n'existe pas
-        const container = document.querySelector('.profile-container');
-        const progressSection = Array.from(container.children).find(el =>
-            el.querySelector('h2')?.textContent.includes('Progression')
-        );
+        // Pages visitées
+        const pagesEl = document.querySelector('.stat-card:nth-child(1) .stat-value');
+        if (pagesEl) pagesEl.textContent = stats.totalPages || 0;
 
-        puzzleSection = document.createElement('div');
-        puzzleSection.className = 'profile-section';
-        puzzleSection.id = 'puzzle-stats-section';
-        puzzleSection.innerHTML = `
-            <h2 class="section-title">🧩 Statistiques Puzzles</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value" id="puzzles-solved">0</div>
-                    <div class="stat-label">Puzzles résolus</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="puzzles-success-rate">0%</div>
-                    <div class="stat-label">Taux de réussite</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="puzzles-best-streak">0</div>
-                    <div class="stat-label">Meilleure série</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="puzzles-avg-time">0s</div>
-                    <div class="stat-label">Temps moyen</div>
-                </div>
-            </div>
-            
-            <div style="margin-top: 20px;">
-                <h3 style="color: #333; margin-bottom: 15px;">Par difficulté</h3>
-                <div class="progress-container">
-                    <div class="progress-item">
-                        <div class="progress-header">
-                            <span class="progress-name">Facile</span>
-                            <span class="progress-value" id="puzzle-facile-stat">0/0</span>
-                        </div>
-                    </div>
-                    <div class="progress-item">
-                        <div class="progress-header">
-                            <span class="progress-name">Moyen</span>
-                            <span class="progress-value" id="puzzle-moyen-stat">0/0</span>
-                        </div>
-                    </div>
-                    <div class="progress-item">
-                        <div class="progress-header">
-                            <span class="progress-name">Difficile</span>
-                            <span class="progress-value" id="puzzle-difficile-stat">0/0</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
+        // Temps d'étude
+        const timeEl = document.querySelector('.stat-card:nth-child(2) .stat-value');
+        if (timeEl) {
+            const hours = Math.floor(((stats.studyTime || 0) / 60));
+            const minutes = Math.floor(((stats.studyTime || 0) % 60));
+            timeEl.textContent = `${hours}h ${minutes}m`;
+        }
 
-        container.insertBefore(puzzleSection, progressSection);
+        // Taux de réussite quiz
+        const successEl = document.querySelector('.stat-card:nth-child(3) .stat-value');
+        if (successEl) {
+            const totalQuestions = stats.quizzesTotalQuestions || 0;
+            if (totalQuestions > 0) {
+                const percentage = Math.round(((stats.quizzesCorrect || 0) / totalQuestions) * 100);
+                successEl.textContent = `${percentage}%`;
+            } else {
+                successEl.textContent = '0%';
+            }
+        }
+
+        // Parties jouées
+        const gamesEl = document.querySelector('.stat-card:nth-child(4) .stat-value');
+        if (gamesEl) gamesEl.textContent = stats.gamesPlayed || 0;
+
+        console.log('✅ Stats détaillées mises à jour');
+    } catch (error) {
+        console.error('❌ Erreur updateDetailedStats:', error);
     }
+}
 
-    if (data.puzzleStats && puzzleSection) {
+// Mettre à jour les statistiques des puzzles
+function updatePuzzleStats(data) {
+    try {
+        if (!data.puzzleStats) {
+            console.log('⚠️ Pas de stats de puzzles');
+            return;
+        }
+
         const ps = data.puzzleStats;
 
-        // Mettre à jour les stats
+        // Cartes de stats
         const solvedEl = document.getElementById('puzzles-solved');
-        if (solvedEl) solvedEl.textContent = ps.totalSolved;
+        if (solvedEl) solvedEl.textContent = ps.totalSolved || 0;
 
         const rateEl = document.getElementById('puzzles-success-rate');
-        if (rateEl && ps.totalAttempts > 0) {
-            const rate = Math.round((ps.totalSolved / ps.totalAttempts) * 100);
-            rateEl.textContent = rate + '%';
+        if (rateEl) {
+            if ((ps.totalAttempts || 0) > 0) {
+                const rate = Math.round(((ps.totalSolved || 0) / ps.totalAttempts) * 100);
+                rateEl.textContent = rate + '%';
+            } else {
+                rateEl.textContent = '0%';
+            }
         }
 
         const streakEl = document.getElementById('puzzles-best-streak');
-        if (streakEl) streakEl.textContent = ps.bestStreak;
+        if (streakEl) streakEl.textContent = ps.bestStreak || 0;
 
         const timeEl = document.getElementById('puzzles-avg-time');
         if (timeEl) timeEl.textContent = (ps.averageTime || 0) + 's';
 
-        // Par difficulté
-        if (ps.byDifficulty) {
-            const facileEl = document.getElementById('puzzle-facile-stat');
-            if (facileEl) {
-                facileEl.textContent = `${ps.byDifficulty.facile.solved}/${ps.byDifficulty.facile.attempted}`;
-            }
-
-            const moyenEl = document.getElementById('puzzle-moyen-stat');
-            if (moyenEl) {
-                moyenEl.textContent = `${ps.byDifficulty.moyen.solved}/${ps.byDifficulty.moyen.attempted}`;
-            }
-
-            const difficileEl = document.getElementById('puzzle-difficile-stat');
-            if (difficileEl) {
-                difficileEl.textContent = `${ps.byDifficulty.difficile.solved}/${ps.byDifficulty.difficile.attempted}`;
-            }
-        }
+        console.log('✅ Stats puzzles mises à jour');
+    } catch (error) {
+        console.error('❌ Erreur updatePuzzleStats:', error);
     }
 }
 
 // Mettre à jour les barres de progression
 function updateProgressBars(data) {
-    const progression = data.progression;
+    try {
+        const progression = data.progression || {};
 
-    const sections = [
-        { name: 'base', index: 1 },
-        { name: 'specificites', index: 2 },
-        { name: 'ouvertures', index: 3 },
-        { name: 'videos', index: 4 }
-    ];
+        const sections = [
+            { name: 'base', index: 1 },
+            { name: 'specificites', index: 2 },
+            { name: 'ouvertures', index: 3 },
+            { name: 'videos', index: 4 }
+        ];
 
-    sections.forEach(section => {
-        const progressValue = progression[section.name] || 0;
+        sections.forEach(section => {
+            const progressValue = progression[section.name] || 0;
 
-        // Mettre à jour le pourcentage
-        const valueEl = document.querySelector(`.progress-item:nth-child(${section.index}) .progress-value`);
-        if (valueEl) valueEl.textContent = `${progressValue}%`;
+            // Mettre à jour le pourcentage
+            const valueEl = document.querySelector(`.progress-item:nth-child(${section.index}) .progress-value`);
+            if (valueEl) valueEl.textContent = `${progressValue}%`;
 
-        // Mettre à jour la barre
-        const fillEl = document.querySelector(`.progress-item:nth-child(${section.index}) .progress-fill`);
-        if (fillEl) fillEl.style.width = `${progressValue}%`;
-    });
+            // Mettre à jour la barre
+            const fillEl = document.querySelector(`.progress-item:nth-child(${section.index}) .progress-fill`);
+            if (fillEl) fillEl.style.width = `${progressValue}%`;
+        });
+
+        console.log('✅ Barres de progression mises à jour');
+    } catch (error) {
+        console.error('❌ Erreur updateProgressBars:', error);
+    }
 }
 
 // Mettre à jour le parcours d'apprentissage
 function updateLearningPath(data) {
-    const path = data.learningPath;
-    const pathItems = document.querySelectorAll('.path-item');
+    try {
+        const path = data.learningPath || {};
+        const pathItems = document.querySelectorAll('.path-item');
 
-    const pathKeys = [
-        'fundamentalRules',
-        'specialMoves',
-        'basicTactics',
-        'openingRepertoire',
-        'essentialEndgames'
-    ];
+        const pathKeys = [
+            'fundamentalRules',
+            'specialMoves',
+            'basicTactics',
+            'openingRepertoire',
+            'essentialEndgames'
+        ];
 
-    pathItems.forEach((item, index) => {
-        const key = pathKeys[index];
-        const isComplete = path[key];
-        const checkEl = item.querySelector('.path-check');
+        pathItems.forEach((item, index) => {
+            const key = pathKeys[index];
+            const isComplete = path[key] || false;
+            const checkEl = item.querySelector('.path-check');
 
-        if (checkEl) {
-            if (isComplete) {
-                checkEl.classList.remove('incomplete');
-                checkEl.textContent = '✓';
-            } else {
-                checkEl.classList.add('incomplete');
-                checkEl.textContent = '○';
+            if (checkEl) {
+                if (isComplete) {
+                    checkEl.classList.remove('incomplete');
+                    checkEl.textContent = '✓';
+                } else {
+                    checkEl.classList.add('incomplete');
+                    checkEl.textContent = '○';
+                }
             }
-        }
-    });
+        });
+
+        console.log('✅ Parcours d\'apprentissage mis à jour');
+    } catch (error) {
+        console.error('❌ Erreur updateLearningPath:', error);
+    }
 }
 
-// ✨ CORRIGÉ : Mettre à jour les achievements (nouvelles conditions)
+// Mettre à jour les achievements
 function updateAchievements(data) {
-    const achievements = data.achievements;
-    const achievementCards = document.querySelectorAll('.achievement-card');
+    try {
+        const achievements = data.achievements || {};
+        const achievementCards = document.querySelectorAll('.achievement-card');
 
-    const achievementKeys = [
-        'firstVisit',      // 0 - 1 page
-        'reader10',        // 1 - 10 pages
-        'quizMaster',      // 2 - 3 quiz parfaits
-        'speedRunner',     // 3 - 1 quiz rapide
-        'onFire',          // 4 - 3 jours consécutifs
-        'tactician',       // 5 - 10 parties
-        'puzzleSolver',    // 6 - 10 puzzles ✨ NOUVEAU
-        'puzzleMaster',    // 7 - 50 puzzles ✨ NOUVEAU
-        'perfectPuzzle',   // 8 - 5 puzzles parfaits ✨ NOUVEAU
-        'speedPuzzler',    // 9 - 10 puzzles rapides ✨ NOUVEAU
-        'grandmaster',     // 10 - Tout compléter
-        'perfectionist'    // 11 - 100% partout
-    ];
+        const achievementKeys = [
+            'firstVisit', 'reader10', 'quizMaster', 'speedRunner', 'onFire',
+            'tactician', 'puzzleSolver', 'puzzleMaster', 'perfectPuzzle',
+            'speedPuzzler', 'grandmaster', 'perfectionist'
+        ];
 
-    // Mettre à jour les noms et descriptions des cartes
-    const achievementData = [
-        { name: 'Premier Pas', desc: '1 page visitée' },
-        { name: 'Lecteur Assidu', desc: '10 pages lues' },
-        { name: 'Quiz Master', desc: '3 quiz parfaits' },
-        { name: 'Rapide', desc: 'Quiz en < 2min' },
-        { name: 'En Feu', desc: '3 jours consécutifs' },
-        { name: 'Tacticien', desc: '10 parties jouées' },
-        { name: 'Puzzle Solver', desc: '10 puzzles résolus' }, // ✨ NOUVEAU
-        { name: 'Puzzle Master', desc: '50 puzzles résolus' }, // ✨ NOUVEAU
-        { name: 'Puzzle Parfait', desc: '5 puzzles sans indice' }, // ✨ NOUVEAU
-        { name: 'Éclair', desc: '10 puzzles < 30s' }, // ✨ NOUVEAU
-        { name: 'Grand Maître', desc: 'Tout compléter' },
-        { name: 'Perfectionniste', desc: '100% partout' }
-    ];
+        const achievementData = [
+            { name: 'Premier Pas', desc: '1 page visitée' },
+            { name: 'Lecteur Assidu', desc: '10 pages lues' },
+            { name: 'Quiz Master', desc: '3 quiz parfaits' },
+            { name: 'Rapide', desc: 'Quiz en < 2min' },
+            { name: 'En Feu', desc: '3 jours consécutifs' },
+            { name: 'Tacticien', desc: '10 parties jouées' },
+            { name: 'Puzzle Solver', desc: '10 puzzles résolus' },
+            { name: 'Puzzle Master', desc: '50 puzzles résolus' },
+            { name: 'Puzzle Parfait', desc: '5 puzzles sans indice' },
+            { name: 'Éclair', desc: '10 puzzles < 30s' },
+            { name: 'Grand Maître', desc: 'Tout compléter' },
+            { name: 'Perfectionniste', desc: '100% partout' }
+        ];
 
-    achievementCards.forEach((card, index) => {
-        const key = achievementKeys[index];
-        const isUnlocked = achievements[key];
+        achievementCards.forEach((card, index) => {
+            const key = achievementKeys[index];
+            const isUnlocked = achievements[key] || false;
 
-        // Mettre à jour le texte
-        const nameEl = card.querySelector('.achievement-name');
-        const descEl = card.querySelector('.achievement-desc');
-        if (nameEl) nameEl.textContent = achievementData[index].name;
-        if (descEl) descEl.textContent = achievementData[index].desc;
+            // Mettre à jour le texte
+            const nameEl = card.querySelector('.achievement-name');
+            const descEl = card.querySelector('.achievement-desc');
+            if (nameEl && achievementData[index]) nameEl.textContent = achievementData[index].name;
+            if (descEl && achievementData[index]) descEl.textContent = achievementData[index].desc;
 
-        if (isUnlocked) {
-            card.classList.remove('locked');
-        } else {
-            card.classList.add('locked');
-        }
-    });
+            if (isUnlocked) {
+                card.classList.remove('locked');
+            } else {
+                card.classList.add('locked');
+            }
+        });
+
+        console.log('✅ Achievements mises à jour');
+    } catch (error) {
+        console.error('❌ Erreur updateAchievements:', error);
+    }
 }
 
 // Mettre à jour l'activité récente
 function updateRecentActivity(data) {
-    const activityList = document.querySelector('.recent-activity');
-    if (!activityList) return;
+    try {
+        const activityList = document.querySelector('.recent-activity');
+        if (!activityList) {
+            console.warn('⚠️ .recent-activity introuvable');
+            return;
+        }
 
-    activityList.innerHTML = '';
+        activityList.innerHTML = '';
 
-    const activities = data.recentActivity.slice(0, 5); // 5 dernières activités
+        const activities = (data.recentActivity || []).slice(0, 5);
 
-    if (activities.length === 0) {
-        activityList.innerHTML = '<li class="activity-item"><span class="activity-icon">📭</span><div class="activity-content"><p class="activity-text">Aucune activité récente</p></div></li>';
-        return;
+        if (activities.length === 0) {
+            activityList.innerHTML = '<li class="activity-item"><span class="activity-icon">📭</span><div class="activity-content"><p class="activity-text">Aucune activité récente</p></div></li>';
+            return;
+        }
+
+        activities.forEach(activity => {
+            const li = document.createElement('li');
+            li.className = 'activity-item';
+
+            const timeAgo = getTimeAgo(activity.date);
+
+            li.innerHTML = `
+                <span class="activity-icon">${activity.icon || '📌'}</span>
+                <div class="activity-content">
+                    <p class="activity-text">${activity.text}</p>
+                    <span class="activity-time">${timeAgo}</span>
+                </div>
+            `;
+
+            activityList.appendChild(li);
+        });
+
+        console.log('✅ Activité récente mise à jour');
+    } catch (error) {
+        console.error('❌ Erreur updateRecentActivity:', error);
     }
-
-    activities.forEach(activity => {
-        const li = document.createElement('li');
-        li.className = 'activity-item';
-
-        const timeAgo = getTimeAgo(activity.date);
-
-        li.innerHTML = `
-            <span class="activity-icon">${activity.icon}</span>
-            <div class="activity-content">
-                <p class="activity-text">${activity.text}</p>
-                <span class="activity-time">${timeAgo}</span>
-            </div>
-        `;
-
-        activityList.appendChild(li);
-    });
 }
 
 // Calculer le "il y a X temps"
@@ -419,26 +435,25 @@ function getTimeAgo(dateString) {
 
 // Configuration des actions du profil
 function setupProfileActions() {
+    console.log('🔧 Configuration des actions du profil...');
+
     // Bouton modifier profil
     const editBtn = document.querySelector('.edit-profile-btn');
     if (editBtn) {
         editBtn.addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
+            console.log('✏️ Ouverture du modal de modification');
             showEditModal();
         });
         console.log('✅ Bouton modifier profil configuré');
     } else {
         console.warn('⚠️ Bouton .edit-profile-btn introuvable');
     }
-
-    // Ajouter bouton d'export/import
-    addDataManagementButtons();
 }
 
 // Afficher le modal de modification
 function showEditModal() {
-    console.log('🔧 Ouverture du modal de modification');
     const data = window.ChessSchoolProgress.getProfileData();
 
     // Supprimer l'ancien modal s'il existe
@@ -462,6 +477,7 @@ function showEditModal() {
     `;
 
     const style = document.createElement('style');
+    style.id = 'modal-style';
     style.textContent = `
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -476,19 +492,19 @@ function showEditModal() {
             
             <div style="margin-bottom: 20px;">
                 <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Nom</label>
-                <input type="text" id="edit-name" value="${data.user.name}" 
+                <input type="text" id="edit-name" value="${data.user.name || ''}" 
                     style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; box-sizing: border-box;">
             </div>
             
             <div style="margin-bottom: 20px;">
                 <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Nom d'utilisateur</label>
-                <input type="text" id="edit-username" value="${data.user.username}" 
+                <input type="text" id="edit-username" value="${data.user.username || ''}" 
                     style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; box-sizing: border-box;">
             </div>
             
             <div style="margin-bottom: 20px;">
                 <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Avatar (emoji)</label>
-                <input type="text" id="edit-avatar" value="${data.user.avatar}" maxlength="2"
+                <input type="text" id="edit-avatar" value="${data.user.avatar || '♔'}" maxlength="2"
                     style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; box-sizing: border-box;">
                 <small style="color: #666;">Suggestions: ♔ ♕ ♖ ♗ ♘ ♙ 👤 🎯 ⚡ 🏆</small>
             </div>
@@ -508,7 +524,6 @@ function showEditModal() {
 
     // Événements
     document.getElementById('save-profile').addEventListener('click', function () {
-        console.log('💾 Sauvegarde des modifications');
         const newName = document.getElementById('edit-name').value.trim();
         const newUsername = document.getElementById('edit-username').value.trim();
         const newAvatar = document.getElementById('edit-avatar').value.trim();
@@ -546,13 +561,11 @@ function showEditModal() {
     });
 
     document.getElementById('cancel-profile').addEventListener('click', function () {
-        console.log('❌ Annulation des modifications');
         modal.remove();
     });
 
     modal.addEventListener('click', function (e) {
         if (e.target === modal) {
-            console.log('🚪 Fermeture du modal (clic extérieur)');
             modal.remove();
         }
     });
@@ -563,48 +576,9 @@ function showEditModal() {
     }, 100);
 }
 
-// Ajouter des boutons de gestion des données
-function addDataManagementButtons() {
-    const container = document.querySelector('.profile-container');
-    if (!container) return;
-
-    const section = document.createElement('div');
-    section.className = 'profile-section';
-    section.innerHTML = `
-        <h2 class="section-title">⚙️ Gestion des Données</h2>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-            <button class="action-btn" onclick="window.ChessSchoolProgress.exportData()">
-                📥 Exporter mes données
-            </button>
-            <button class="action-btn secondary" onclick="document.getElementById('import-file').click()">
-                📤 Importer des données
-            </button>
-            <button class="action-btn secondary" onclick="window.ChessSchoolProgress.resetAllData()" style="background: #ef4444; color: white; border-color: #ef4444;">
-                🗑️ Réinitialiser
-            </button>
-        </div>
-        <input type="file" id="import-file" accept=".json" style="display: none;">
-        
-        <div style="margin-top: 20px; padding: 15px; background: rgba(89, 155, 179, 0.1); border-radius: 8px;">
-            <p style="margin: 0; color: #666; font-size: 0.9em;">
-                💡 <strong>Astuce :</strong> Les données sont sauvegardées automatiquement dans votre navigateur.
-                Exportez-les régulièrement pour ne pas les perdre !
-            </p>
-        </div>
-    `;
-
-    container.appendChild(section);
-
-    // Gérer l'import
-    document.getElementById('import-file').addEventListener('change', function (e) {
-        const file = e.target.files[0];
-        if (file) {
-            window.ChessSchoolProgress.importData(file);
-        }
-    });
-}
-
 // Rafraîchir le profil toutes les 30 secondes
 setInterval(() => {
     loadProfileData();
 }, 30000);
+
+console.log('✅ Profile Display Script chargé');
