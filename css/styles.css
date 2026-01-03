@@ -36,6 +36,13 @@ header {
     font-weight: 800;
     font-style: normal;
 }
+#titre-page {
+    color: white;
+    font-family: "Sora", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+}
 
 #spec-title {
     color: white;
@@ -2496,7 +2503,6 @@ body.dark-mode .progress-circle::before {
     display: inline-block;
     font-size: 0.95em;
     font-weight: 500;
-    margin-top: -10px;
 }
 
 #boutonframe:hover {

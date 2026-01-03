@@ -11,28 +11,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/vnd.icon" href="images/favicon.png">
-    
-    
+
+    <!-- Google Ads -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7585075498869283"
         crossorigin="anonymous"></script>
-    <!-- Google tag (gtag.js) -->
+
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DFZKXZ6TDH"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-DFZKXZ6TDH');
     </script>
-    
-    
-    <!-- Précharger les polices critiques -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap"
-        as="style">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
-    <script src="progress-tracker.js"></script>
 </head>
 
 <body>
@@ -40,7 +31,7 @@
         <header id="site-header" class="site-title">
             <div class="header-row">
                 <div class="brand">
-                    <h1 id="site-title">Chess School</h1>
+                    <h1 id="titre-page">Chess School</h1>
                 </div>
 
                 <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
@@ -58,11 +49,9 @@
                         <span class="bar"></span>
                         <span class="bar"></span>
                         <span class="bar"></span>
-
                     </button>
                 </nav>
             </div>
-
         </header>
 
         <div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
@@ -78,7 +67,7 @@
                 <a class="nav-link" id="frame-link-probleme" href="probleme.html">Puzzle</a>
                 <a class="nav-link" id="frame-link-quiz" href="quiz.html">Quiz</a>
                 <a class="nav-link" id="frame-link-glo" href="glossaire.html">Glossaire</a>
-                <a id="boutonframe" class="unboutonframe" href="https://github.com/Devlaubin/Chess-school/commits/main/">Log</a>
+                <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school/commits/main/">Log</a>
                 <a id="boutonframe" href="faq.html">FAQ</a>
                 <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school">Github</a>
                 <a id="boutonframe" href="https://discord.gg/C4q8Cae4Ju">Discord</a>
@@ -93,7 +82,7 @@
                 <a href="base.html" class="hero-cta">Commencer maintenant</a>
             </section>
 
-            <img id="chessimagesindex" src="images/photopieces.png" />
+            <img id="chessimagesindex" src="images/photopieces.png" alt="Pièces d'échecs" />
 
             <div class="cards-grid">
                 <a href="base.html" class="feature-card">
@@ -119,16 +108,19 @@
         </main>
 
         <footer id="index-footer" class="site-footer">
-            <p>&copy; 2025 Chess School v4.3 |
+            <p>&copy; 2025 Chess School v4.3.1 |
                 <a href="apropos.html" style="color: #b9b0b0; text-decoration: underline;">À Propos</a> |
                 <a href="cgu.html" style="color: #b9b0b0; text-decoration: underline;">CGU</a> |
                 <a href="mentions-legales.html" style="color: #b9b0b0; text-decoration: underline;">Mentions Légales</a>
             </p>
         </footer>
     </div>
+
+    <!-- Scripts -->
+    <script src="javascript/progress-tracker.js"></script>
     <script src="javascript/script.js"></script>
     <script src="javascript/save-system.js"></script>
-    <script src="javascript/burger-menu.js" ></script>
+    <script src="javascript/burger-menu.js"></script>
 </body>
 
 </html>
