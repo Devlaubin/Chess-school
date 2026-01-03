@@ -213,7 +213,7 @@ body {
 .main-nav.open .nav-toggle .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 
-@media (max-width: 800px) {
+@media (max-width: 1170px) {
     .nav-links {
         position: absolute;
         right: 12px;

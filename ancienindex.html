@@ -4,15 +4,28 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Chess School — Problemme</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/puzzle.css">
+    <title>Chess School</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&display=swap"
         rel="stylesheet">
     <link rel="icon" type="image/vnd.icon" href="images/favicon.png">
-    <script src="javascript/progress-tracker.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7585075498869283"
+        crossorigin="anonymous"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DFZKXZ6TDH"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-DFZKXZ6TDH');
+    </script> 
+    <!-- Précharger les polices critiques -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&display=swap"
+        as="style">
+    <script src="progress-tracker.js"></script>
 </head>
 
 <body>
@@ -20,14 +33,14 @@
         <header id="site-header" class="site-title">
             <div class="header-row">
                 <div class="brand">
-                    <h1 id="site-title">Chess School — Puzzle</h1>
+                    <h1 id="site-title">Chess School</h1>
                 </div>
-
+    
                 <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
                     <div class="nav-links" id="main-nav-list">
-                        <a class="nav-link" href="index.html">Accueil</a>
-                        <a class="nav-link" href="base.html">Base</a>
-                        <a class="nav-link" href="specificite.html">Spécificités</a>
+                        <a class="nav-link active" id="link-home" href="index.html">Accueil</a>
+                        <a class="nav-link" id="link-base" href="base.html">Base</a>
+                        <a class="nav-link" id="link-specificite" href="specificite.html">Spécificités</a>
                         <a class="nav-link" href="ouverture.html">Ouvertures</a>
                         <a class="nav-link" href="videos.html">Vidéos</a>
                         <a class="nav-link" href="profil.html">Profil</a>
@@ -38,7 +51,7 @@
                         <span class="bar"></span>
                         <span class="bar"></span>
                         <span class="bar"></span>
-
+    
                     </button>
                 </nav>
             </div>
@@ -66,72 +79,49 @@
         </div>
         <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
 
-        <main id="mainbases">
-            <div id="mainpuzzlehead" class="board-container">
-                <div class="quiz-header">
-                    <h2>Problèmes d'Échecs</h2>
-                    <p>Tenter de resoudre tout les Problèmes.</p>
-                </div>
-            </div>
+        <main class="site-wrapper">
+            <section class="hero-section">
+                <h1 id="bienvenue-index" >Bienvenue sur Chess School</h1>
+                <p class="muted">Choisissez une page pour commencer à apprendre les échecs.</p>
+                <a href="base.html" class="hero-cta">Commencer maintenant</a>
+            </section>
 
-            <div class="board-container">
-                <div class="board-layout">
-                    <div class="controls-panel">
-                        <h3>Informations</h3>
-                        <div class="info-box" id="turn-info">
-                            <h4>Tour</h4>
-                        </div>
-                        <div class="info-box" id="game-status">
-                            <h4>État du jeu</h4>
-                            <p id="status-text">Position de problème</p>
-                        </div>
-                        <div class="info-box">
-                            <h4>Puzzle</h4>
-                            <p id="puzzle-instructions">Choisissez un puzzle ci‑dessous.</p>
-                            <p id="puzzle-hint" class="muted" style="margin-top:6px;color:#2b6cb0;"></p>
-                        </div>
-                        <div class="info-box">
-                            <h4>Historique des coups</h4>
-                            <div id="move-history"
-                                style="max-height:200px; overflow-y:auto; font-family:monospace; font-size:0.9em;">
-                                <p style="color:#999; font-style:italic;">Aucun coup</p>
-                            </div>
-                        </div>
-                        <div class="action-buttons">
-                            <button class="action-btn" id="hint-btn">Indice</button>
-                            <button class="action-btn" id="next-btn">Suivant</button>
-                            <button class="action-btn secondary" id="undo-move">Annuler le coup</button>
-                        </div>
-                    </div>
+            <img id="chessimagesindex" src="images/photopieces.png" />
+            
+            <div class="cards-grid">
+                <a href="base.html" class="feature-card">
+                    <span class="card-icon">📚</span>
+                    <h2 class="card-title">Les Bases</h2>
+                </a>
 
-                    <div class="board-wrapper">
-                        <div class="chessboard" id="chessboard"></div>
-                        <div class="coordinates">
-                            <span>a</span><span>b</span><span>c</span><span>d</span>
-                            <span>e</span><span>f</span><span>g</span><span>h</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <a href="specificite.html" class="feature-card">
+                    <span class="card-icon">⚡</span>
+                    <h2 class="card-title">Spécificités</h2>
+                </a>
 
-            <div id="mainpuzzle" class="board-container">
-                <h3>Choisissez un puzzle</h3>
-                <div id="puzzle-list" class="puzzle-list" aria-label="Liste de puzzles"></div>
+                <a href="ouverture.html" class="feature-card">
+                    <span class="card-icon">🎯</span>
+                    <h2 class="card-title">Ouvertures</h2>
+                </a>
+
+                <a href="videos.html" class="feature-card">
+                    <span class="card-icon">🎥</span>
+                    <h2 class="card-title">Vidéos</h2>
+                </a>
             </div>
         </main>
 
         <footer id="index-footer" class="site-footer">
-            <p>&copy; 2025 Chess School |
+            <p>&copy; 2025 Chess School v4.2.1 |
                 <a href="apropos.html" style="color: #b9b0b0; text-decoration: underline;">À Propos</a> |
                 <a href="cgu.html" style="color: #b9b0b0; text-decoration: underline;">CGU</a> |
                 <a href="mentions-legales.html" style="color: #b9b0b0; text-decoration: underline;">Mentions Légales</a>
             </p>
         </footer>
     </div>
-    <script src="javascript/script.js"></script>
-    <script src="javascript/save-system.js"></script>
-    <script src="javascript/chessboard.js"></script>
-    <script src="javascript/probleme.js"  ></script>
+    <script src="script.js"></script>
+    <script src="theme.js"></script>
+    <script src="save-system.js"></script>
 </body>
 
 </html>

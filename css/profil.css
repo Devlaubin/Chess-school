@@ -1,0 +1,340 @@
+.profile-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.profile-header {
+    background: linear-gradient(135deg, rgba(89, 155, 179, 0.15), rgba(64, 140, 153, 0.15));
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 30px;
+    border-left: 4px solid #599bb3;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #599bb3, #408c99);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3em;
+    color: white;
+    box-shadow: 0 4px 20px rgba(89, 155, 179, 0.3);
+    flex-shrink: 0;
+}
+
+.profile-info {
+    flex: 1;
+    min-width: 250px;
+}
+
+.profile-name {
+    font-size: 2em;
+    font-weight: bold;
+    color: #333;
+    margin: 0 0 10px 0;
+}
+
+.profile-username {
+    color: #599bb3;
+    font-size: 1.1em;
+    margin: 0 0 15px 0;
+}
+
+.profile-stats-quick {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.stat-quick {
+    text-align: center;
+}
+
+.stat-quick-value {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #599bb3;
+    display: block;
+}
+
+.stat-quick-label {
+    font-size: 0.9em;
+    color: #666;
+    display: block;
+    margin-top: 4px;
+}
+
+.profile-section {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    margin: 0 0 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #599bb3;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat-card {
+    background: rgba(89, 155, 179, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border-left: 4px solid #599bb3;
+}
+
+.stat-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #599bb3;
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 0.95em;
+}
+
+.progress-container {
+    margin: 20px 0;
+}
+
+.progress-item {
+    margin-bottom: 20px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.progress-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.progress-value {
+    font-weight: bold;
+    color: #599bb3;
+}
+
+.progress-bar {
+    background: rgba(0, 0, 0, 0.1);
+    height: 12px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #599bb3, #408c99);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.achievement-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+}
+
+.achievement-card {
+    background: white;
+    border: 2px solid rgba(89, 155, 179, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.achievement-card:hover {
+    transform: translateY(-5px);
+    border-color: #599bb3;
+    box-shadow: 0 4px 16px rgba(89, 155, 179, 0.3);
+}
+
+.achievement-card.locked {
+    opacity: 0.4;
+    filter: grayscale(100%);
+}
+
+.achievement-icon {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.achievement-name {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.achievement-desc {
+    font-size: 0.8em;
+    color: #666;
+}
+
+.recent-activity {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.activity-item {
+    padding: 15px;
+    border-left: 3px solid #599bb3;
+    background: rgba(89, 155, 179, 0.05);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.activity-icon {
+    font-size: 1.5em;
+    flex-shrink: 0;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-text {
+    color: #333;
+    font-weight: 500;
+    margin: 0 0 4px 0;
+}
+
+.activity-time {
+    color: #999;
+    font-size: 0.85em;
+}
+
+.edit-profile-btn {
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #599bb3, #408c99);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.edit-profile-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(89, 155, 179, 0.4);
+}
+
+.badges-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba(89, 155, 179, 0.1);
+    color: #599bb3;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
+.learning-path {
+    display: grid;
+    gap: 15px;
+}
+
+.path-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: rgba(89, 155, 179, 0.05);
+    border-radius: 12px;
+    border-left: 4px solid #599bb3;
+}
+
+.path-check {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #599bb3;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    flex-shrink: 0;
+}
+
+.path-check.incomplete {
+    background: rgba(89, 155, 179, 0.2);
+    color: #999;
+}
+
+.path-content {
+    flex: 1;
+}
+
+.path-title {
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 5px 0;
+}
+
+.path-desc {
+    color: #666;
+    font-size: 0.9em;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .profile-stats-quick {
+        justify-content: center;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .achievement-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+}
