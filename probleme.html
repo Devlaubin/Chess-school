@@ -13,7 +13,6 @@
     <link rel="icon" type="image/vnd.icon" href="images/favicon.png">
     <script src="progress-tracker.js"></script>
     <style>
-
         body {
             font-family: Arial, Helvetica, sans-serif;
             background-color: #181a1b;
@@ -34,7 +33,7 @@
             border-radius: 8px;
             padding: 12px;
             width: 220px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -51,15 +50,17 @@
             font-size: 0.9rem;
             font-family: Arial, Helvetica, sans-serif;
         }
-        h4, h3{
+
+        h4,
+        h3 {
             font-family: 'arial black', sans-serif;
         }
-        
+
         .puzzle-actions {
             display: flex;
             gap: 8px;
         }
-       
+
 
         .puzzle-btn {
             background: #599bb3;
@@ -71,7 +72,9 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
+            flex: 1;
         }
+
         .puzzle-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(89, 155, 179, 0.4);
@@ -86,29 +89,164 @@
         .puzzle-btn.secondary:hover {
             background: rgba(89, 155, 179, 0.1);
         }
+
         .puzzle-btn:active {
             transform: translateY(0);
             box-shadow: none;
         }
+
         .puzzle-btn:focus {
             outline: 3px solid #2b6cb0;
             outline-offset: 2px;
         }
-        
-        
-        #mainpuzzlehead{
+
+
+        #mainpuzzlehead {
             background-color: #ffffff;
             padding: 20px;
             border-radius: 20px;
-            margin: 20px;
+            margin: 20px auto;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
+            max-width: 1200px;
+            text-align: center;
         }
-        #mainpuzzle{
+
+        #mainpuzzle {
             background-color: #ffffff;
             padding: 20px;
             border-radius: 20px;
-            margin: 20px;
+            margin: 20px auto;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
+            max-width: 1200px;
+        }
+
+        .board-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .board-layout {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            justify-items: center;
+        }
+
+        .controls-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .info-box {
+            background: rgba(89, 155, 179, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #599bb3;
+            margin-bottom: 15px;
+        }
+
+        .info-box h4 {
+            margin: 0 0 8px 0;
+            color: #333;
+        }
+
+        .info-box p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .action-btn {
+            padding: 12px;
+            background: #599bb3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #408c99;
+            transform: translateY(-2px);
+        }
+
+        .action-btn.secondary {
+            background: white;
+            color: #599bb3;
+            border: 2px solid #599bb3;
+        }
+
+        .action-btn.secondary:hover {
+            background: rgba(89, 155, 179, 0.1);
+        }
+
+        .board-wrapper {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chessboard {
+            display: grid;
+            grid-template-columns: repeat(8, 70px);
+            grid-template-rows: repeat(8, 70px);
+            border: 3px solid #333;
+            margin: 0 auto 15px;
+        }
+
+        .square {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            cursor: pointer;
+        }
+
+        .square.white {
+            background-color: #f0d9b5;
+        }
+
+        .square.black {
+            background-color: #b58863;
+        }
+
+        .coordinates {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .coordinates span {
+            width: 70px;
+            text-align: center;
         }
     </style>
 </head>
@@ -164,15 +302,15 @@
         </div>
         <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
 
-            <div class="board-container">
-
-                <main id="mainpuzzlehead">   
+        <main id="mainbases">
+            <div id="mainpuzzlehead" class="board-container">
                 <div class="quiz-header">
                     <h2>Problèmes d'Échecs</h2>
                     <p>Tenter de resoudre tout les Problèmes.</p>
                 </div>
-                </main>
+            </div>
 
+            <div class="board-container">
                 <div class="board-layout">
                     <div class="controls-panel">
                         <h3>Informations</h3>
@@ -190,7 +328,8 @@
                         </div>
                         <div class="info-box">
                             <h4>Historique des coups</h4>
-                            <div id="move-history" style="max-height:200px; overflow-y:auto; font-family:monospace; font-size:0.9em;">
+                            <div id="move-history"
+                                style="max-height:200px; overflow-y:auto; font-family:monospace; font-size:0.9em;">
                                 <p style="color:#999; font-style:italic;">Aucun coup</p>
                             </div>
                         </div>
@@ -208,12 +347,13 @@
                             <span>e</span><span>f</span><span>g</span><span>h</span>
                         </div>
                     </div>
-                    
                 </div>
             </div>
-        </main>
-        <main id="mainpuzzle">
-            <div id="puzzle-list" class="puzzle-list" aria-label="Liste de puzzles"></div>
+
+            <div id="mainpuzzle" class="board-container">
+                <h3>Choisissez un puzzle</h3>
+                <div id="puzzle-list" class="puzzle-list" aria-label="Liste de puzzles"></div>
+            </div>
         </main>
 
         <footer id="index-footer" class="site-footer">
@@ -331,476 +471,7 @@
                     if (hintEl) hintEl.textContent = '';
                 });
             }
-            }
-        );
-        
-            // ========================================
-            // SYSTÈME DE SAUVEGARDE DES PUZZLES
-            // ========================================
-
-            // Variables pour le tracking des puzzles
-            let puzzleStartTime = 0;
-            let puzzleAttempts = 0;
-            let puzzleHintsUsed = 0;
-            let currentPuzzleSolved = false;
-
-            // Démarrer le chrono quand on charge un puzzle
-            const originalLoadPuzzle = window.loadPuzzle;
-            window.loadPuzzle = function (fen, turn) {
-                if (originalLoadPuzzle) {
-                    originalLoadPuzzle(fen, turn);
-                }
-
-                // Réinitialiser les compteurs
-                puzzleStartTime = Date.now();
-                puzzleAttempts = 0;
-                puzzleHintsUsed = 0;
-                currentPuzzleSolved = false;
-
-                console.log('Puzzle chargé, chrono démarré');
-            };
-
-            // Compter les tentatives quand on joue un coup
-            const moveObserver = new MutationObserver(function (mutations) {
-                mutations.forEach(function (mutation) {
-                    if (mutation.target.id === 'move-history') {
-                        // Un coup a été joué
-                        puzzleAttempts++;
-                        console.log('Tentative #', puzzleAttempts);
-                    }
-                });
-            });
-
-            const moveHistory = document.getElementById('move-history');
-            if (moveHistory) {
-                moveObserver.observe(moveHistory, {
-                    childList: true,
-                    subtree: true
-                });
-            }
-
-            // Modifier le bouton Indice pour compter
-            if (hintBtn) {
-                const originalHintHandler = hintBtn.onclick;
-                hintBtn.addEventListener('click', function () {
-                    puzzleHintsUsed++;
-                    console.log('Indices utilisés:', puzzleHintsUsed);
-                }, true);
-            }
-
-            // Fonction pour détecter si le puzzle est résolu (mat)
-            function checkPuzzleSolved() {
-                const statusText = document.getElementById('status-text');
-                if (!statusText) return false;
-
-                const text = statusText.textContent.toLowerCase();
-                const isMate = text.includes('échec et mat') || text.includes('mat');
-
-                if (isMate && !currentPuzzleSolved) {
-                    currentPuzzleSolved = true;
-                    savePuzzleCompletion(true);
-                    return true;
-                }
-
-                return false;
-            }
-
-            // Observer les changements de statut
-            const statusObserver = new MutationObserver(function (mutations) {
-                mutations.forEach(function (mutation) {
-                    if (mutation.target.id === 'status-text') {
-                        checkPuzzleSolved();
-                    }
-                });
-            });
-
-            // Démarrer l'observation
-            setTimeout(() => {
-                const statusEl = document.getElementById('status-text');
-                if (statusEl) {
-                    statusObserver.observe(statusEl, {
-                        childList: true,
-                        characterData: true,
-                        subtree: true
-                    });
-                }
-            }, 1000);
-
-            // Fonction pour sauvegarder la complétion d'un puzzle
-            function savePuzzleCompletion(solved) {
-                if (!window.ChessSchoolProgress) {
-                    console.warn('ChessSchoolProgress non disponible');
-                    return;
-                }
-
-                const timeSpent = Math.floor((Date.now() - puzzleStartTime) / 1000);
-                const puzzle = puzzles[currentPuzzleIndex];
-
-                const puzzleData = {
-                    puzzleId: currentPuzzleIndex + 1,
-                    puzzleName: puzzle.name,
-                    difficulty: 'moyen', // Ajustez selon vos puzzles
-                    solved: solved,
-                    attempts: puzzleAttempts,
-                    hintsUsed: puzzleHintsUsed,
-                    timeSpent: timeSpent
-                };
-
-                console.log('💾 Sauvegarde puzzle:', puzzleData);
-
-                window.ChessSchoolProgress.savePuzzleResult(puzzleData);
-
-                // Afficher une notification
-                if (solved) {
-                    showNotification(`🎉 Puzzle ${puzzle.name} résolu en ${timeSpent}s !`);
-                }
-            }
-
-            // Fonction pour afficher une notification
-            function showNotification(message) {
-                const notification = document.createElement('div');
-                notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: linear-gradient(135deg, #22c55e, #16a34a);
-                color: white;
-                padding: 16px 24px;
-                border-radius: 12px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-                z-index: 10000;
-                font-weight: 600;
-                animation: slideIn 0.3s ease;
-            `;
-                notification.textContent = message;
-
-                const style = document.createElement('style');
-                style.textContent = `
-                @keyframes slideIn {
-                    from { transform: translateX(400px); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-            `;
-                document.head.appendChild(style);
-
-                document.body.appendChild(notification);
-
-                setTimeout(() => {
-                    notification.style.animation = 'slideIn 0.3s ease reverse';
-                    setTimeout(() => notification.remove(), 300);
-                }, 3000);
-            }
-
-            // Sauvegarder aussi quand on passe au puzzle suivant
-            if (nextBtn) {
-                const originalNextHandler = nextBtn.onclick;
-                nextBtn.addEventListener('click', function () {
-                    // Si le puzzle actuel n'a pas été résolu mais qu'on passe au suivant
-                    if (!currentPuzzleSolved && puzzleAttempts > 0) {
-                        savePuzzleCompletion(false);
-                    }
-                }, true);
-            }
-
-            // Charger les stats au démarrage
-            function loadPuzzleStatsDisplay() {
-                if (!window.ChessSchoolProgress) return;
-
-                const data = window.ChessSchoolProgress.getProfileData();
-                const stats = data.puzzleStats;
-
-                if (stats && stats.totalAttempts > 0) {
-                    // Ajouter un affichage des stats en haut de la page
-                    const header = document.querySelector('.quiz-header');
-                    if (header && !document.getElementById('puzzle-stats-display')) {
-                        const statsDiv = document.createElement('div');
-                        statsDiv.id = 'puzzle-stats-display';
-                        statsDiv.style.cssText = `
-                        background: rgba(89, 155, 179, 0.1);
-                        padding: 15px;
-                        border-radius: 12px;
-                        margin-top: 15px;
-                        display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-                        gap: 15px;
-                    `;
-
-                        const successRate = stats.totalAttempts > 0
-                            ? Math.round((stats.totalSolved / stats.totalAttempts) * 100)
-                            : 0;
-
-                        statsDiv.innerHTML = `
-                        <div style="text-align: center;">
-                            <div style="font-size: 2em; font-weight: bold; color: #599bb3;">${stats.totalSolved}</div>
-                            <div style="color: #666; font-size: 0.9em;">Résolus</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 2em; font-weight: bold; color: #599bb3;">${successRate}%</div>
-                            <div style="color: #666; font-size: 0.9em;">Réussite</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 2em; font-weight: bold; color: #599bb3;">${stats.bestStreak}</div>
-                            <div style="color: #666; font-size: 0.9em;">Meilleure série</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 2em; font-weight: bold; color: #599bb3;">${stats.averageTime || 0}s</div>
-                            <div style="color: #666; font-size: 0.9em;">Temps moyen</div>
-                        </div>
-                    `;
-
-                        header.appendChild(statsDiv);
-                    }
-                }
-            }
-
-            // Charger au démarrage
-            setTimeout(loadPuzzleStatsDisplay, 500);
-
-            // Rafraîchir les stats toutes les 5 secondes
-            setInterval(function () {
-                const statsDisplay = document.getElementById('puzzle-stats-display');
-                if (statsDisplay) {
-                    statsDisplay.remove();
-                    loadPuzzleStatsDisplay();
-                }
-            }, 5000);
-
-            // ========================================
-                // SYSTÈME DE SAUVEGARDE DES PUZZLES
-                // ========================================
-
-                let puzzleStartTime = 0;
-                let puzzleAttempts = 0;
-                let puzzleHintsUsed = 0;
-                let currentPuzzleSolved = false;
-
-                (function () {
-                    const originalLoadPuzzle = window.loadPuzzle;
-
-                    window.loadPuzzle = function (fen, turn) {
-                        if (originalLoadPuzzle) {
-                            originalLoadPuzzle.call(this, fen, turn);
-                        }
-
-                        puzzleStartTime = Date.now();
-                        puzzleAttempts = 0;
-                        puzzleHintsUsed = 0;
-                        currentPuzzleSolved = false;
-
-                        console.log('✅ Puzzle chargé, tracking démarré');
-                    };
-                })();
-
-                setTimeout(function () {
-                    const moveHistory = document.getElementById('move-history');
-                    if (moveHistory) {
-                        const moveObserver = new MutationObserver(function (mutations) {
-                            let hasNewMove = false;
-                            mutations.forEach(function (mutation) {
-                                if (mutation.addedNodes.length > 0) {
-                                    hasNewMove = true;
-                                }
-                            });
-
-                            if (hasNewMove) {
-                                puzzleAttempts++;
-                                console.log('🎯 Tentative #' + puzzleAttempts);
-                            }
-                        });
-
-                        moveObserver.observe(moveHistory, {
-                            childList: true,
-                            subtree: true
-                        });
-                    }
-                }, 1500);
-
-                setTimeout(function () {
-                    const hintButton = document.getElementById('hint-btn');
-                    if (hintButton) {
-                        hintButton.addEventListener('click', function () {
-                            puzzleHintsUsed++;
-                            console.log('💡 Indices utilisés: ' + puzzleHintsUsed);
-                        }, { capture: true });
-                    }
-                }, 1500);
-
-                setTimeout(function () {
-                    const statusEl = document.getElementById('status-text');
-                    if (statusEl) {
-                        const statusObserver = new MutationObserver(function (mutations) {
-                            mutations.forEach(function (mutation) {
-                                const text = statusEl.textContent.toLowerCase();
-                                const isMate = text.includes('échec et mat') || text.includes('mat');
-
-                                if (isMate && !currentPuzzleSolved && puzzleAttempts > 0) {
-                                    currentPuzzleSolved = true;
-                                    console.log('🎉 Mat détecté !');
-                                    savePuzzleCompletion(true);
-                                }
-                            });
-                        });
-
-                        statusObserver.observe(statusEl, {
-                            childList: true,
-                            characterData: true,
-                            subtree: true
-                        });
-                    }
-                }, 1500);
-
-                function savePuzzleCompletion(solved) {
-                    if (!window.ChessSchoolProgress) {
-                        console.warn('⚠️ ChessSchoolProgress non disponible');
-                        return;
-                    }
-
-                    const timeSpent = Math.floor((Date.now() - puzzleStartTime) / 1000);
-                    const puzzle = puzzles[currentPuzzleIndex];
-
-                    if (!puzzle) {
-                        console.warn('⚠️ Puzzle actuel introuvable');
-                        return;
-                    }
-
-                    let difficulty = 'moyen';
-                    if (currentPuzzleIndex < 2) difficulty = 'facile';
-                    else if (currentPuzzleIndex >= puzzles.length - 1) difficulty = 'difficile';
-
-                    const puzzleData = {
-                        puzzleId: currentPuzzleIndex + 1,
-                        puzzleName: puzzle.name,
-                        difficulty: difficulty,
-                        solved: solved,
-                        attempts: puzzleAttempts,
-                        hintsUsed: puzzleHintsUsed,
-                        timeSpent: timeSpent
-                    };
-
-                    console.log('💾 Sauvegarde puzzle:', puzzleData);
-
-                    window.ChessSchoolProgress.savePuzzleResult(puzzleData);
-
-                    if (solved) {
-                        showNotification('🎉 ' + puzzle.name + ' résolu en ' + timeSpent + 's !');
-                    }
-
-                    setTimeout(loadPuzzleStatsDisplay, 500);
-                }
-
-                function showNotification(message) {
-                    const oldNotif = document.getElementById('puzzle-notification');
-                    if (oldNotif) oldNotif.remove();
-
-                    const notification = document.createElement('div');
-                    notification.id = 'puzzle-notification';
-                    notification.style.cssText = `
-                position: fixed;
-                top: 80px;
-                right: 20px;
-                background: linear-gradient(135deg, #22c55e, #16a34a);
-                color: white;
-                padding: 16px 24px;
-                border-radius: 12px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-                z-index: 10000;
-                font-weight: 600;
-                max-width: 300px;
-            `;
-                    notification.textContent = message;
-
-                    if (!document.getElementById('puzzle-notif-styles')) {
-                        const style = document.createElement('style');
-                        style.id = 'puzzle-notif-styles';
-                        style.textContent = `
-                    @keyframes slideInRight {
-                        from { transform: translateX(400px); opacity: 0; }
-                        to { transform: translateX(0); opacity: 1; }
-                    }
-                `;
-                        document.head.appendChild(style);
-                    }
-
-                    notification.style.animation = 'slideInRight 0.3s ease';
-                    document.body.appendChild(notification);
-
-                    setTimeout(function () {
-                        notification.style.animation = 'slideInRight 0.3s ease reverse';
-                        setTimeout(function () {
-                            if (notification.parentNode) notification.remove();
-                        }, 300);
-                    }, 4000);
-                }
-
-                setTimeout(function () {
-                    const nextButton = document.getElementById('next-btn');
-                    if (nextButton) {
-                        nextButton.addEventListener('click', function () {
-                            if (!currentPuzzleSolved && puzzleAttempts > 0) {
-                                console.log('⏭️ Passage au suivant sans résoudre');
-                                savePuzzleCompletion(false);
-                            }
-                        }, { capture: true });
-                    }
-                }, 1500);
-
-                function loadPuzzleStatsDisplay() {
-                    if (!window.ChessSchoolProgress) return;
-
-                    const data = window.ChessSchoolProgress.getProfileData();
-                    const stats = data.puzzleStats;
-
-                    if (!stats || stats.totalAttempts === 0) return;
-
-                    const header = document.querySelector('.quiz-header');
-                    if (!header) return;
-
-                    let statsDiv = document.getElementById('puzzle-stats-display');
-
-                    if (!statsDiv) {
-                        statsDiv = document.createElement('div');
-                        statsDiv.id = 'puzzle-stats-display';
-                        header.appendChild(statsDiv);
-                    }
-
-                    const successRate = stats.totalAttempts > 0
-                        ? Math.round((stats.totalSolved / stats.totalAttempts) * 100)
-                        : 0;
-
-                    statsDiv.style.cssText = `
-                background: rgba(89, 155, 179, 0.1);
-                padding: 15px;
-                border-radius: 12px;
-                margin-top: 15px;
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-                gap: 15px;
-            `;
-
-                    statsDiv.innerHTML = `
-                <div style="text-align: center;">
-                    <div style="font-size: 2em; font-weight: bold; color: #599bb3;">${stats.totalSolved}</div>
-                    <div style="color: #666; font-size: 0.9em;">Résolus</div>
-                </div>
-                <div style="text-align: center;">
-                    <div style="font-size: 2em; font-weight: bold; color: #599bb3;">${successRate}%</div>
-                    <div style="color: #666; font-size: 0.9em;">Réussite</div>
-                </div>
-                <div style="text-align: center;">
-                    <div style="font-size: 2em; font-weight: bold; color: #599bb3;">${stats.currentStreak}</div>
-                    <div style="color: #666; font-size: 0.9em;">Série actuelle</div>
-                </div>
-                <div style="text-align: center;">
-                    <div style="font-size: 2em; font-weight: bold; color: #599bb3;">${stats.bestStreak}</div>
-                    <div style="color: #666; font-size: 0.9em;">Meilleure série</div>
-                </div>
-            `;
-                }
-
-                setTimeout(loadPuzzleStatsDisplay, 2000);
-                setInterval(loadPuzzleStatsDisplay, 10000);
-
-                console.log('✅ Système de sauvegarde des puzzles activé');
+        });
     </script>
 </body>
 
