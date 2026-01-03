@@ -1,14 +1,3 @@
-header {
-    background-color: rgba(146, 141, 141, 0.2);
-    border-radius: 30px;
-    height: 70px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 10px;
-
-}
 
 #site-title {
     color: white;
@@ -16,6 +5,16 @@ header {
     font-optical-sizing: auto;
     font-weight: 800;
     font-style: normal;
+}
+
+.nav-toggle .bar {
+    background: linear-gradient(90deg, #599bb3, #408c99);
+    height: 3px;
+    width: 28px;
+    margin: 4px 0;
+    border-radius: 2px;
+    transition: all 0.35s cubic-bezier(0.4, 0.0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .nav-link {
@@ -44,121 +43,6 @@ header {
     font-optical-sizing: auto;
     font-weight: 600;
     font-style: normal;
-}
-
-
-
-/* Bouton Burger - Animation fluide */
-.nav-toggle {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, rgba(89, 155, 179, 0.15), rgba(64, 140, 153, 0.1));
-    border-radius: 12px;
-    border: 2px solid rgba(60, 177, 219, 0.3);
-    padding: 8px;
-    margin-left: 12px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    position: relative;
-}
-
-
-/* Barres du burger */
-.nav-toggle .bar {
-    background: linear-gradient(90deg, #599bb3, #408c99);
-    padding: 0;
-    height: 3px;
-    width: 28px;
-    margin: 4px 0;
-    border-radius: 2px;
-    transition: all 0.35s cubic-bezier(0.4, 0.0, 0.2, 1);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-right: 30px;
-}
-
-/* Liens du menu latéral */
-.side-frame .frame-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.side-frame .nav-link {
-    background: linear-gradient(135deg, rgba(89, 155, 179, 0.15), rgba(64, 140, 153, 0.1));
-    border-radius: 10px;
-    padding: 12px 16px;
-    color: #fff;
-    text-align: left;
-    border: 1px solid rgba(89, 155, 179, 0.2);
-    transition: all 0.3s ease;
-    cursor: pointer;
-    font-weight: 500;
-    position: relative;
-    overflow: hidden;
-}
-
-.side-frame .nav-link::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 0.5s ease;
-}
-
-.side-frame .nav-link:hover::before {
-    left: 100%;
-}
-
-.side-frame .nav-link:hover {
-    background: linear-gradient(135deg, rgba(89, 155, 179, 0.3), rgba(64, 140, 153, 0.2));
-    border-color: #599bb3;
-    transform: translateX(8px);
-    box-shadow: 0 4px 12px rgba(89, 155, 179, 0.2);
-}
-
-.side-frame .nav-link:active {
-    transform: translateX(6px);
-}
-
-#boutonframe {
-    color: #599bb3;
-    text-decoration: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-    display: inline-block;
-    font-size: 0.95em;
-    font-weight: 500;
-    margin-top: -10px;
-}
-
-#boutonframe:hover {
-    color: #23c9d4;
-    background: rgba(89, 155, 179, 0.1);
-    transform: translateX(4px);
-}
-
-/* Backdrop - Fond sombre */
-.frame-backdrop {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 2500;
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-    animation: fadeInBackdrop 0.3s ease;
-}
-
-.frame-backdrop.open {
-    display: block;
 }
 
 @keyframes fadeInBackdrop {
