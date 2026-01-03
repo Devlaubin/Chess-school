@@ -422,9 +422,14 @@ function setupProfileActions() {
     // Bouton modifier profil
     const editBtn = document.querySelector('.edit-profile-btn');
     if (editBtn) {
-        editBtn.addEventListener('click', function () {
+        editBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
             showEditModal();
         });
+        console.log('✅ Bouton modifier profil configuré');
+    } else {
+        console.warn('⚠️ Bouton .edit-profile-btn introuvable');
     }
 
     // Ajouter bouton d'export/import
@@ -433,9 +438,15 @@ function setupProfileActions() {
 
 // Afficher le modal de modification
 function showEditModal() {
+    console.log('🔧 Ouverture du modal de modification');
     const data = window.ChessSchoolProgress.getProfileData();
 
+    // Supprimer l'ancien modal s'il existe
+    const oldModal = document.getElementById('edit-profile-modal');
+    if (oldModal) oldModal.remove();
+
     const modal = document.createElement('div');
+    modal.id = 'edit-profile-modal';
     modal.style.cssText = `
         position: fixed;
         top: 0;
@@ -447,36 +458,47 @@ function showEditModal() {
         align-items: center;
         justify-content: center;
         z-index: 10000;
+        animation: fadeIn 0.3s ease;
     `;
 
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    `;
+    document.head.appendChild(style);
+
     modal.innerHTML = `
-        <div style="background: white; padding: 40px; border-radius: 20px; max-width: 500px; width: 90%;">
-            <h2 style="margin-top: 0; color: #333;">Modifier le profil</h2>
+        <div style="background: white; padding: 40px; border-radius: 20px; max-width: 500px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+            <h2 style="margin-top: 0; color: #333;">✏️ Modifier le profil</h2>
             
             <div style="margin-bottom: 20px;">
                 <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Nom</label>
                 <input type="text" id="edit-name" value="${data.user.name}" 
-                    style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em;">
+                    style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; box-sizing: border-box;">
             </div>
             
             <div style="margin-bottom: 20px;">
                 <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Nom d'utilisateur</label>
                 <input type="text" id="edit-username" value="${data.user.username}" 
-                    style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em;">
+                    style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; box-sizing: border-box;">
             </div>
             
             <div style="margin-bottom: 20px;">
                 <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Avatar (emoji)</label>
                 <input type="text" id="edit-avatar" value="${data.user.avatar}" maxlength="2"
-                    style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em;">
+                    style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; box-sizing: border-box;">
+                <small style="color: #666;">Suggestions: ♔ ♕ ♖ ♗ ♘ ♙ 👤 🎯 ⚡ 🏆</small>
             </div>
             
             <div style="display: flex; gap: 12px; margin-top: 30px;">
-                <button id="save-profile" style="flex: 1; padding: 14px; background: linear-gradient(135deg, #599bb3, #408c99); color: white; border: none; border-radius: 25px; font-weight: bold; cursor: pointer;">
-                    Enregistrer
+                <button id="save-profile" style="flex: 1; padding: 14px; background: linear-gradient(135deg, #599bb3, #408c99); color: white; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1em;">
+                    💾 Enregistrer
                 </button>
-                <button id="cancel-profile" style="flex: 1; padding: 14px; background: #ddd; color: #333; border: none; border-radius: 25px; font-weight: bold; cursor: pointer;">
-                    Annuler
+                <button id="cancel-profile" style="flex: 1; padding: 14px; background: #ddd; color: #333; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1em;">
+                    ❌ Annuler
                 </button>
             </div>
         </div>
@@ -486,28 +508,59 @@ function showEditModal() {
 
     // Événements
     document.getElementById('save-profile').addEventListener('click', function () {
-        const newName = document.getElementById('edit-name').value;
-        const newUsername = document.getElementById('edit-username').value;
-        const newAvatar = document.getElementById('edit-avatar').value;
+        console.log('💾 Sauvegarde des modifications');
+        const newName = document.getElementById('edit-name').value.trim();
+        const newUsername = document.getElementById('edit-username').value.trim();
+        const newAvatar = document.getElementById('edit-avatar').value.trim();
+
+        if (!newName || !newUsername) {
+            alert('Le nom et le nom d\'utilisateur ne peuvent pas être vides !');
+            return;
+        }
 
         data.user.name = newName;
         data.user.username = newUsername;
-        data.user.avatar = newAvatar;
+        data.user.avatar = newAvatar || '♔';
 
         window.ChessSchoolProgress.saveData(data);
-        document.body.removeChild(modal);
+        modal.remove();
         loadProfileData();
+
+        // Notification de succès
+        const notif = document.createElement('div');
+        notif.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #22c55e;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 10001;
+            font-weight: 600;
+        `;
+        notif.textContent = '✅ Profil mis à jour !';
+        document.body.appendChild(notif);
+        setTimeout(() => notif.remove(), 3000);
     });
 
     document.getElementById('cancel-profile').addEventListener('click', function () {
-        document.body.removeChild(modal);
+        console.log('❌ Annulation des modifications');
+        modal.remove();
     });
 
     modal.addEventListener('click', function (e) {
         if (e.target === modal) {
-            document.body.removeChild(modal);
+            console.log('🚪 Fermeture du modal (clic extérieur)');
+            modal.remove();
         }
     });
+
+    // Focus sur le premier champ
+    setTimeout(() => {
+        document.getElementById('edit-name').focus();
+    }, 100);
 }
 
 // Ajouter des boutons de gestion des données
