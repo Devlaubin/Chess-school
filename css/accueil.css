@@ -11,10 +11,28 @@
     background: linear-gradient(90deg, #599bb3, #408c99);
     height: 3px;
     width: 28px;
-    margin: 4px 0;
+    margin: 4px auto;
     border-radius: 2px;
-    transition: all 0.35s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation pour le premier bar */
+.main-nav.open .nav-toggle .bar:nth-child(1) {
+    opacity: 0.5;
+    transform: scaleX(0.7);
+}
+
+/* Animation pour le deuxième bar (celui du milieu) */
+.main-nav.open .nav-toggle .bar:nth-child(2) {
+    opacity: 0.3;
+    transform: scaleX(0.5);
+}
+
+/* Animation pour le troisième bar */
+.main-nav.open .nav-toggle .bar:nth-child(3) {
+    opacity: 0.5;
+    transform: scaleX(0.7);
 }
 
 .nav-link {
