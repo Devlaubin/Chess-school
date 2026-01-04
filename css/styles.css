@@ -2640,3 +2640,103 @@ body.dark-mode .progress-circle::before {
     transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     box-shadow: 0 2px 10px rgba(89, 155, 179, 0.3);
 }
+
+.burger-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.burger-btn {
+    background: linear-gradient(180deg, #ffffff, #f3f6f8);
+    border: 2px solid #7ea7dd;
+    padding: 8px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 128, 255, 0.12);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    margin-top: -2px;
+    width: 48px;
+    height: 48px;
+}
+
+.burger-btn:hover {
+    border: 3px solid #599bb3;
+}
+
+.burger-btn:active {
+    transform: translateY(2px);
+}
+
+.burger-btn svg {
+    display: block
+}
+#site-title {
+    color: white;
+    font-family: "Sora", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.nav-link {
+    font-family: "Sora", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.muted {
+    font-family: "Sora", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#bienvenue-index {
+    font-family: "Sora", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.hero-cta {
+    font-family: "Sora", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+}
+
+@keyframes fadeInBackdrop {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+
+    .side-frame {
+        width: 260px;
+    }
+
+    .side-frame .nav-link {
+        padding: 10px 14px;
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .side-frame {
+        width: 75vw;
+        max-width: 260px;
+    }
+}
