@@ -487,7 +487,7 @@ function showEditModal() {
     document.head.appendChild(style);
 
     modal.innerHTML = `
-        <div style="background: white; padding: 40px; border-radius: 20px; max-width: 500px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+        <div style="background: white; padding: 40px; border-radius: 20px; max-width: 500px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3);font-family: Arial, sans-serif;">
             <h2 style="margin-top: 0; color: #333;">✏️ Modifier le profil</h2>
             
             <div style="margin-bottom: 20px;">
@@ -511,10 +511,10 @@ function showEditModal() {
             
             <div style="display: flex; gap: 12px; margin-top: 30px;">
                 <button id="save-profile" style="flex: 1; padding: 14px; background: linear-gradient(135deg, #599bb3, #408c99); color: white; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1em;">
-                    💾 Enregistrer
+                    Enregistrer
                 </button>
                 <button id="cancel-profile" style="flex: 1; padding: 14px; background: #ddd; color: #333; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1em;">
-                    ❌ Annuler
+                    Annuler
                 </button>
             </div>
         </div>
