@@ -2761,4 +2761,80 @@ body.dark-mode .progress-circle::before {
     text-align: justify;
     line-height: 1.6;
     margin-bottom: 20px;
+    cursor: default;
+}
+
+#mainbases h2 {
+    font-family: "Sora", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    color: #408c99;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+.next-btn {
+    padding: 16px 40px;
+    background: linear-gradient(135deg, #599bb3, #408c99);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+
+    display: inline-block;
+    text-align: center; 
+    text-decoration: none;
+}
+.next-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(89, 155, 179, 0.4);
+}
+.results-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 20px;
+    border-left: 6px solid #599bb3;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.brand{
+    text-decoration: none;
+}
+#titre-page:hover {
+    color: #408c99;
+    transition: color 0.3s ease;
+}
+
+p:hover {
+    color: #408c99;
+    font-size: 19px;
+    transition: 0.3s ease;
+}
+p {
+    transition: 0.3s ease;
+}
+
+h3:hover {
+    color: #408c99;
+    font-size: 19px;
+    transition: 0.3s ease;
+}
+
+h3 {
+    transition: 0.3s ease;
+}
+li:hover {
+    color: #408c99;
+    font-size: 19px;
+    transition: 0.3s ease;
+}
+
+li {
+    transition: 0.3s ease;
 }
