@@ -109,10 +109,10 @@ body {
 }
 
 #mainbases {
-    background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
     border-radius: 20px;
     margin: 20px;
+    background-color: #DFDFF0;
 }
 
 .site-title,
@@ -124,6 +124,26 @@ body {
 
 #mainbases {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#mainouvertures{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    cursor: default;
+    background-color: #DFDFF0;
+}
+#mainouvertures a {
+    cursor: pointer;
+    text-decoration: none;
+    color: #599bb3;
+}
+#mainouvertures h2:hover {
+    color: #408c99;
+    font-size: 29px;
+    transition: 0.3s ease;
+}
+#mainouvertures h2{
+    color: #408c99;
+    transition: 0.3s ease;
 }
 
 #spec-footer,
@@ -2617,9 +2637,16 @@ body.dark-mode .progress-circle::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-left: 400px;
+    margin-right: 400px;
 
+}
+
+#hero-page-retour{
+    background: linear-gradient(135deg, #ffffff, #ffffff);
+    box-shadow: 0 4px 15px rgba(253, 253, 253, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: #408c99;
 }
 
 .hero-page::before {

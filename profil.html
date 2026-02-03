@@ -33,8 +33,10 @@
                         <a class="nav-link" href="profil.html">Profil</a>
                     </div>
 
-                    <button id="burgerBtn" class="burger-btn" aria-expanded="false" aria-controls="burgerMenu" aria-label="Ouvrir le menu">
-                        <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                    <button id="burgerBtn" class="burger-btn" aria-expanded="false" aria-controls="burgerMenu"
+                        aria-label="Ouvrir le menu">
+                        <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg">
                             <rect x="3" y="5" width="18" height="2" fill="#000" rx="1" />
                             <rect x="3" y="11" width="18" height="2" fill="#000" rx="1" />
                             <rect x="3" y="17" width="18" height="2" fill="#000" rx="1" />
@@ -94,11 +96,11 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div style="text-align: center; margin-top: 30px;">
                     <button class="edit-profile-btn">Modifier le profil</button>
                 </div>
-                
+
                 <!-- Statistiques détaillées -->
                 <div class="profile-section">
                     <h2 class="section-title">Statistiques d'Apprentissage</h2>
@@ -330,8 +332,40 @@
     <script src="javascript/progress-tracker.js"></script>
     <script src="javascript/save-system.js"></script>
     <script src="javascript/profile-display.js"></script>
-    <script src="javascript/profil.js" ></script>
+    <script src="javascript/profil.js"></script>
     <script src="javascript/burger-menu.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const auth = window.ChessAuth;
+
+            if (!auth.isAuthenticated()) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Charger le profil
+            const profile = await auth.loadUserProfile();
+
+            if (profile) {
+                // Mettre à jour l'avatar
+                document.querySelector('.profile-avatar').textContent = profile.avatar;
+
+                // Mettre à jour le pseudo
+                document.querySelector('.profile-name').textContent = profile.username;
+                document.querySelector('.profile-username').textContent = `@${profile.username}`;
+
+                // Charger les stats
+                const progress = await auth.loadProgress();
+                const activities = await auth.getRecentActivity();
+                const achievements = await auth.getAchievements();
+
+                // Afficher les données (à personnaliser selon votre HTML)
+                console.log('Progression:', progress);
+                console.log('Activités:', activities);
+                console.log('Achievements:', achievements);
+            }
+        });
+    </script>
 </body>
 
 </html>
