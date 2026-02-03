@@ -25,6 +25,15 @@
         gtag('js', new Date());
         gtag('config', 'G-DFZKXZ6TDH');
     </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DFZKXZ6TDH"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-DFZKXZ6TDH');
+    </script>
 </head>
 
 <body>
@@ -42,7 +51,20 @@
                         <a class="nav-link" id="link-specificite" href="specificite.html">Spécificités</a>
                         <a class="nav-link" href="ouverture.html">Ouvertures</a>
                         <a class="nav-link" href="videos.html">Vidéos</a>
-                        <a class="nav-link" href="profil.html">Profil</a>
+                        <a class="nav-link" href="profil.html" id="profile-link">Profil</a>
+                        
+                        <script>
+                            document.getElementById('profile-link').addEventListener('click', (e) => {
+                                e.preventDefault();
+
+                                // Vérifier si connecté
+                                if (window.ChessAuth && window.ChessAuth.isAuthenticated()) {
+                                    window.location.href = 'profil.html';
+                                } else {
+                                    window.location.href = 'login.html';
+                                }
+                            });
+                        </script>
                     </div>
 
                     <button id="burgerBtn" class="burger-btn" aria-expanded="false" aria-controls="burgerMenu"
