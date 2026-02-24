@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Chess School — Glossaire</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/accueil.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/vnd.icon" href="images/favicon.png">
+    <script src="javascript/progress-tracker.js"></script>
+</head>
+
+<body>
+    <!-- Barre de progression -->
+    <div class="reading-progress" id="reading-progress"></div>
+    <div class="progress-circle" id="progress-circle">
+        <span id="progress-percent">0%</span>
+    </div>
+    <div class="site-wrapper">
+        <header id="base-header" class="site-header card">
+            <div class="header-row">
+                <a href="index.html" class="brand">
+                    <h1 id="titre-page">Chess School — Glossaire</h1>
+                </a>
+
+                <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+                    <div class="nav-links" id="main-nav-list">
+                        <a class="nav-link" href="index.html">Accueil</a>
+                        <a class="nav-link" href="base.html">Base</a>
+                        <a class="nav-link" href="specificite.html">Spécificités</a>
+                        <a class="nav-link" href="ouverture.html">Ouvertures</a>
+                        <a class="nav-link" href="videos.html">Vidéos</a>
+                        <a class="nav-link" href="profil.html">Profil</a>
+                    </div>
+                
+                    <button id="burgerBtn" class="burger-btn" aria-expanded="false" aria-controls="burgerMenu" aria-label="Ouvrir le menu">
+                        <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="5" width="18" height="2" fill="#000" rx="1" />
+                            <rect x="3" y="11" width="18" height="2" fill="#000" rx="1" />
+                            <rect x="3" y="17" width="18" height="2" fill="#000" rx="1" />
+                        </svg>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
+            <nav class="frame-nav">
+                <a class="nav-link" id="frame-link-home" href="index.html">Accueil</a>
+                <a class="nav-link" id="frame-link-base" href="base.html">Base</a>
+                <a class="nav-link" id="frame-link-specificite" href="specificite.html">Spécificités</a>
+                <a class="nav-link" id="frame-link-ouvertures" href="ouverture.html">Ouvertures</a>
+                <a class="nav-link" id="frame-link-videos" href="videos.html">Vidéos</a>
+                <div style="border-top: 2px solid rgba(255,255,255,0.2); margin: 12px 0;"></div>
+                <a class="nav-link" id="frame-link-profil" href="profil.html">Mon Profil</a>
+                <a class="nav-link" id="frame-link-chessboard" href="chessboard.html">Echiquier</a>
+                <a class="nav-link" id="frame-link-probleme" href="probleme.html">Puzzle</a>
+                <a class="nav-link" id="frame-link-quiz" href="quiz.html">Quiz</a>
+                <a class="nav-link" id="frame-link-glo" href="glossaire.html">Glossaire</a>
+                <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school/commits/main/">Log</a>
+                <a id="boutonframe" href="faq.html">FAQ</a>
+                <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school">Github</a>
+                <a id="boutonframe" href="https://discord.gg/C4q8Cae4Ju">Discord</a>
+            </nav>
+        </div>
+        <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
+
+        <main id="mainbases">
+            <div class="glossary-header">
+                <h2>Glossaire des Échecs</h2>
+                <p>Découvrez et comprenez le vocabulaire essentiel des échecs</p>
+            </div>
+             
+            <h3 id="Citations">Citations de la semaine</h3>
+            <p class="muted">"Je ne perds jamais, soit je gagne soit j'apprends »</p>
+            <p class="muted2">Nelson Mandela</p>
+
+            <div id="glossary-content">
+                <div class="glossary-section" data-letter="a">
+                    <h2 class="letter-title">A</h2>
+
+                    <div class="term-card" data-term="abandon">
+                        <h3 class="term-name">
+                            Abandon
+                        </h3>
+                        <p class="term-definition">
+                            Lorsqu'un joueur décide de <strong>concéder la défaite</strong> avant la fin de la partie.
+                            Il abandonne en reconnaissant que sa position est perdue.
+                        </p>
+                    </div>
+
+                    <div class="term-card" data-term="aile">
+                        <h3 class="term-name">
+                            Aile
+                        </h3>
+                        <p class="term-definition">
+                            Les deux moitiés de l'échiquier. L'<strong>aile dame</strong> (colonnes a, b, c, d) et
+                            l'<strong>aile roi</strong> (colonnes e, f, g, h).
+                        </p>
+                    </div>
+
+                    <div class="term-card" data-term="avantage">
+                        <h3 class="term-name">
+                            Avantage
+                        </h3>
+                        <p class="term-definition">
+                            Supériorité d'un joueur sur l'autre, que ce soit en <strong>matériel</strong> (pièces), en
+                            <strong>position</strong>, ou en <strong>temps</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glossary-section" data-letter="c">
+                    <h2 class="letter-title">C</h2>
+
+                    <div class="term-card" data-term="centre">
+                        <h3 class="term-name">
+                            Centre
+                        </h3>
+                        <p class="term-definition">
+                            Les quatre cases centrales de l'échiquier (d4, d5, e4, e5). <strong>Contrôler le
+                                centre</strong> est un principe fondamental des échecs.
+                        </p>
+                        <div class="term-example">
+                            💡 "Il faut occuper ou contrôler le centre dès l'ouverture"
+                        </div>
+                    </div>
+
+                    <div class="term-card" data-term="clouage">
+                        <h3 class="term-name">
+                            Clouage
+                        </h3>
+                        <p class="term-definition">
+                            Situation où une pièce ne peut pas bouger sans exposer une pièce plus importante (souvent le
+                            roi) derrière elle.
+                        </p>
+                        <div class="term-example">
+                            💡 "Le fou cloue le cavalier sur le roi"
+                        </div>
+                    </div>
+
+                    <div class="term-card" data-term="combinaison">
+                        <h3 class="term-name">
+                            Combinaison
+                        </h3>
+                        <p class="term-definition">
+                            Série de coups <strong>forcés</strong> qui mènent à un avantage décisif. Souvent basée sur
+                            des sacrifices et des tactiques.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glossary-section" data-letter="d">
+                    <h2 class="letter-title">D</h2>
+
+                    <div class="term-card" data-term="développement">
+                        <h3 class="term-name">
+                            Développement
+                        </h3>
+                        <p class="term-definition">
+                            Action de <strong>sortir ses pièces</strong> de leur position initiale pour les placer sur
+                            des cases actives. Essentiel en ouverture.
+                        </p>
+                    </div>
+
+                    <div class="term-card" data-term="diagonale">
+                        <h3 class="term-name">
+                            Diagonale
+                        </h3>
+                        <p class="term-definition">
+                            Ligne de cases de même couleur allant d'un coin à l'autre. Les <strong>fous et la
+                                dame</strong> se déplacent sur les diagonales.
+                        </p>
+                    </div>
+
+                    <div class="term-card" data-term="doublement">
+                        <h3 class="term-name">
+                            Doublement de pions
+                        </h3>
+                        <p class="term-definition">
+                            Deux pions du même camp sur la <strong>même colonne</strong>. Généralement considéré comme
+                            une faiblesse car ils ne peuvent se défendre mutuellement.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glossary-section" data-letter="e">
+                    <h2 class="letter-title">E</h2>
+
+                    <div class="term-card" data-term="échec">
+                        <h3 class="term-name">
+                            Échec
+                        </h3>
+                        <p class="term-definition">
+                            Situation où le <strong>roi est attaqué</strong>. Le joueur doit immédiatement parer l'échec
+                            en déplaçant son roi, en bloquant l'attaque, ou en capturant la pièce attaquante.
+                        </p>
+                    </div>
+
+                    <div class="term-card" data-term="enfilade">
+                        <h3 class="term-name">
+                            Enfilade
+                        </h3>
+                        <p class="term-definition">
+                            Tactique où une pièce importante est forcée de bouger, exposant une pièce de valeur égale ou
+                            moindre derrière elle.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section F -->
+                <div class="glossary-section" data-letter="f">
+                    <h2 class="letter-title">F</h2>
+
+                    <div class="term-card" data-term="finale">
+                        <h3 class="term-name">
+                            Finale
+                        </h3>
+                        <p class="term-definition">
+                            Dernière phase de la partie où il reste <strong>peu de pièces</strong> sur l'échiquier. Le
+                            roi devient une pièce active.
+                        </p>
+                    </div>
+
+                    <div class="term-card" data-term="fourchette">
+                        <h3 class="term-name">
+                            Fourchette
+                        </h3>
+                        <p class="term-definition">
+                            Coup où une pièce (souvent un <strong>cavalier</strong>) attaque simultanément deux pièces
+                            adverses ou plus.
+                        </p>
+                        <div class="term-example">
+                            💡 "Le cavalier fait une fourchette sur le roi et la dame"
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section G -->
+                <div class="glossary-section" data-letter="g">
+                    <h2 class="letter-title">G</h2>
+
+                    <div class="term-card" data-term="gambit">
+                        <h3 class="term-name">
+                            Gambit
+                        </h3>
+                        <p class="term-definition">
+                            Sacrifice volontaire de matériel (généralement un pion) en <strong>ouverture</strong> pour
+                            obtenir un avantage de développement ou de position.
+                        </p>
+                        <div class="term-example">
+                            💡 Exemples : Gambit du Roi, Gambit Dame
+                        </div>
+                    </div>
+
+                    <div class="term-card" data-term="grand-maitre">
+                        <h3 class="term-name">
+                            Grand Maître (GM)
+                        </h3>
+                        <p class="term-definition">
+                            Le <strong>titre le plus élevé</strong> décerné par la FIDE aux joueurs d'échecs. Titre à
+                            vie obtenu après avoir atteint un niveau de jeu exceptionnel.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section I -->
+                <div class="glossary-section" data-letter="i">
+                    <h2 class="letter-title">I</h2>
+
+                    <div class="term-card" data-term="initiative">
+                        <h3 class="term-name">
+                            Initiative
+                        </h3>
+                        <p class="term-definition">
+                            Avantage du joueur qui <strong>impose le jeu</strong> et force l'adversaire à réagir plutôt
+                            qu'à mener ses propres plans.
+                        </p>
+                    </div>
+
+                    <div class="term-card" data-term="isolé">
+                        <h3 class="term-name">
+                            Pion isolé
+                        </h3>
+                        <p class="term-definition">
+                            Pion qui n'a <strong>aucun pion allié</strong> sur les colonnes adjacentes. Souvent
+                            considéré comme une faiblesse car difficile à défendre.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section M -->
+                <div class="glossary-section" data-letter="m">
+                    <h2 class="letter-title">M</h2>
+
+                    <div class="term-card" data-term="mat">
+                        <h3 class="term-name">
+                            Mat (Échec et mat)
+                        </h3>
+                        <p class="term-definition">
+                            Position finale où le roi est en échec et <strong>ne peut échapper</strong>. La partie se
+                            termine immédiatement.
+                        </p>
+                    </div>
+
+                    <div class="term-card" data-term="milieu">
+                        <h3 class="term-name">
+                            Milieu de partie
+                        </h3>
+                        <p class="term-definition">
+                            Phase entre l'ouverture et la finale où la <strong>tactique et la stratégie</strong> sont au
+                            cœur du jeu.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section N -->
+                <div class="glossary-section" data-letter="n">
+                    <h2 class="letter-title">N</h2>
+
+                    <div class="term-card" data-term="nulle">
+                        <h3 class="term-name">
+                            Nulle (Match nul)
+                        </h3>
+                        <p class="term-definition">
+                            Partie sans vainqueur (½-½). Peut résulter d'un <strong>pat</strong>, d'une répétition, d'un
+                            matériel insuffisant, ou d'un accord mutuel.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section O -->
+                <div class="glossary-section" data-letter="o">
+                    <h2 class="letter-title">O</h2>
+
+                    <div class="term-card" data-term="ouverture">
+                        <h3 class="term-name">
+                            Ouverture
+                        </h3>
+                        <p class="term-definition">
+                            Les <strong>premiers coups</strong> d'une partie d'échecs. Objectifs : contrôler le centre,
+                            développer les pièces, mettre le roi en sécurité.
+                        </p>
+                    </div>
+
+                    <div class="term-card" data-term="opposition">
+                        <h3 class="term-name">
+                            Opposition
+                        </h3>
+                        <p class="term-definition">
+                            Position où deux rois se font face avec une case impaire entre eux. Concept crucial en
+                            <strong>finale de pions</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section P -->
+                <div class="glossary-section" data-letter="p">
+                    <h2 class="letter-title">P</h2>
+
+                    <div class="term-card" data-term="passé">
+                        <h3 class="term-name">
+                            Pion passé
+                        </h3>
+                        <p class="term-definition">
+                            Pion qui n'a <strong>aucun pion adverse</strong> pouvant l'empêcher d'atteindre la
+                            promotion. Très dangereux en finale.
+                        </p>
+                    </div>
+
+                    <div class="term-card" data-term="pat">
+                        <h3 class="term-name">
+                            Pat
+                        </h3>
+                        <p class="term-definition">
+                            Situation où un joueur n'est <strong>pas en échec</strong> mais n'a aucun coup légal.
+                            Résultat : nulle.
+                        </p>
+                    </div>
+
+                    <div class="term-card" data-term="promotion">
+                        <h3 class="term-name">
+                            Promotion
+                        </h3>
+                        <p class="term-definition">
+                            Transformation d'un pion qui atteint la <strong>dernière rangée</strong> en Dame, Tour, Fou
+                            ou Cavalier.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section R -->
+                <div class="glossary-section" data-letter="r">
+                    <h2 class="letter-title">R</h2>
+
+                    <div class="term-card" data-term="roque">
+                        <h3 class="term-name">
+                            Roque
+                        </h3>
+                        <p class="term-definition">
+                            Seul coup où le <strong>roi et la tour</strong> bougent simultanément. Permet de mettre le
+                            roi en sécurité et d'activer la tour.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section S -->
+                <div class="glossary-section" data-letter="s">
+                    <h2 class="letter-title">S</h2>
+
+                    <div class="term-card" data-term="sacrifice">
+                        <h3 class="term-name">
+                            Sacrifice
+                        </h3>
+                        <p class="term-definition">
+                            Don volontaire de matériel pour obtenir un <strong>avantage</strong> (attaque sur le roi,
+                            meilleure position, gain de temps).
+                        </p>
+                    </div>
+
+                    <div class="term-card" data-term="structure">
+                        <h3 class="term-name">
+                            Structure de pions
+                        </h3>
+                        <p class="term-definition">
+                            Configuration des pions sur l'échiquier. Détermine souvent le <strong>plan
+                                stratégique</strong> de la partie.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section T -->
+                <div class="glossary-section" data-letter="t">
+                    <h2 class="letter-title">T</h2>
+
+                    <div class="term-card" data-term="tempo">
+                        <h3 class="term-name">
+                            Tempo
+                        </h3>
+                        <p class="term-definition">
+                            Unité de temps aux échecs correspondant à <strong>un coup</strong>. Gagner un tempo signifie
+                            forcer l'adversaire à perdre un coup.
+                        </p>
+                    </div>
+
+                    <div class="term-card" data-term="trait">
+                        <h3 class="term-name">
+                            Trait
+                        </h3>
+                        <p class="term-definition">
+                            Le droit de jouer. "Avoir le trait" signifie que c'est à votre tour de jouer.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section Z -->
+                <div class="glossary-section" data-letter="z">
+                    <h2 class="letter-title">Z</h2>
+
+                    <div class="term-card" data-term="zugzwang">
+                        <h3 class="term-name">
+                            Zugzwang
+                        </h3>
+                        <p class="term-definition">
+                            Situation où avoir le trait est un <strong>désavantage</strong>. Tout coup disponible
+                            aggrave la position. Fréquent en finale.
+                        </p>
+                        <div class="term-example">
+                            💡 Mot allemand signifiant "obligation de jouer"
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <a href="chessboard.html" class="hero-page">Continuer vers l'échiquier</a>
+        <a href="problemme.html" id="hero-page-retour" class="hero-page">Retounez vers les Puzzles</a>
+
+        <footer id="base-footer" class="site-footer">
+            <p>&copy; 2025 Chess School |
+                <a href="apropos.html" style="color: #b9b0b0; text-decoration: underline;">À Propos</a> |
+                <a href="cgu.html" style="color: #b9b0b0; text-decoration: underline;">CGU</a> |
+                <a href="mentions-legales.html" style="color: #b9b0b0; text-decoration: underline;">Mentions Légales</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="javascript/script.js"></script>
+    <script src="javascript/save-system.js"></script>
+    <script src="javascript/burger-menu.js"></script>
+</body>
+
+</html>

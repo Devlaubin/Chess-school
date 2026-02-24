@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Chess School — Vidéos</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/accueil.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&display=swap"
+        rel="stylesheet">
+    <script src="javascript/progress-tracker.js"></script>
+</head>
+
+<body>
+    <!-- Barre de progression -->
+    <div class="reading-progress" id="reading-progress"></div>
+    <div class="progress-circle" id="progress-circle">
+        <span id="progress-percent">0%</span>
+    </div>
+    <div class="site-wrapper">
+        <header id="base-header" class="site-header card">
+            <div class="header-row">
+                <a href="index.html" class="brand">
+                    <h1 id="titre-page">Chess School — Vidéos</h1>
+                </a>
+
+                <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+                    <div class="nav-links" id="main-nav-list">
+                        <a class="nav-link" href="index.html">Accueil</a>
+                        <a class="nav-link" href="base.html">Base</a>
+                        <a class="nav-link" href="specificite.html">Spécificités</a>
+                        <a class="nav-link" href="ouverture.html">Ouvertures</a>
+                        <a class="nav-link" href="videos.html">Vidéos</a> 
+                        <a class="nav-link" href="profil.html">Profil</a>
+                    </div>
+
+                    <button id="burgerBtn" class="burger-btn" aria-expanded="false" aria-controls="burgerMenu" aria-label="Ouvrir le menu">
+                        <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="5" width="18" height="2" fill="#000" rx="1" />
+                            <rect x="3" y="11" width="18" height="2" fill="#000" rx="1" />
+                            <rect x="3" y="17" width="18" height="2" fill="#000" rx="1" />
+                        </svg>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
+            <nav class="frame-nav">
+                <a class="nav-link" id="frame-link-home" href="index.html">Accueil</a>
+                <a class="nav-link" id="frame-link-base" href="base.html">Base</a>
+                <a class="nav-link" id="frame-link-specificite" href="specificite.html">Spécificités</a>
+                <a class="nav-link" id="frame-link-ouvertures" href="ouverture.html">Ouvertures</a>
+                <a class="nav-link" id="frame-link-videos" href="videos.html">Vidéos</a>
+                <div style="border-top: 2px solid rgba(255,255,255,0.2); margin: 12px 0;"></div>
+                <a class="nav-link" id="frame-link-profil" href="profil.html">Mon Profil</a>
+                <a class="nav-link" id="frame-link-chessboard" href="chessboard.html">Echiquier</a>
+                <a class="nav-link" id="frame-link-probleme" href="probleme.html">Puzzle</a>
+                <a class="nav-link" id="frame-link-quiz" href="quiz.html">Quiz</a>
+                <a class="nav-link" id="frame-link-glo" href="glossaire.html">Glossaire</a>
+                <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school/commits/main/">Log</a>
+                <a id="boutonframe" href="faq.html">FAQ</a>
+                <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school">Github</a>
+                <a id="boutonframe" href="https://discord.gg/C4q8Cae4Ju">Discord</a>
+            </nav>
+        </div>
+        <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
+
+        <main id="mainbases">
+            <div class="intro-section">
+                <h2 style="margin-top: 0;">Tutoriels Vidéo d'Échecs</h2>
+                <p>Voici ma selection de video d'apprentissage, regarder les videos dans l'ordre si vous etes debutant.</p>
+            </div>
+
+            <div class="section-header">
+                <h2>Pour Débutants</h2>
+            </div>
+
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <iframe src="https://www.youtube.com/embed/upixcS1m540?si=lgcv_FMVnnXUWGBV"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">Apprends à jouer aux échecs ! Le guide ultime pour débutant.</h3>
+                        <p class="video-description">Apprenez les règles fondamentales : comment placer l'échiquier, les
+                            mouvements de chaque pièce et l'objectif du jeu.</p>
+                        <div class="video-meta">
+                            <span class="video-tag">Débutant</span>
+                            <span class="video-tag">50 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <iframe src="https://www.youtube.com/embed/BDcppKDH62c?si=on7tQSzzS5OYty9z"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">Le guide ultime de la tactique pour débutants aux échecs</h3>
+                        <p class="video-description">Découvrez le guide ultime pour les tactics au niveaux debutant</p>
+                        <div class="video-meta">
+                            <span class="video-tag">Débutant</span>
+                            <span class="video-tag">20 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <iframe src="https://www.youtube.com/embed/2lVsIoSJMpk?si=ecO7iRdVfYnvhwP9"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">Les Ouvertures de Base</h3>
+                        <p class="video-description">Maîtrisez les ouvertures élémentaires pour bien commencer vos parties </p>
+                        <div class="video-meta">
+                            <span class="video-tag">Débutant</span>
+                            <span class="video-tag">30 min</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h2> Niveau Intermédiaire</h2>
+            </div>
+
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <iframe src="https://www.youtube.com/embed/URkyRw6Fczw?si=umBMKR5mYGl8OstR"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">Tactiques et Combinaisons pour passer les 1000 ELO</h3>
+                        <p class="video-description">Apprenez les motifs tactiques essentiels : fourchettes, clouages,
+                            enfilades et plus encore.</p>
+                        <div class="video-meta">
+                            <span class="video-tag">Intermédiaire</span>
+                            <span class="video-tag">15 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <iframe src="https://www.youtube.com/embed/mg_dXfJslug?si=BPW7wyAwkQMsXFf3"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">Stratégie au Milieu de Partie</h3>
+                        <p class="video-description">Apprenez a mieux calculer en partie</p>
+                        <div class="video-meta">
+                            <span class="video-tag">Intermédiaire</span>
+                            <span class="video-tag">15 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <iframe src="https://www.youtube.com/embed/4r8xWGJYgrs?si=RJsN0GmWPDiwYVRi"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">Les Ouvertures Classiques</h3>
+                        <p class="video-description">Explorez les ouvertures les plus populaires et leurs variantes
+                            principales.</p>
+                        <div class="video-meta">
+                            <span class="video-tag">Intermédiaire</span>
+                            <span class="video-tag">45 min</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h2>Niveau Avancé</h2>
+            </div>
+
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <iframe src="https://www.youtube.com/embed/Ao9iOeK_jvU"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">Parties de Grands Maîtres</h3>
+                        <p class="video-description">Analysez des parties légendaires commentées par des experts.</p>
+                        <div class="video-meta">
+                            <span class="video-tag">Avancé</span>
+                            <span class="video-tag">35 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <iframe src="https://www.youtube.com/embed/zHhIJPR0JXw?si=8R7O0MxZ4fLQQc4n"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">Finales Complexes</h3>
+                        <p class="video-description">Maîtrisez les finales avancées et les techniques de conversion.</p>
+                        <div class="video-meta">
+                            <span class="video-tag">Avancé</span>
+                            <span class="video-tag">10 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <iframe src="https://www.youtube.com/embed/SWXTr9SK3oE?si=O5OZKJbIJQIUAgvm"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">Techniques pour passer les 1300 ELO</h3>
+                        <p class="video-description">Conseils pour passer 1300 Elo aux échecs !</p>
+                        <div class="video-meta">
+                            <span class="video-tag">Avancé</span>
+                            <span class="video-tag">5 min</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="intro-section" style="margin-top: 40px;">
+                <h3 style="margin-top: 0;">Ressources Externes</h3>
+                <p>Pour aller plus loin, voici quelques chaînes YouTube recommandées :</p>
+                <ul style="line-height: 1.8;">
+                    <li><strong>Blitzstream</strong> - Parties commentées et analyses</li>
+                    <li><strong>Kevin Bordi</strong> - Tutoriels et cours structurés</li>
+                    <li><strong>MatChess</strong> - Cours pour tous niveaux</li>
+                    <li><strong>GMI Anthony Wirig</strong> - Analyses de grands maîtres</li>
+                    <li><strong>Julien Song</strong>- Stratégies et techniques avancées</li>
+                    <li><strong>Eric Rosen</strong>- Specialiste des tournoi</li>
+                    <li><strong>Anna Cramling</strong>- Une joueuse d'échecs suédoise, maître FIDE féminin depuis 2018. Elle est
+                    également vidéaste sur YouTube avec une chaîne cumulant 1,51 million d'abonnés.</li>
+                    <li><strong>Hikaru Nakamura</strong>- un joueur d'échecs américain d'origine japonaise, cinq fois champion des États-Unis et détenteur du titre de grand
+                    maître international, avec une particularité de ne pas avoir un QI proportionel a son niveaux</li>
+
+                </ul>
+            </div>
+        </main>
+        <a href="quiz.html" class="hero-page">Continuer vers les quiz</a>
+        <a href="ouverture.html" id="hero-page-retour" class="hero-page">Retounez vers les ouvertures</a>
+
+        <footer id="base-footer" class="site-footer">
+            <p>&copy; 2025 Chess School |
+                <a href="apropos.html" style="color: #b9b0b0; text-decoration: underline;">À Propos</a> |
+                <a href="cgu.html" style="color: #b9b0b0; text-decoration: underline;">CGU</a> |
+                <a href="mentions-legales.html" style="color: #b9b0b0; text-decoration: underline;">Mentions Légales</a>
+            </p>
+        </footer>
+    </div>
+        <script src="javascript/script.js"></script>
+        <script src="javascript/save-system.js"></script>
+        <script src="javascript/burger-menu.js"></script>
+        <script>
+            // Détecter quand une vidéo est visionnée (au moins de 30 secondes)
+            document.addEventListener('DOMContentLoaded', function () {
+                const videoCards = document.querySelectorAll('.video-card');
+
+                videoCards.forEach(card => {
+                    const iframe = card.querySelector('iframe');
+                    const title = card.querySelector('.video-title').textContent;
+                    let watchTime = 0;
+                    let watchInterval = null;
+
+                    // Observer quand l'iframe est visible
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                // Vidéo visible, commencer à compter
+                                watchInterval = setInterval(() => {
+                                    watchTime++;
+
+                                    // Après 30 secondes, considérer comme "visionnée"
+                                    if (watchTime >= 30 && window.ChessSchoolProgress) {
+                                        window.ChessSchoolProgress.saveVideoWatched(title);
+                                        clearInterval(watchInterval);
+                                        observer.unobserve(entry.target);
+                                    }
+                                }, 1000);
+                            } else {
+                                // Vidéo plus visible, arrêter le compteur
+                                if (watchInterval) {
+                                    clearInterval(watchInterval);
+                                    watchInterval = null;
+                                }
+                            }
+                        });
+                    }, { threshold: 0.5 });
+
+                    observer.observe(card);
+                });
+            });
+            
+            function onVideoWatched(videoTitle) {
+                    window.ChessSchoolProgress.saveVideoWatched(videoTitle);
+                }
+        </script>
+        </body>
+        
+</html>
