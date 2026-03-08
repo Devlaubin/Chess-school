@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Chess School — Ouvertures</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/accueil.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">    
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&display=swap"rel="stylesheet">
+    <link rel="icon" type="image/vnd.icon" href="images/favicon.png">
+    <script src="javascript/piece-util.js"></script>
+  <script src="javascript/progress-tracker.js"></script>
+</head>
+
+<body>
+    <!-- Barre de progression -->
+    <div class="reading-progress" id="reading-progress"></div>
+    <div class="progress-circle" id="progress-circle">
+        <span id="progress-percent">0%</span>
+    </div>
+
+    <div class="site-wrapper">
+        <header id="spec-header" class="site-header card">
+            <div class="header-row">
+                <a href="index.html" class="brand">
+                    <h1 id="titre-page">Chess School — Ouvertures</h1>
+                </a>
+
+                <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+                    <div class="nav-links" id="main-nav-list">
+                        <a class="nav-link" href="index.html">Accueil</a>
+                        <a class="nav-link" href="base.html">Base</a>
+                        <a class="nav-link" href="specificite.html">Spécificités</a>
+                        <a class="nav-link active" href="ouverture.html">Ouvertures</a>
+                        <a class="nav-link" href="videos.html">Vidéos</a>
+                        <a class="nav-link" href="profil.html">Profil</a>
+                    </div>
+
+                    <button id="burgerBtn" class="burger-btn" aria-expanded="false" aria-controls="burgerMenu" aria-label="Ouvrir le menu">
+                        <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="5" width="18" height="2" fill="#000" rx="1" />
+                            <rect x="3" y="11" width="18" height="2" fill="#000" rx="1" />
+                            <rect x="3" y="17" width="18" height="2" fill="#000" rx="1" />
+                        </svg>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
+            <nav class="frame-nav">
+                <a class="nav-link" id="frame-link-home" href="index.html">Accueil</a>
+                <a class="nav-link" id="frame-link-base" href="base.html">Base</a>
+                <a class="nav-link" id="frame-link-specificite" href="specificite.html">Spécificités</a>
+                <a class="nav-link" id="frame-link-ouvertures" href="ouverture.html">Ouvertures</a>
+                <a class="nav-link" id="frame-link-videos" href="videos.html">Vidéos</a>
+                <div style="border-top: 2px solid rgba(255,255,255,0.2); margin: 12px 0;"></div>
+                <a class="nav-link" id="frame-link-profil" href="profil.html">Mon Profil</a>
+                <a class="nav-link" id="frame-link-chessboard" href="chessboard.html">Echiquier</a>
+                <a class="nav-link" id="frame-link-probleme" href="probleme.html">Puzzle</a>
+                <a class="nav-link" id="frame-link-quiz" href="quiz.html">Quiz</a>
+                <a class="nav-link" id="frame-link-glo" href="glossaire.html">Glossaire</a>
+                <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school/commits/main/">Log</a>
+                <a id="boutonframe" href="faq.html">FAQ</a>
+                <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school">Github</a>
+                <a id="boutonframe" href="https://discord.gg/C4q8Cae4Ju">Discord</a>
+            </nav>
+        </div>
+        <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
+        
+        <main id="mainouvertures" class="content-main card">
+            <article class="content-card card">
+                <h2>Les Ouvertures aux Échecs</h2>
+                <p>Les ouvertures aux échecs sont les premiers coups joués au début d'une partie. Elles sont cruciales car elles établissent la position initiale des pièces et influencent le déroulement de la partie. Une bonne ouverture permet de contrôler le centre de l'échiquier, de développer les pièces rapidement et de garantir la sécurité du roi.</p>
+                <h3>Principales Ouvertures :</h3>
+                <ul>
+                    <li><strong>Ouverture Italienne </strong></li>
+                    <li><strong>Défense Sicilienne (Fermer)</strong></li>
+                    <li><strong>Gambit Dame </strong></li>
+                    <li><strong>Défense Française </strong></li>
+                    <li><strong>Ouverture Espagnole (Ruy Lopez) </strong></li>
+                    <li><strong>L'écossaise</strong></li>
+                    <li><strong>Petrov</strong></li>
+                    <li><strong>Caro Kan</strong></li>
+                    <li><strong>Scanidinave</strong></li>
+                    <li><strong>systeme de londre</strong></li>
+                </ul>
+                <p>Il est important pour les joueurs d'étudier et de pratiquer différentes ouvertures afin de s'adapter à divers styles de jeu et stratégies adverses.</p>
+            </article>
+        </main>   
+        <main id="mainouvertures" class="content-main card">
+            <section class="content-section card">
+                <h2>L'Ouverture Italienne</h2>
+                <p>L'Ouverture Italienne est l'une des ouvertures les plus anciennes et les plus populaires aux échecs. Elle commence par les mouvements 1.e4 e5 2.Nf3 Nc6 3.Bc4. Cette ouverture vise à contrôler le centre de l'échiquier tout en développant rapidement les pièces mineures.</p>
+                <p>Voici un lien vers une partie d'exemple utilisant l'Ouverture Italienne sur Lichess : <a id="lichesslink" href="https://lichess.org/opening/Italian_Game" target="_blank" rel="noopener">Partie d'Exemple</a></p>
+                <p><strong>Jouer: avec les blanc / à environ 900 ELO <strong></p>
+                <h3>Mouvements Initiaux</h3>
+                <ul>
+                    <img id="imageouverturespng" src="images/italienne.png" alt="Diagramme de l'Ouverture Italienne">
+                    <li id="ligneouvertures1">e4</li>
+                    <li>e5</li>
+                    <li>Nf3</li>
+                    <li>Nc6</li>
+                    <li>Bc4</li>
+                </ul>
+            </section>
+        </main>   
+        <main id="mainouvertures" class="content-main card">
+            <section class="content-section card">
+                <h2>L'Ouverture Sicilienne (Fermer)</h2>
+                <p>
+                    L'Ouverture Sicilienne est une défense populaire contre 1.e4, caractérisée par le mouvement 1...c5. Cette ouverture vise à contester le contrôle du centre tout en préparant un contre-jeu actif. 
+                    La variante fermée de la Sicilienne se développe souvent avec des mouvements comme 2.Nc3 et 3.g3, menant à des positions riches en stratégie.</p>
+                <p>Voici un lien vers une partie d'exemple utilisant l'Ouverture Sicilienne sur Lichess : <a id="lichesslink"
+                        href="lichess.org/opening/Sicilian_Defense_Closed" target="_blank" rel="noopener">Partie d'Exemple</a></p>
+                <p><strong>Jouer: avec les Noir / En professionnel <strong></p>
+                        <h3>Mouvements Initiaux</h3>
+                <ul>
+                    <img id="imageouverturespng" src="images/sicilienne-fermer.png" alt="Diagramme de l'Ouverture sicilienne">
+                    <li id="ligneouvertures1">e4</li>
+                    <li>e4</li>
+                    <li>c5</li>
+                    <li>Nc3</li>
+                </ul>
+            </section>
+        </main>
+        <main id="mainouvertures" class="content-main card">
+            <section class="content-section card">
+                <h2>Le Gambit Dame</h2>
+                <p>Le Gambit Dame est une ouverture classique qui commence par les mouvements 1.d4 d5 2.c4. En offrant un pion, les Blancs cherchent à contrôler le centre et à accélérer le développement de leurs pièces. Le Gambit Dame peut mener à des positions très dynamiques et offre de nombreuses possibilités stratégiques pour les deux camps.</p>
+                <p>Voici un lien vers une partie d'exemple utilisant Le Gambit Dame sur Lichess : <a id="lichesslink"
+                        href="https://lichess.org/opening/Queens_Gambit" target="_blank" rel="noopener">Partie d'Exemple</a>
+                </p>
+                <p><strong>Jouer: avec les blanc / à 1150 ELO</strong></p>
+                <h3>Mouvements Initiaux</h3>
+                <ul>
+                    <img id="imageouverturespng" src="images/gambit_dame.png" alt="Diagramme du Gambit Dame">
+                    <li id="ligneouvertures1">d4</li>
+                    <li>d5</li>
+                    <li>c4</li>
+                </ul>
+            </section>
+        </main>
+        <main id="mainouvertures" class="content-main card">
+            <section class="content-section card">
+                <h2>La defence Française</h2>
+                <p>La défense française est l'une des réponses noires les plus populaires contre le coup 1.e4. Elle figure au répertoire
+                des maîtres depuis le XIXème siècle, et reste une des armes favorites des joueurs positionnels. Elle mène souvent à des
+                parties assez lentes et constitue une option solide pour les joueurs de tous niveaux.</p>
+                <p>Voici un lien vers une partie d'exemple utilisant La defence française sur Lichess : <a id="lichesslink"
+                        href="https://lichess.org/opening/French_Defense" target="_blank" rel="noopener">Partie d'Exemple</a>
+                </p>
+                <p><strong>Jouer: avec les noir / à 1600 ELO</strong></p>
+                <h3>Mouvements Initiaux</h3>
+                <ul>
+                    <img id="imageouverturespng" src="images/french_defense.png" alt="Diagramme de la defence française">
+                    <li id="ligneouvertures1">e4</li>
+                    <li>e6</li>
+                </ul>
+            </section>
+        </main>
+        <main id="mainouvertures" class="content-main card">
+            <section class="content-section card">
+                <h2>L' Ouverture Espagnole</h2>
+                <p>La partie espagnole est une ouverture très populaire, jouée par les débutants comme par les champions du monde. Elle est
+                également parfois nommée Ruy Lopez en hommage à Ruy Lopez de Segura, moine espagnol du 16ème siècle, considéré comme le
+                joueur le plus brillant de son temps, qui a insisté sur son intérêt dans son ouvrage Libro del Ajedrez (1561)
+                .La partie espagnole a été profondément théorisée, et certaines lignes peuvent être analysées jusqu'au 30ème coup ! C'est
+                une ouverture pleine d'opportunités stratégiques et tactiques pour les blancs comme pour les noirs.</p>
+                <p>Voici un lien vers une partie d'exemple utilisant L'ouverture espagnole (Ruy_lopez) sur Lichess : <a id="lichesslink"
+                        href="https://lichess.org/analysis/pgn/e4_e5_Nf3_Nc6_Bb5_d5#5" target="_blank" rel="noopener">Partie d'Exemple</a>
+                </p>
+                <p><strong>Jouer: avec les blanc / à 700-1000 ELO</strong></p>
+                <h3>Mouvements Initiaux</h3>
+                <ul>
+                    <img id="imageouverturespng" src="images/ruy_lopez.png" alt="Diagramme de l'Ouverture Espagnole">
+                    <li id="ligneouvertures1">e4</li>
+                    <li>e5</li>
+                    <li>Nf3</li>
+                    <li>Nc6</li>
+                    <li>Bb5</li>
+                    <li>d5</li>
+                </ul>
+            </section>
+        </main>
+        <main id="mainouvertures" class="content-main card">
+            <section class="content-section card">
+                <h2>L'Ouverture Ecossaise</h2>
+                <p>La base de l'ouverture écossaise repose sur une idée simple mais efficace : un contrôle rapide et direct du centre de
+                l'échiquier.</p>
+                <p>Voici un lien vers une partie d'exemple utilisant La defence française sur Lichess : <a id="lichesslink"
+                        href="https://lichess.org/analysis/pgn/e4_e5_Nf3_Nc6_Bb5_d5#5" target="_blank" rel="noopener">Partie
+                        d'Exemple</a>
+                </p>
+                <p><strong>Jouer: avec les blanc / à 1250 ELO</strong></p>
+                <h3>Mouvements Initiaux</h3>
+                <ul>
+                    <img id="imageouverturespng" src="images/scotch_game.png" alt="Diagramme de l'Ouverture Ecossaise">
+                    <li id="ligneouvertures1">e4</li>
+                    <li>e5</li>
+                    <li>Nf3</li>
+                    <li>Nc6</li>
+                    <li>d4</li>
+                </ul>
+            </section>
+        </main>
+        <main id="mainouvertures" class="content-main card">
+            <section class="content-section card">
+                <h2>La Petrov</h2>
+                <p>La Défense Petrov (aussi appelé Défense Russe) est une ouverture que l'on voit rarement au niveau amateur, et encore
+                moins chez les scolaires car ce n'est souvent pas des parties très exitantes</p>
+                <p>Voici un lien vers une partie d'exemple utilisant La Petrov sur Lichess : <a id="lichesslink"
+                        href="https://lichess.org/analysis/pgn/e4_e5_Nf3_Nf6" target="_blank" rel="noopener">Partie
+                        d'Exemple</a>
+                </p>
+                <p><strong>Jouer: avec les blanc et noir / à tout niveaux</strong></p>
+                <h3>Mouvements Initiaux</h3>
+                <ul>
+                    <img id="imageouverturespng" src="images/petrov.png" alt="Diagramme de La Petrov">
+                    <li id="ligneouvertures1">e4</li>
+                    <li>e5</li>
+                    <li>Nf3</li>
+                    <li>Nf6</li>
+                </ul>
+            </section>
+        </main>
+        <main id="mainouvertures" class="content-main card">
+            <section class="content-section card">
+                <h2>La Caro kann</h2>
+                <p>La défense Caro-Kann est une ouverture aux échecs qui se caractérise par les coups 1. e4 c6. Elle doit son nom au joueur
+                anglais[note 1] Horatio Caro[note 2] et au théoricien viennois Marcus Kann[note 3] qui en commencèrent l'analyse en 1886
+                dans la revue allemande Brüderschaft</p>
+                <p>Voici un lien vers une partie d'exemple utilisant La Caro Kann sur Lichess : <a id="lichesslink"
+                        href="https://lichess.org/analysis/pgn/e4_c6" target="_blank" rel="noopener">Partie
+                        d'Exemple</a>
+                </p>
+                <p><strong>Jouer: avec les noir / en professionnel</strong></p>
+                <h3>Mouvements Initiaux</h3>
+                <ul>
+                    <img id="imageouverturespng" src="images/caro_kan.png" alt="Diagramme de La Caro Kann">
+                    <li id="ligneouvertures1">e4</li>
+                    <li>c6</li>
+                </ul>
+            </section>
+        </main>
+        <main id="mainouvertures" class="content-main card">
+            <section class="content-section card">
+                <h2>La Scanidinave</h2>
+                <p>La défense scandinave est la septième défense la plus populaire pour les noirs face au coup 1.e4.</p>
+                <p>Voici un lien vers une partie d'exemple utilisant La Scanidinave sur Lichess : <a id="lichesslink"
+                        href="https://lichess.org/analysis/pgn/e4,d5" target="_blank" rel="noopener">Partie
+                        d'Exemple</a>
+                </p>
+                <p><strong>Jouer: avec les noir / à 600-800 ELO</strong></p>
+                <h3>Mouvements Initiaux</h3>
+                <ul>
+                    <img id="imageouverturespng" src="images/scandinave.png" alt="Diagramme de La Scanidinave">
+                    <li id="ligneouvertures1">e4</li>
+                    <li>d5</li>
+                </ul>
+            </section>
+        </main>
+        <main id="mainouvertures" class="content-main card">
+            <section class="content-section card">
+                <h2>Le systeme de Londre</h2>
+                <p>Le système de Londres est une ouverture du pion dame très populaire et à la réputation solide. On parle de système car
+                quelque soit les réponses des noirs, les blancs vont plus ou moins toujours placer leurs pièces de la même manière.
+                C'est pour cette raison que la théorie du système de Londres n'est pas aussi fournie que celles d'autres ouvertures.</p>
+                <p>Voici un lien vers une partie d'exemple utilisant La Scanidinave sur Lichess : <a id="lichesslink"
+                        href="https://lichess.org/analysis/pgn/d4_Nf6_Nf3_g6_Bf4" target="_blank" rel="noopener">Partie
+                        d'Exemple</a>
+                </p>
+                <p><strong>Jouer: avec les banc / à 1100-1300 ELO (même plus)</strong></p>
+                <h3>Mouvements Initiaux</h3>
+                <ul>
+                    <img id="imageouverturespng" src="images/system_london.png" alt="Diagramme du systeme de Londre">
+                    <li id="ligneouvertures1">d4</li>
+                    <li>Nf6</li>
+                    <li>Nf3</li>
+                    <li>g6</li>
+                    <li>Bf4</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+    <a href="videos.html" class="hero-page">Continuer vers les vidéos</a>
+    <a href="specificité.html" id="hero-page-retour" class="hero-page">Retounez vers les specificités</a>
+    <footer id="base-footer" class="site-footer">
+        <p>&copy; 2025 Chess School |
+            <a href="apropos.html" style="color: #b9b0b0; text-decoration: underline;">À Propos</a> |
+            <a href="cgu.html" style="color: #b9b0b0; text-decoration: underline;">CGU</a> |
+            <a href="mentions-legales.html" style="color: #b9b0b0; text-decoration: underline;">Mentions Légales</a>
+        </p>
+    </footer>
+    
+    <script src="javascript/script.js"></script>
+    <script src="javascript/save-system.js"></script>
+    <script src="javascript/burger-menu.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Déterminer quelle étape du parcours valider
+            const pageName = window.location.pathname.split('/').pop().replace('.html', '');
+
+            // Vérifier si l'utilisateur a lu toute la page (scroll jusqu'en bas)
+            let hasScrolledToBottom = false;
+
+            window.addEventListener('scroll', function () {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight;
+                const clientHeight = document.documentElement.clientHeight;
+
+                if (scrollTop + clientHeight >= scrollHeight - 100) {
+                    if (!hasScrolledToBottom) {
+                        hasScrolledToBottom = true;
+                        markPathProgress(pageName);
+                    }
+                }
+            });
+
+            function markPathProgress(page) {
+                if (!window.ChessSchoolProgress) return;
+
+                // Mapper les pages aux étapes du parcours
+                const pathMapping = {
+                    'base': 'fundamentalRules',
+                    'specificite': 'specialMoves'
+                };
+
+                const pathKey = pathMapping[page];
+                if (pathKey) {
+                    window.ChessSchoolProgress.updateLearningPath(pathKey, true);
+                }
+            }
+        });
+    </script>
+</body>

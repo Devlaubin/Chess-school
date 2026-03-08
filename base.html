@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Chess School — Base</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/accueil.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/vnd.icon" href="images/favicon.png">
+  <script src="javascript/piece-util.js"></script>
+  <script src="javascript/progress-tracker.js"></script>
+</head>
+<body>
+  <!-- Barre de progression -->
+  <div class="reading-progress" id="reading-progress"></div>
+  <div class="progress-circle" id="progress-circle">
+    <span id="progress-percent">0%</span>
+  </div>
+  <div class="site-wrapper">
+  <header id="base-header" class="site-header card">
+    <div class="header-row">
+      <a href="index.html" class="brand">
+        <h1 id="titre-page">Chess School — Base</h1>
+      </a>
+
+      <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+        <div class="nav-links" id="main-nav-list">
+          <a class="nav-link" href="index.html">Accueil</a>
+          <a class="nav-link active" href="base.html">Base</a>
+          <a class="nav-link" href="specificite.html">Spécificités</a>
+          <a class="nav-link" href="ouverture.html">Ouvertures</a>
+          <a class="nav-link" href="videos.html">Vidéos</a>
+          <a class="nav-link" href="profil.html">Profil</a>
+        </div>
+
+        <button id="burgerBtn" class="burger-btn" aria-expanded="false" aria-controls="burgerMenu" aria-label="Ouvrir le menu">
+          <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="5" width="18" height="2" fill="#000" rx="1" />
+            <rect x="3" y="11" width="18" height="2" fill="#000" rx="1" />
+            <rect x="3" y="17" width="18" height="2" fill="#000" rx="1" />
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
+    <nav class="frame-nav">
+      <a class="nav-link" id="frame-link-home" href="index.html">Accueil</a>
+      <a class="nav-link" id="frame-link-base" href="base.html">Base</a>
+      <a class="nav-link" id="frame-link-specificite" href="specificite.html">Spécificités</a>
+      <a class="nav-link" id="frame-link-ouvertures" href="ouverture.html">Ouvertures</a>
+      <a class="nav-link" id="frame-link-videos" href="videos.html">Vidéos</a>
+      <div style="border-top: 2px solid rgba(255,255,255,0.2); margin: 12px 0;"></div>
+      <a class="nav-link" id="frame-link-profil" href="profil.html">Mon Profil</a>
+      <a class="nav-link" id="frame-link-chessboard" href="chessboard.html">Echiquier</a>
+      <a class="nav-link" id="frame-link-probleme" href="probleme.html">Puzzle</a>
+      <a class="nav-link" id="frame-link-quiz" href="quiz.html">Quiz</a>
+      <a class="nav-link" id="frame-link-glo" href="glossaire.html">Glossaire</a>
+      <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school/commits/main/">Log</a>
+      <a id="boutonframe" href="faq.html">FAQ</a>
+      <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school">Github</a>
+      <a id="boutonframe" href="https://discord.gg/C4q8Cae4Ju">Discord</a>
+    </nav>
+  </div>
+  <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
+
+  <main>
+  <main id="mainbases">
+    <section id="section-echiquier" class="content-section card">
+      <h2 id="echiquier-title">L'Échiquier</h2>
+      <p id="echiquier-desc">L'échiquier est composé de 64 cases (8×8) alternant entre cases claires et foncées.</p>
+      <p id="echiquier-orientation">Il s'oriente avec une case blanche dans le coin droit de chaque joueur.</p>
+      <p id="echiquier-notation">Les colonnes sont notées de <strong>a</strong> à <strong>h</strong> (de gauche à droite) et les rangées de <strong>1</strong> à <strong>8</strong> (de bas en haut).</p>
+    </section>
+
+    <section id="section-pieces" class="content-section">
+      <h2 id="pieces-title">Les Pièces et leur Placement</h2>
+      <p id="pieces-desc">Chaque joueur dispose de 16 pièces :</p>
+    <ol>
+      <li>1 Roi - la pièce la plus importante</li>
+      <li>1 Dame - la pièce la plus puissante</li>
+      <li>2 Tours - des pièces puissantes qui se déplacent horizontalement et verticalement</li>
+      <li>2 Fous - se déplacent en diagonale</li>
+      <li>2 Cavaliers - les seules pièces qui peuvent sauter par-dessus d'autres pièces</li>
+      <li>8 Pions - les pièces les plus nombreuses et les moins puissantes</li>
+    </ol>
+
+    <section id="section-deplacements" class="content-section">
+      <h2 id="deplacements-title">Déplacement des Pièces</h2>
+      <h3 id="roi-title">Le Roi</h3>
+      <p id="roi-desc">Se déplace d'une case dans n'importe quelle direction (horizontale, verticale, diagonale).</p>
+
+      <h3 id="dame-title">La Dame</h3>
+      <p id="dame-desc">Se déplace dans n'importe quelle direction (horizontale, verticale, diagonale) et d'autant de cases que souhaité tant que le chemin est libre.</p>
+
+      <h3 id="tour-title">La Tour</h3>
+      <p id="tour-desc">Se déplace horizontalement ou verticalement d'autant de cases que souhaité tant que le chemin est libre.</p>
+
+      <h3 id="fou-title">Le Fou</h3>
+      <p id="fou-desc">Se déplace en diagonale d'autant de cases que souhaité tant que le chemin est libre.</p>
+
+      <h3 id="cavalier-title">Le Cavalier</h3>
+      <p id="cavalier-desc">Se déplace en forme de "L" (2 cases dans une direction puis 1 case perpendiculairement). Il peut sauter par-dessus d'autres pièces.</p>
+
+      <h3 id="pion-title">Le Pion</h3>
+      <p id="pion-desc">Se déplace d'une case vers l'avant. Lors de son premier mouvement, il peut avancer de deux cases. Il capture en diagonale vers l'avant.</p>
+    </section>
+
+    <section id="section-objectif" class="content-section">
+      <h2 id="objectif-title">Objectif du Jeu</h2>
+      <p id="objectif-desc">L'objectif est de mettre le roi adverse en échec et mat, c'est-à-dire dans une position où :</p>
+      <ul id="objectif-list">
+        <li>Le roi est en échec (menacé de capture)</li>
+        <li>Le joueur ne peut pas déplacer son roi hors d'échec</li>
+        <li>Le joueur ne peut pas capturer la pièce qui met en échec</li>
+        <li>Le joueur ne peut pas bloquer l'échec</li>
+      </ul>
+    </section>
+
+    <section id="section-regles" class="content-section">
+      <h2 id="regles-title">Règles de Base</h2>
+      <ul id="regles-list">
+        <li>Les blancs jouent en premier</li>
+        <li>Les joueurs jouent à tour de rôle</li>
+        <li>Un joueur ne peut pas passer son tour</li>
+        <li>Un joueur ne peut pas déplacer ses pièces sur des cases occupées par ses propres pièces</li>
+        <li>Toutes les pièces capturent en remplaçant la pièce adverse sur sa case (sauf pour la prise en passant)</li>
+        <li>Un joueur ne peut pas mettre ou laisser son propre roi en échec.</li>
+      </ul>
+    </section>
+  </main>
+  
+  <a href="specificite.html" class="hero-page">Continuer vers les specificités</a> 
+  <a href="/" id="hero-page-retour" class="hero-page">Retounez vers l'accueil</a>
+  
+  <footer id="base-footer" class="site-footer">
+      <p>&copy; 2025 Chess School |
+        <a href="apropos.html" style="color: #b9b0b0; text-decoration: underline;">À Propos</a> |
+        <a href="cgu.html" style="color: #b9b0b0; text-decoration: underline;">CGU</a> |
+        <a href="mentions-legales.html" style="color: #b9b0b0; text-decoration: underline;">Mentions Légales</a>
+      </p>
+    </footer>
+  </div>
+    <script src="javascript/script.js"></script>
+    <script src="javascript/save-system.js"></script>
+    <script src="javascript/burger-menu.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Déterminer quelle étape du parcours valider
+        const pageName = window.location.pathname.split('/').pop().replace('.html', '');
+
+
+
+         // Header scroll
+        const header = document.getElementById('siteHeader');
+        window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
+
+        // Vérifier si l'utilisateur a lu toute la page (scroll jusqu'en bas)
+        let hasScrolledToBottom = false;
+
+        window.addEventListener('scroll', function () {
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          const scrollHeight = document.documentElement.scrollHeight;
+          const clientHeight = document.documentElement.clientHeight;
+
+          if (scrollTop + clientHeight >= scrollHeight - 100) {
+            if (!hasScrolledToBottom) {
+              hasScrolledToBottom = true;
+              markPathProgress(pageName);
+            }
+          }
+        });
+
+        function markPathProgress(page) {
+          if (!window.ChessSchoolProgress) return;
+
+          // Mapper les pages aux étapes du parcours
+          const pathMapping = {
+            'base': 'fundamentalRules',
+            'specificite': 'specialMoves'
+          };
+
+          const pathKey = pathMapping[page];
+          if (pathKey) {
+            window.ChessSchoolProgress.updateLearningPath(pathKey, true);
+          }
+        }
+      });
+    </script>
+</body>
+</html>
