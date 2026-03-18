@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Chess School</title>
+    <title>Chess School — Quiz</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -56,24 +56,28 @@
             overflow-x: hidden;
         }
 
-/* ===== HEADER ===== */
+        /* ===== HEADER ===== */
         header {
             position: fixed;
-            top: 0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            right: 0;
             z-index: 100;
             padding: 20px 48px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(to bottom, rgba(14,13,11,0.95), transparent);
+            background: linear-gradient(to bottom, rgba(14, 13, 11, 0.95), transparent);
             backdrop-filter: blur(0px);
             transition: all 0.4s;
         }
+
         header.scrolled {
             padding: 14px 48px;
-            background: rgba(14,13,11,0.95), transparent;
+            background: rgba(14, 13, 11, 0.95), transparent;
             backdrop-filter: blur(12px);
         }
+
         .brand {
             font-family: 'Sora', serif;
             font-size: 1.5rem;
@@ -82,19 +86,30 @@
             text-decoration: none;
             letter-spacing: 0.02em;
         }
-        .brand span { color: var(--gold); }
 
-        #totalnav { display: flex; gap: 32px; align-items: center; }
+        .brand span {
+            color: var(--gold);
+        }
+
+        #totalnav {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
         #navindex {
             font-size: 0.875rem;
             font-weight: 400;
-            color: rgba(245,240,232,0.65);
+            color: rgba(245, 240, 232, 0.65);
             text-decoration: none;
             letter-spacing: 0.05em;
             text-transform: uppercase;
             transition: color 0.2s;
         }
-        #navindex:hover { color: var(--gold); }
+
+        #navindex:hover {
+            color: var(--gold);
+        }
 
         /* Burger styles were moved to main CSS; inline rules removed */
         /* ===== HERO ===== */
@@ -282,6 +297,7 @@
             transform: scale(1.05);
             box-shadow: 0 8px 16px rgba(64, 140, 153, 0.4);
         }
+
         .btn-primary:active {
             transform: scale(0.98);
         }
@@ -297,7 +313,7 @@
             transition: all 0.2s;
             border-bottom: 1px solid transparent;
         }
-        
+
         .btn-secondary:hover {
             color: #e4e4e7;
         }
@@ -688,6 +704,7 @@
             transition: color 0.2s;
             min-width: 60px;
         }
+
         .step-title {
             font-family: 'Playfair Display', serif;
             font-size: 1.15rem;
@@ -1043,17 +1060,18 @@
 </head>
 
 <body>
-    
+
     <!-- Header -->
     <header id="siteHeader">
         <a href="index.html" class="brand">Chess <span>School</span></a>
         <nav id="totalnav">
-            <a  id="navindex"   href="base.html">Les Bases</a>
-            <a  id="navindex"   href="specificite.html">Spécificités</a>
-            <a  id="navindex"   href="ouverture.html">Ouvertures</a>
-            <a  id="navindex"   href="videos.html">Vidéos</a>
-            <a  id="navindex"   href="quiz.html">Quiz</a>
-            <button id="burgerBtn" class="burger-btn" aria-expanded="false" aria-controls="burgerMenu" aria-label="Ouvrir le menu">
+            <a id="navindex" href="base.html">Les Bases</a>
+            <a id="navindex" href="specificite.html">Spécificités</a>
+            <a id="navindex" href="ouverture.html">Ouvertures</a>
+            <a id="navindex" href="videos.html">Vidéos</a>
+            <a id="navindex" href="quiz.html">Quiz</a>
+            <button id="burgerBtn" class="burger-btn" aria-expanded="false" aria-controls="burgerMenu"
+                aria-label="Ouvrir le menu">
                 <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
                     <rect x="3" y="5" width="18" height="2" fill="#000" rx="1" />
                     <rect x="3" y="11" width="18" height="2" fill="#000" rx="1" />
@@ -1087,235 +1105,78 @@
 
     <!-- Hero -->
     <section class="hero">
-        <div class="hero-orb"></div>
-        <div class="hero-content">
-            <div class="hero-tag">100% Gratuit · En Français</div>
-            <h1 class="hero-title">
-                Bienvenue sur<br>
-                Chess<em> School</em>
-                <span class="line2">Apprendre facilement et gratuitement les échecs</span>
-            </h1>
-            <p class="hero-desc">
-                Avec les differentes pages, Apprenez à votre rythme, gratuitement.
-            </p>
-            <div class="hero-actions">
-                <a href="base.html" class="btn-primary">
-                    Commencer maintenant
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2.5">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                </a>
-                <a href="videos.html" class="btn-secondary">
-                    Voir les vidéos
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 3l14 9-14 9V3z" fill="currentColor" />
-                    </svg>
-                </a>
-            </div>
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <span class="stat-num">10</span>
-                    <span class="stat-label">Page a explorer</span>
+        <main id="mainbases">
+            <div class="quiz-container">
+                <div class="start-screen" id="start-screen">
+                    <div class="quiz-header">
+                        <h2>Quiz d'Échecs</h2>
+                        <p>Testez vos connaissances des règles et stratégies</p>
+                    </div>
+        
+                    <div class="difficulty-selector">
+                        <button class="difficulty-btn active" data-difficulty="facile">
+                            Facile<br><small>(10 questions)</small>
+                        </button>
+                        <button class="difficulty-btn" data-difficulty="moyen">
+                            Moyen<br><small>(15 questions)</small>
+                        </button>
+                        <button class="difficulty-btn" data-difficulty="difficile">
+                            Difficile<br><small>(20 questions)</small>
+                        </button>
+                    </div>
+        
+                    <div style="text-align: center; margin-top: 40px;">
+                        <button class="restart-btn" id="start-btn">Commencer le Quiz</button>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-num">10^123</span>
-                    <span class="stat-label">Possibilités</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-num">0</span>
-                    <span class="stat-label">Euro a dépenser</span>
-                </div>
-            </div>
-        </div>
-        <div class="hero-visual">
-            <div class="chess-board-display">
-                <div class="board-glow"></div>
-                <div class="board-label tl">
-                    <span class="label-title">Roi en danger</span>
-                    <span class="label-sub">Apprenez à le protéger</span>
-                </div>
-                <div class="board-label br">
-                    <span class="label-title">Mat en 2 coups</span>
-                    <span class="label-sub">Puzzle du jour</span>
-                </div>
-                <div class="board-wrap" id="chessBoard"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Marquee -->
-    <div class="marquee-section">
-        <div class="marquee-track" id="marqueeTrack">
-            <div class="marquee-item">Règles des pièces</div>
-            <div class="marquee-item">Tactiques & Stratégie</div>
-            <div class="marquee-item">Ouvertures célèbres</div>
-            <div class="marquee-item">Puzzles & Exercices</div>
-            <div class="marquee-item">Vidéos pédagogiques</div>
-            <div class="marquee-item">Le roque & prise en passant</div>
-            <div class="marquee-item">Glossaire complet</div>
-            <div class="marquee-item">Progressez rapidement</div>
-            <!-- duplicate for seamless loop -->
-            <div class="marquee-item">Règles des pièces</div>
-            <div class="marquee-item"> Tactiques & Stratégie</div>
-            <div class="marquee-item">Ouvertures célèbres</div>
-            <div class="marquee-item">Puzzles & Exercices</div>
-            <div class="marquee-item">Vidéos pédagogiques</div>
-            <div class="marquee-item">Le roque & prise en passant</div>
-            <div class="marquee-item">Glossaire complet</div>
-            <div class="marquee-item">Progressez rapidement</div>
-        </div>
-    </div>
-
-    <!-- Features -->
-    <section class="section reveal">
-        <div class="section-tag">Ce que vous apprendrez</div>
-        <h2 class="section-title">Tout pour <em>progresser</em><br>au même endroit</h2>
-        <p class="section-desc">Un parcours d'apprentissage structuré qui vous emmène des règles fondamentales jusqu'aux
-            stratégies avancées.</p>
-
-        <div class="features-grid">
-            <a href="base.html" class="feature-card">
-                <span class="card-num">01</span>
-                <h3 class="card-title">Les Bases</h3>
-                <p class="card-text">Mouvement des pièces, règles du jeu, échec et mat. Tout ce qu'il faut pour jouer
-                    votre première partie.</p>
-                <span class="card-link">Explorer →</span>
-            </a>
-            <a href="specificite.html" class="feature-card">
-                <span class="card-num">02</span>
-                <h3 class="card-title">Spécificités</h3>
-                <p class="card-text">Le roque, la prise en passant, la promotion du pion — les règles spéciales qui
-                    changent tout.</p>
-                <span class="card-link">Explorer →</span>
-            </a>
-            <a href="ouverture.html" class="feature-card">
-                <span class="card-num">03</span>
-                <h3 class="card-title">Ouvertures</h3>
-                <p class="card-text">Les grandes ouvertures classiques : Sicilienne, Ruy Lopez, Gambit Dame et bien
-                    d'autres.</p>
-                <span class="card-link">Explorer →</span>
-            </a>
-            <a href="videos.html" class="feature-card">
-                <span class="card-num">04</span>
-                <h3 class="card-title">Vidéos</h3>
-                <p class="card-text">Des vidéos pédagogiques soigneusement sélectionnées pour visualiser et comprendre
-                    les concepts.</p>
-                <span class="card-link">Explorer →</span>
-            </a>
-        </div>
-    </section>
-
-    <!-- How it works -->
-    <div class="how-section">
-        <div class="how-inner">
-            <div class="reveal">
-                <div class="section-tag">Comment ça marche</div>
-                <h2 class="section-title">Simple.<br><em>Efficace.</em><br>Gratuit.</h2>
-                <div class="steps">
-                    <!-- empty placeholder removed -->
-                    <div class="step">
-                        <div class="step-num">01</div>
-                        <div class="step-content">
-                            <h3 class="step-title">Suivez le parcours</h3>
-                            <p class="step-desc">Des leçons progressives du débutant à l'avancé. Avancez à votre rythme.
-                            </p>
+        
+                <!-- Écran du quiz -->
+                <div class="quiz-screen" id="quiz-screen">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+        
+                    <div class="question-card" id="question-card">
+                        <div class="question-number" id="question-number">Question 1/10</div>
+                        <h3 class="question-text" id="question-text"></h3>
+                        <div class="answers-grid" id="answers-grid"></div>
+                        <div class="feedback" id="feedback">
+                            <div class="feedback-title" id="feedback-title"></div>
+                            <div id="feedback-text"></div>
                         </div>
+                        <button class="next-btn" id="next-btn">Question suivante →</button>
                     </div>
-                    <div class="step">
-                        <div class="step-num">02</div>
-                        <div class="step-content">
-                            <h3 class="step-title">Pratiquez & progressez</h3>
-                            <p class="step-desc">Puzzles, quiz, échiquier interactif — mettez en pratique ce que vous
-                                avez appris.</p>
+                </div>
+        
+                <!-- Écran des résultats -->
+                <div class="results-screen" id="results-screen">
+                    <div class="score-card">
+                        <div class="score-emoji" id="score-emoji">🎉</div>
+                        <h2 class="score-title">Quiz Terminé !</h2>
+                        <div class="score-value" id="score-value">0/10</div>
+                        <p class="score-message" id="score-message"></p>
+        
+                        <div class="score-details">
+                            <div class="score-stat">
+                                <div class="score-stat-value" id="correct-count">0</div>
+                                <div class="score-stat-label">Bonnes réponses</div>
+                            </div>
+                            <div class="score-stat">
+                                <div class="score-stat-value" id="incorrect-count">0</div>
+                                <div class="score-stat-label">Mauvaises réponses</div>
+                            </div>
+                            <div class="score-stat">
+                                <div class="score-stat-value" id="percentage">0%</div>
+                                <div class="score-stat-label">Pourcentage</div>
+                            </div>
                         </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="reveal">
-                <div class="pieces-showcase">
-                    <div class="piece-tile"><img class="piece-emoji" src="https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg" alt="Roi"><span class="piece-name">Roi</span></div>
-                    <div class="piece-tile"><img class="piece-emoji" src="https://upload.wikimedia.org/wikipedia/commons/1/15/Chess_qlt45.svg" alt="Dame"><span class="piece-name">Dame</span></div>
-                    <div class="piece-tile"><img class="piece-emoji" src="https://upload.wikimedia.org/wikipedia/commons/7/72/Chess_rlt45.svg" alt="Tour"><span class="piece-name">Tour</span></div>
-                    <div class="piece-tile"><img class="piece-emoji" src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Chess_blt45.svg" alt="Fou"><span class="piece-name">Fou</span></div>
-                    <div class="piece-tile"><img class="piece-emoji" src="https://upload.wikimedia.org/wikipedia/commons/7/70/Chess_nlt45.svg" alt="Cavalier"><span class="piece-name">Cavalier</span>
-                    </div>
-                    <div class="piece-tile"><img class="piece-emoji" src="https://upload.wikimedia.org/wikipedia/commons/4/45/Chess_plt45.svg" alt="Pion"><span class="piece-name">Pion</span></div>
-                    <div class="piece-tile" style="grid-column: span 3; aspect-ratio: 3/1;">
-                        <div style="text-align:center; padding: 20px;">
-                            <p
-                                style="font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; margin-bottom: 8px;">
-                                6 pièces, 10^120 possibilités</p>
-                            <p style="font-size:0.8rem; color:var(--muted);">Chaque pièce a sa propre personnalité.
-                                Apprenez à les maîtriser.</p>
-                        </div>
+        
+                        <button class="restart-btn" id="restart-btn">Recommencer</button>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Testimonials -->
-    <section class="testimonials-section reveal">
-        <div class="section-tag">Ils en parlent</div>
-        <h2 class="section-title">Des joueurs qui ont <em>progressé</em></h2>
-
-        <div class="testimonials-grid">
-            <div class="testimonial-card">
-                <div class="t-quote">"</div>
-                <p class="t-text">Grâce à Chess School, j'ai enfin compris les ouvertures. Les explications sont claires
-                    et le site est vraiment bien fait.</p>
-                <div class="t-author">
-                    <div class="t-avatar">ES</div>
-                    <div>
-                        <div class="t-name">Esteban</div>
-                        <div class="t-level">Débutante → Intermédiaire</div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card">
-                <div class="t-quote">"</div>
-                <p class="t-text">Le meilleur site francophone pour apprendre les échecs. Gratuit, complet, et sans pub
-                    agressive. Je recommande à tous.</p>
-                <div class="t-author">
-                    <div class="t-avatar">BI</div>
-                    <div>
-                        <div class="t-name">Bilal</div>
-                        <div class="t-level">Joueur intermédiaire</div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card">
-                <div class="t-quote">"</div>
-                <p class="t-text">J'ai commencé les échecs à 40 ans grâce à Chess School. Les puzzles et les vidéos
-                    m'ont beaucoup aidé à progresser rapidement.</p>
-                <div class="t-author">
-                    <div class="t-avatar">AU</div>
-                    <div>
-                        <div class="t-name">Aurélie</div>
-                        <div class="t-level">Nouvelle joueuse</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </main>
     </section>
-
-    <!-- CTA -->
-    <div class="cta-section reveal">
-        <h2 class="cta-title">Prêt à faire<br>votre premier <em>mouvement</em> ?</h2>
-        <p class="cta-desc">Rejoignez des centaines d'apprenants et commencez votre voyage aux échecs aujourd'hui —
-            gratuitement.</p>
-        <div class="cta-actions">
-            <a href="base.html" class="btn-primary">
-                Commencer maintenant
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-            </a>
-            <a href="quiz.html" class="btn-secondary">Tester mes connaissances</a>
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer>
@@ -1329,67 +1190,42 @@
             <a href="https://discord.gg/C4q8Cae4Ju">Discord</a>
             <a href="https://github.com/Devlaubin/Chess-school">Github</a>
         </div>
-        <div class="footer-copy">© 2026 Chess School v5 ALPHA/PREVIEW</div>
+        <div class="footer-copy">© 2026 Chess School v5</div>
     </footer>
 
-<script src="javascript/piece-util.js"></script>
-<script>
-    alert("Le site est actuellement en maintenance, seule la page d'accueil a été conservée, merci de votre compréhension.")
+    <script src="javascript/piece-util.js"></script>
+    <script>
 
-    // Header scroll
-    const header = document.getElementById('siteHeader');
-    window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
+        // Header scroll
+        const header = document.getElementById('siteHeader');
+        window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
 
-    // helper for boards: fall back when piece-util isn't loaded yet
-    function localCreatePiece(symbol) {
-        if (window.createPieceElement) {
-            return window.createPieceElement(symbol);
-        }
-        const span = document.createElement('span');
-        span.className = 'piece';
-        span.textContent = symbol;
-        return span;
-    }
-
-    // Chess board
-    const board = document.getElementById('chessBoard');
-    const startPosition = [
-        ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜'],
-        ['♟', '♟', '♟', '♟', '♟', '♟', '♟', '♟'],
-        ['', '', '', '', '', '', '', ''],
-        ['', '', '', '', '', '', '', ''],
-        ['', '', '', '', '', '', '', ''],
-        ['', '', '', '', '', '', '', ''],
-        ['♙', '♙', '♙', '♙', '♙', '♙', '♙', '♙'],
-        ['♖', '♘', '♗', '♕', '♔', '♗', '♘', '♖'],
-    ];
-    startPosition.forEach((row, r) => {
-        row.forEach((piece, c) => {
-            const cell = document.createElement('div');
-            const isLight = (r + c) % 2 === 0;
-            cell.className = 'cell ' + (isLight ? 'light' : 'dark');
-            if (piece) {
-                cell.appendChild(localCreatePiece(piece));
+        // helper for boards: fall back when piece-util isn't loaded yet
+        function localCreatePiece(symbol) {
+            if (window.createPieceElement) {
+                return window.createPieceElement(symbol);
             }
-            board.appendChild(cell);
-        });
-    });
+            const span = document.createElement('span');
+            span.className = 'piece';
+            span.textContent = symbol;
+            return span;
+        }
 
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
-        });
-    }, { threshold: 0.15 });
-    reveals.forEach(el => observer.observe(el));
-</script>
+        // Scroll reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+            });
+        }, { threshold: 0.15 });
+        reveals.forEach(el => observer.observe(el));
+    </script>
 
     <!-- Scripts originaux (préservés) -->
     <script src="javascript/progress-tracker.js"></script>
     <script src="javascript/script.js"></script>
     <script src="javascript/save-system.js"></script>
-    <script src="javascript/burger-menu.js" ></script>
+    <script src="javascript/burger-menu.js"></script>
 
 </body>
 

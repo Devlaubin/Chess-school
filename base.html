@@ -1,196 +1,1212 @@
 <!doctype html>
 <html lang="fr">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Chess School — Base</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/accueil.css">
-  <link rel="stylesheet" href="css/responsive.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/vnd.icon" href="images/favicon.png">
-  <script src="javascript/piece-util.js"></script>
-  <script src="javascript/progress-tracker.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Chess School — Base</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/accueil.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/vnd.icon" href="images/favicon.png">
+    <script src="javascript/piece-util.js"></script>
+    <script src="javascript/progress-tracker.js"></script>
 </head>
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #F5F0E8;
+            --dark: #0E0D0B;
+            --gold: #4c9bc9;
+            --gold-light: #408c99;
+            --brown: #2e475c;
+            --muted: #ffffff;
+            --board-light: #b5ecf0;
+            --board-dark: #599bb3;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        footer, nav a, #boutonframe{
+            font-family: 'DM Sans', sans-serif;
+            color: var(--cream);
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 14px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(14, 13, 11, 0.95), transparent);
+            backdrop-filter: blur(0px);
+            transition: all 0.4s;
+        }
+
+        header.scrolled {
+            padding: 14px 48px;
+            background: #0E0D0B;
+        }
+
+        .brand {
+            font-family: 'Sora', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--cream);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+        }
+
+        .brand span {
+            color: var(--gold);
+        }
+
+        #totalnav {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        #navindex {
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: rgba(245, 240, 232, 0.65);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        #navindex:hover {
+            color: var(--gold);
+        }
+
+        /* Burger styles were moved to main CSS; inline rules removed */
+        /* ===== HERO ===== */
+        .hero {
+            margin-top: 100px;
+        }
+        
+        @keyframes boardPulse {
+
+            0%,
+            100% {
+                opacity: 0.06;
+                transform: translateY(-50%) rotate(0deg) scale(1);
+            }
+
+            50% {
+                opacity: 0.10;
+                transform: translateY(-50%) rotate(2deg) scale(1.02);
+            }
+        }
+
+        /* Gold gradient orb */
+        .hero-orb {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(60, 165, 214, 0.12) 0%, transparent 70%);
+            top: -100px;
+            right: 20%;
+            pointer-events: none;
+            animation: orbFloat 12s ease-in-out infinite;
+        }
+
+        @keyframes orbFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-40px);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--gold);
+            border: 1px solid #408c99;
+            padding: 6px 16px;
+            border-radius: 100px;
+            margin-bottom: 28px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.2s forwards;
+        }
+
+        .hero-tag::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: blink 1.5s ease infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.2;
+            }
+        }
+
+        h1.hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3.5rem, 6vw, 6rem);
+            font-weight: 900;
+            line-height: 1.0;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.4s forwards;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .hero-title .line2 {
+            display: block;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 0.7em;
+            color: rgba(245, 240, 232, 0.45);
+            margin-top: 4px;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: rgba(245, 240, 232, 0.6);
+            max-width: 420px;
+            margin: 28px 0 40px;
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.6s forwards;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.8s forwards;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--gold);
+            color: var(--dark);
+            padding: 16px 32px;
+            border-radius: 13px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(64, 140, 153, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(245, 240, 232, 0.7);
+            font-size: 0.875rem;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
+            border-bottom: 1px solid transparent;
+        }
+
+        .btn-secondary:hover {
+            color: #e4e4e7;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 64px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(245, 240, 232, 0.08);
+            opacity: 0;
+            animation: fadeUp 0.8s ease 1s forwards;
+        }
+
+        .stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--gold);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+        }
+
+        /* Hero visual side */
+        .hero-visual {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            animation: fadeIn 1.2s ease 0.5s forwards;
+        }
+
+        .chess-board-display {
+            position: relative;
+            width: clamp(280px, 36vw, 480px);
+            aspect-ratio: 1;
+        }
+
+        .board-wrap {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            border: 3px solid var(--gold);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(76, 155, 201, 0.2), inset 0 0 60px rgba(0, 0, 0, 0.3);
+            cursor: grab;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(14px, 2.2vw, 32px);
+            position: relative;
+        }
+
+        .cell.light {
+            background: var(--board-light);
+        }
+
+        .cell.dark {
+            background: var(--board-dark);
+        }
+
+        .cell .piece {
+            line-height: 1;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+            transition: transform 0.2s;
+        }
+
+        .cell:hover .piece {
+            transform: scale(1.15);
+        }
+
+        /* Floating glow around board */
+        .board-glow {
+            position: absolute;
+            inset: -30px;
+            background: radial-gradient(ellipse at center, rgba(88, 76, 201, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Floating label */
+        .board-label {
+            position: absolute;
+            background: rgba(14, 13, 11, 0.9);
+            border: 1px solid rgba(76, 130, 201, 0.712);
+            border-radius: 4px;
+            padding: 10px 16px;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            backdrop-filter: blur(8px);
+            animation: floatLabel 4s ease-in-out infinite;
+        }
+
+        .board-label.tl {
+            top: -20px;
+            left: -40px;
+            animation-delay: 0s;
+            z-index: 1000;
+        }
+
+        .board-label.br {
+            bottom: -20px;
+            right: -40px;
+            animation-delay: 2s;
+            z-index: 1000;
+        }
+
+        .board-label .label-title {
+            color: var(--gold);
+            font-weight: 500;
+            display: block;
+        }
+
+        .board-label .label-sub {
+            color: var(--muted);
+            font-size: 0.7rem;
+        }
+
+        @keyframes floatLabel {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* ===== MARQUEE ===== */
+        .marquee-section {
+            overflow: hidden;
+            border-top: 1px solid rgba(245, 240, 232, 0.06);
+            border-bottom: 1px solid rgba(245, 240, 232, 0.06);
+            padding: 18px 0;
+            background: rgba(76, 155, 201, 0.04);
+            cursor: default;
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 64px;
+            animation: marquee 20s linear infinite;
+            width: max-content;
+        }
+
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            white-space: nowrap;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+        }
+
+        .marquee-item span {
+            color: var(--gold);
+            font-size: 1.1rem;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ===== FEATURES ===== */
+        
+
+        .section-tag {
+            font-size: 0.72rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .section-title em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .section-desc {
+            font-size: 1rem;
+            color: rgba(245, 240, 232, 0.5);
+            line-height: 1.7;
+            max-width: 520px;
+            font-weight: 300;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            margin-top: 64px;
+        }
+
+        .feature-card {
+            background: rgba(51, 82, 150, 0.03);
+            border: 1px solid rgba(111, 169, 216, 0.06);
+            padding: 40px 32px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.35s;
+            position: relative;
+            overflow: hidden;
+            display: block;
+            border-radius: 12px;
+            margin-right: 12px;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s;
+        }
+
+        .feature-card:hover {
+            background: rgba(94, 143, 216, 0.06);
+            border-color: rgba(86, 119, 230, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 24px;
+            filter: grayscale(0.2);
+        }
+
+        .card-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            color: rgba(71, 221, 201, 0.575);
+            position: absolute;
+            top: -10px;
+            right: 2px;
+            line-height: 1;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--cream);
+        }
+
+        .card-text {
+            font-size: 0.875rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 24px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .feature-card:hover .card-link {
+            opacity: 1;
+        }
+
+        /* ===== HOW IT WORKS ===== */
+        .how-section {
+            padding: 120px 48px;
+            background: rgba(245, 240, 232, 0.02);
+            border-top: 1px solid rgba(245, 240, 232, 0.05);
+            border-bottom: 1px solid rgba(245, 240, 232, 0.05);
+        }
+
+        .how-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 48px;
+        }
+
+        .step {
+            display: flex;
+            gap: 24px;
+            padding: 28px 0;
+            border-bottom: 1px solid rgba(245, 240, 232, 0.06);
+            cursor: default;
+            transition: all 0.2s;
+        }
+
+        .step:hover .step-num {
+            color: var(--gold);
+        }
+
+        .step-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: rgba(245, 240, 232, 0.06);
+            line-height: 1;
+            transition: color 0.2s;
+            min-width: 60px;
+        }
+
+        .step-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .step-desc {
+            font-size: 0.875rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* Piece showcase */
+        .pieces-showcase {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+        }
+
+        .piece-tile {
+            aspect-ratio: 1;
+            background: rgba(32, 116, 211, 0.03);
+            border: 1px solid rgba(245, 240, 232, 0.06);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+
+        .piece-tile::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(40, 123, 172, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .piece-tile:hover {
+            border-color: rgba(76, 155, 201, 0.3);
+            transform: scale(1.04);
+            z-index: 1;
+        }
+
+        .piece-tile:hover::after {
+            opacity: 1;
+        }
+
+        .piece-emoji {
+            /* supports both emoji text and <img> elements */
+            font-size: 2.5rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+        }
+
+        .piece-name {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials-section {
+            padding: 120px 48px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 64px;
+        }
+
+        .testimonial-card {
+            background: rgba(44, 243, 243, 0.03);
+            border: 1px solid rgba(70, 122, 199, 0.07);
+            padding: 36px;
+            border-radius: 13px;
+            transition: all 0.3s;
+        }
+
+        .testimonial-card:hover {
+            border-color: rgba(76, 116, 201, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .t-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .t-text {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: rgba(245, 240, 232, 0.65);
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        .t-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .t-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .t-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .t-level {
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            margin: 0 48px 120px;
+            background: linear-gradient(135deg, rgba(76, 141, 201, 0.15) 0%, rgba(11, 13, 14, 0) 50%, rgba(92, 61, 46, 0.15) 100%);
+            border: 1px solid rgba(76, 134, 201, 0.2);
+            padding: 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 14px;
+        }
+
+        .cta-section::before {
+            /* use pawn image instead of emoji for better rendering */
+            content: url('https://upload.wikimedia.org/wikipedia/commons/c/c7/Chess_pdt45.svg');
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            top: -80px;
+            right: -40px;
+            opacity: 0.03;
+            line-height: 1;
+        }
+
+        .cta-section::after {
+            content: url('https://upload.wikimedia.org/wikipedia/commons/f/f0/Chess_kdt45.svg');
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            bottom: -60px;
+            left: -20px;
+            opacity: 0.03;
+            line-height: 1;
+        }
+
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .cta-title em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .cta-desc {
+            font-size: 1rem;
+            color: rgba(245, 240, 232, 0.55);
+            margin-bottom: 48px;
+            font-weight: 300;
+        }
+
+        .cta-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            border-top: 1px solid rgba(232, 241, 245, 0.07);
+            padding: 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .footer-brand {
+            font-family: 'Sora', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--cream);
+        }
+
+        .footer-brand span {
+            color: var(--gold);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .footer-copy {
+            font-size: 0.75rem;
+            color: rgba(138, 128, 112, 0.5);
+        }
+
+        /* ===== SCROLL REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== MOBILE ===== */
+        /* mobile rules were simplified previously; navigation remains visible like on other pages */
+        @media (max-width: 900px) {
+            header {
+                padding: 16px 24px;
+            }
+
+            header.scrolled {
+                padding: 12px 24px;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 100px 24px 60px;
+                text-align: center;
+            }
+
+            .hero::before {
+                display: none;
+            }
+
+            .hero-desc {
+                margin: 20px auto 32px;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+                gap: 32px;
+            }
+
+            .hero-visual {
+                margin-top: 60px;
+            }
+
+            .chess-board-display {
+                width: clamp(240px, 80vw, 340px);
+            }
+
+            .board-label {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .how-inner {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 80px 24px;
+            }
+
+            .how-section {
+                padding: 80px 24px;
+            }
+
+            .cta-section {
+                margin: 0 24px 80px;
+                padding: 60px 32px;
+            }
+
+            footer {
+                padding: 32px 24px;
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pieces-showcase {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        li{
+            margin-left: 20px;
+        }
+        .page-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            padding: 20px 20px 20px;
+            flex-wrap: wrap;
+            max-width: 1300px;
+            margin: 0 auto;
+            border-top: 1px solid rgba(245, 240, 232, 0.06);
+        }
+    </style>
+</head>
+
 <body>
-  <!-- Barre de progression -->
-  <div class="reading-progress" id="reading-progress"></div>
-  <div class="progress-circle" id="progress-circle">
-    <span id="progress-percent">0%</span>
-  </div>
-  <div class="site-wrapper">
-  <header id="base-header" class="site-header card">
-    <div class="header-row">
-      <a href="index.html" class="brand">
-        <h1 id="titre-page">Chess School — Base</h1>
-      </a>
+    <!-- Header -->
+    <header id="siteHeader">
+        <a href="index.html" class="brand">Chess <span>School</span></a>
+        <nav id="totalnav">
+            <a id="navindex" href="base.html">Les Bases</a>
+            <a id="navindex" href="specificite.html">Spécificités</a>
+            <a id="navindex" href="ouverture.html">Ouvertures</a>
+            <a id="navindex" href="videos.html">Vidéos</a>
+            <a id="navindex" href="quiz.html">Quiz</a>
+            <button id="burgerBtn" class="burger-btn" aria-expanded="false" aria-controls="burgerMenu"
+                aria-label="Ouvrir le menu">
+                <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="5" width="18" height="2" fill="#000" rx="1" />
+                    <rect x="3" y="11" width="18" height="2" fill="#000" rx="1" />
+                    <rect x="3" y="17" width="18" height="2" fill="#000" rx="1" />
+                </svg>
+            </button>
+        </nav>
+    </header>
 
-      <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
-        <div class="nav-links" id="main-nav-list">
-          <a class="nav-link" href="index.html">Accueil</a>
-          <a class="nav-link active" href="base.html">Base</a>
-          <a class="nav-link" href="specificite.html">Spécificités</a>
-          <a class="nav-link" href="ouverture.html">Ouvertures</a>
-          <a class="nav-link" href="videos.html">Vidéos</a>
-          <a class="nav-link" href="profil.html">Profil</a>
-        </div>
-
-        <button id="burgerBtn" class="burger-btn" aria-expanded="false" aria-controls="burgerMenu" aria-label="Ouvrir le menu">
-          <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-            <rect x="3" y="5" width="18" height="2" fill="#000" rx="1" />
-            <rect x="3" y="11" width="18" height="2" fill="#000" rx="1" />
-            <rect x="3" y="17" width="18" height="2" fill="#000" rx="1" />
-          </svg>
-        </button>
-      </nav>
+    <div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
+        <nav class="frame-nav">
+            <a class="nav-link" id="frame-link-home" href="index.html">Accueil</a>
+            <a class="nav-link" id="frame-link-base" href="base.html">Base</a>
+            <a class="nav-link" id="frame-link-specificite" href="specificite.html">Spécificités</a>
+            <a class="nav-link" id="frame-link-ouvertures" href="ouverture.html">Ouvertures</a>
+            <a class="nav-link" id="frame-link-videos" href="videos.html">Vidéos</a>
+            <div style="border-top: 2px solid rgba(255,255,255,0.2); margin: 12px 0;"></div>
+            <a class="nav-link" id="frame-link-profil" href="profil.html">Mon Profil</a>
+            <a class="nav-link" id="frame-link-chessboard" href="chessboard.html">Echiquier</a>
+            <a class="nav-link" id="frame-link-probleme" href="probleme.html">Puzzle</a>
+            <a class="nav-link" id="frame-link-quiz" href="quiz.html">Quiz</a>
+            <a class="nav-link" id="frame-link-glo" href="glossaire.html">Glossaire</a>
+            <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school/commits/main/">Log</a>
+            <a id="boutonframe" href="faq.html">FAQ</a>
+            <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school">Github</a>
+            <a id="boutonframe" href="https://discord.gg/C4q8Cae4Ju">Discord</a>
+        </nav>
     </div>
-  </header>
+    <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
 
-  <div id="side-frame" class="side-frame" role="dialog" aria-hidden="true" aria-label="Menu principal">
-    <nav class="frame-nav">
-      <a class="nav-link" id="frame-link-home" href="index.html">Accueil</a>
-      <a class="nav-link" id="frame-link-base" href="base.html">Base</a>
-      <a class="nav-link" id="frame-link-specificite" href="specificite.html">Spécificités</a>
-      <a class="nav-link" id="frame-link-ouvertures" href="ouverture.html">Ouvertures</a>
-      <a class="nav-link" id="frame-link-videos" href="videos.html">Vidéos</a>
-      <div style="border-top: 2px solid rgba(255,255,255,0.2); margin: 12px 0;"></div>
-      <a class="nav-link" id="frame-link-profil" href="profil.html">Mon Profil</a>
-      <a class="nav-link" id="frame-link-chessboard" href="chessboard.html">Echiquier</a>
-      <a class="nav-link" id="frame-link-probleme" href="probleme.html">Puzzle</a>
-      <a class="nav-link" id="frame-link-quiz" href="quiz.html">Quiz</a>
-      <a class="nav-link" id="frame-link-glo" href="glossaire.html">Glossaire</a>
-      <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school/commits/main/">Log</a>
-      <a id="boutonframe" href="faq.html">FAQ</a>
-      <a id="boutonframe" href="https://github.com/Devlaubin/Chess-school">Github</a>
-      <a id="boutonframe" href="https://discord.gg/C4q8Cae4Ju">Discord</a>
-    </nav>
-  </div>
-  <div id="frame-backdrop" class="frame-backdrop" tabindex="-1" aria-hidden="true"></div>
 
-  <main>
-  <main id="mainbases">
-    <section id="section-echiquier" class="content-section card">
-      <h2 id="echiquier-title">L'Échiquier</h2>
-      <p id="echiquier-desc">L'échiquier est composé de 64 cases (8×8) alternant entre cases claires et foncées.</p>
-      <p id="echiquier-orientation">Il s'oriente avec une case blanche dans le coin droit de chaque joueur.</p>
-      <p id="echiquier-notation">Les colonnes sont notées de <strong>a</strong> à <strong>h</strong> (de gauche à droite) et les rangées de <strong>1</strong> à <strong>8</strong> (de bas en haut).</p>
+    <!-- Hero -->
+    <section class="hero">
+        <main>
+            <main id="mainbases">
+                <section id="section-echiquier" class="content-section card">
+                    <h2 id="echiquier-title">L'Échiquier</h2>
+                    <p id="echiquier-desc">L'échiquier est composé de 64 cases (8×8) alternant entre cases claires et foncées.
+                    </p>
+                    <p id="echiquier-orientation">Il s'oriente avec une case blanche dans le coin droit de chaque joueur.</p>
+                    <p id="echiquier-notation">Les colonnes sont notées de <strong>a</strong> à <strong>h</strong> (de gauche à
+                        droite) et les rangées de <strong>1</strong> à <strong>8</strong> (de bas en haut).</p>
+                </section>
+        
+                <section id="section-pieces" class="content-section">
+                    <h2 id="pieces-title">Les Pièces et leur Placement</h2>
+                    <p id="pieces-desc">Chaque joueur dispose de 16 pièces :</p>
+                    <ol>
+                        <li>1 Roi - la pièce la plus importante</li>
+                        <li>1 Dame - la pièce la plus puissante</li>
+                        <li>2 Tours - des pièces puissantes qui se déplacent horizontalement et verticalement</li>
+                        <li>2 Fous - se déplacent en diagonale</li>
+                        <li>2 Cavaliers - les seules pièces qui peuvent sauter par-dessus d'autres pièces</li>
+                        <li>8 Pions - les pièces les plus nombreuses et les moins puissantes</li>
+                    </ol>
+        
+                    <section id="section-deplacements" class="content-section">
+                        <h2 id="deplacements-title">Déplacement des Pièces</h2>
+                        <h3 id="roi-title">Le Roi</h3>
+                        <p id="roi-desc">Se déplace d'une case dans n'importe quelle direction (horizontale, verticale,
+                            diagonale).</p>
+        
+                        <h3 id="dame-title">La Dame</h3>
+                        <p id="dame-desc">Se déplace dans n'importe quelle direction (horizontale, verticale, diagonale) et
+                            d'autant de cases que souhaité tant que le chemin est libre.</p>
+        
+                        <h3 id="tour-title">La Tour</h3>
+                        <p id="tour-desc">Se déplace horizontalement ou verticalement d'autant de cases que souhaité tant que le
+                            chemin est libre.</p>
+        
+                        <h3 id="fou-title">Le Fou</h3>
+                        <p id="fou-desc">Se déplace en diagonale d'autant de cases que souhaité tant que le chemin est libre.
+                        </p>
+        
+                        <h3 id="cavalier-title">Le Cavalier</h3>
+                        <p id="cavalier-desc">Se déplace en forme de "L" (2 cases dans une direction puis 1 case
+                            perpendiculairement). Il peut sauter par-dessus d'autres pièces.</p>
+        
+                        <h3 id="pion-title">Le Pion</h3>
+                        <p id="pion-desc">Se déplace d'une case vers l'avant. Lors de son premier mouvement, il peut avancer de
+                            deux cases. Il capture en diagonale vers l'avant.</p>
+                    </section>
+        
+                    <section id="section-objectif" class="content-section">
+                        <h2 id="objectif-title">Objectif du Jeu</h2>
+                        <p id="objectif-desc">L'objectif est de mettre le roi adverse en échec et mat, c'est-à-dire dans une
+                            position où :</p>
+                        <ul id="objectif-list">
+                            <li>Le roi est en échec (menacé de capture)</li>
+                            <li>Le joueur ne peut pas déplacer son roi hors d'échec</li>
+                            <li>Le joueur ne peut pas capturer la pièce qui met en échec</li>
+                            <li>Le joueur ne peut pas bloquer l'échec</li>
+                        </ul>
+                    </section>
+        
+                    <section id="section-regles" class="content-section">
+                        <h2 id="regles-title">Règles de Base</h2>
+                        <ul id="regles-list">
+                            <li>Les blancs jouent en premier</li>
+                            <li>Les joueurs jouent à tour de rôle</li>
+                            <li>Un joueur ne peut pas passer son tour</li>
+                            <li>Un joueur ne peut pas déplacer ses pièces sur des cases occupées par ses propres pièces</li>
+                            <li>Toutes les pièces capturent en remplaçant la pièce adverse sur sa case (sauf pour la prise en
+                                passant)</li>
+                            <li>Un joueur ne peut pas mettre ou laisser son propre roi en échec.</li>
+                        </ul>
+                    </section>
+            </main>
     </section>
 
-    <section id="section-pieces" class="content-section">
-      <h2 id="pieces-title">Les Pièces et leur Placement</h2>
-      <p id="pieces-desc">Chaque joueur dispose de 16 pièces :</p>
-    <ol>
-      <li>1 Roi - la pièce la plus importante</li>
-      <li>1 Dame - la pièce la plus puissante</li>
-      <li>2 Tours - des pièces puissantes qui se déplacent horizontalement et verticalement</li>
-      <li>2 Fous - se déplacent en diagonale</li>
-      <li>2 Cavaliers - les seules pièces qui peuvent sauter par-dessus d'autres pièces</li>
-      <li>8 Pions - les pièces les plus nombreuses et les moins puissantes</li>
-    </ol>
+    <!-- PAGE ACTIONS -->
+    <div class="page-actions">
+        <a href="/" class="btn-secondary">← Retour à l'accueil</a>
+        <a href="specificite.html" class="btn-primary">
+            Continuer vers les spécificités
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+        </a>
+    </div>
 
-    <section id="section-deplacements" class="content-section">
-      <h2 id="deplacements-title">Déplacement des Pièces</h2>
-      <h3 id="roi-title">Le Roi</h3>
-      <p id="roi-desc">Se déplace d'une case dans n'importe quelle direction (horizontale, verticale, diagonale).</p>
-
-      <h3 id="dame-title">La Dame</h3>
-      <p id="dame-desc">Se déplace dans n'importe quelle direction (horizontale, verticale, diagonale) et d'autant de cases que souhaité tant que le chemin est libre.</p>
-
-      <h3 id="tour-title">La Tour</h3>
-      <p id="tour-desc">Se déplace horizontalement ou verticalement d'autant de cases que souhaité tant que le chemin est libre.</p>
-
-      <h3 id="fou-title">Le Fou</h3>
-      <p id="fou-desc">Se déplace en diagonale d'autant de cases que souhaité tant que le chemin est libre.</p>
-
-      <h3 id="cavalier-title">Le Cavalier</h3>
-      <p id="cavalier-desc">Se déplace en forme de "L" (2 cases dans une direction puis 1 case perpendiculairement). Il peut sauter par-dessus d'autres pièces.</p>
-
-      <h3 id="pion-title">Le Pion</h3>
-      <p id="pion-desc">Se déplace d'une case vers l'avant. Lors de son premier mouvement, il peut avancer de deux cases. Il capture en diagonale vers l'avant.</p>
-    </section>
-
-    <section id="section-objectif" class="content-section">
-      <h2 id="objectif-title">Objectif du Jeu</h2>
-      <p id="objectif-desc">L'objectif est de mettre le roi adverse en échec et mat, c'est-à-dire dans une position où :</p>
-      <ul id="objectif-list">
-        <li>Le roi est en échec (menacé de capture)</li>
-        <li>Le joueur ne peut pas déplacer son roi hors d'échec</li>
-        <li>Le joueur ne peut pas capturer la pièce qui met en échec</li>
-        <li>Le joueur ne peut pas bloquer l'échec</li>
-      </ul>
-    </section>
-
-    <section id="section-regles" class="content-section">
-      <h2 id="regles-title">Règles de Base</h2>
-      <ul id="regles-list">
-        <li>Les blancs jouent en premier</li>
-        <li>Les joueurs jouent à tour de rôle</li>
-        <li>Un joueur ne peut pas passer son tour</li>
-        <li>Un joueur ne peut pas déplacer ses pièces sur des cases occupées par ses propres pièces</li>
-        <li>Toutes les pièces capturent en remplaçant la pièce adverse sur sa case (sauf pour la prise en passant)</li>
-        <li>Un joueur ne peut pas mettre ou laisser son propre roi en échec.</li>
-      </ul>
-    </section>
-  </main>
-  
-  <a href="specificite.html" class="hero-page">Continuer vers les specificités</a> 
-  <a href="/" id="hero-page-retour" class="hero-page">Retounez vers l'accueil</a>
-  
-  <footer id="base-footer" class="site-footer">
-      <p>&copy; 2025 Chess School |
-        <a href="apropos.html" style="color: #b9b0b0; text-decoration: underline;">À Propos</a> |
-        <a href="cgu.html" style="color: #b9b0b0; text-decoration: underline;">CGU</a> |
-        <a href="mentions-legales.html" style="color: #b9b0b0; text-decoration: underline;">Mentions Légales</a>
-      </p>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-brand">Chess <span>School</span></div>
+        <div class="footer-links">
+            <a href="apropos.html">À Propos</a>
+            <a href="cgu.html">CGU</a>
+            <a href="mentions-legales.html">Mentions Légales</a>
+            <a href="faq.html">FAQ</a>
+            <a href="glossaire.html">Glossaire</a>
+            <a href="https://discord.gg/C4q8Cae4Ju">Discord</a>
+            <a href="https://github.com/Devlaubin/Chess-school">Github</a>
+        </div>
+        <div class="footer-copy">© 2026 Chess School v4.5</div>
     </footer>
-  </div>
-    <script src="javascript/script.js"></script>
-    <script src="javascript/save-system.js"></script>
-    <script src="javascript/burger-menu.js"></script>
+
+    <script src="javascript/piece-util.js"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        // Déterminer quelle étape du parcours valider
-        const pageName = window.location.pathname.split('/').pop().replace('.html', '');
 
-
-
-         // Header scroll
+        // Header scroll
         const header = document.getElementById('siteHeader');
         window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
 
-        // Vérifier si l'utilisateur a lu toute la page (scroll jusqu'en bas)
-        let hasScrolledToBottom = false;
-
-        window.addEventListener('scroll', function () {
-          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-          const scrollHeight = document.documentElement.scrollHeight;
-          const clientHeight = document.documentElement.clientHeight;
-
-          if (scrollTop + clientHeight >= scrollHeight - 100) {
-            if (!hasScrolledToBottom) {
-              hasScrolledToBottom = true;
-              markPathProgress(pageName);
+        // helper for boards: fall back when piece-util isn't loaded yet
+        function localCreatePiece(symbol) {
+            if (window.createPieceElement) {
+                return window.createPieceElement(symbol);
             }
-          }
-        });
-
-        function markPathProgress(page) {
-          if (!window.ChessSchoolProgress) return;
-
-          // Mapper les pages aux étapes du parcours
-          const pathMapping = {
-            'base': 'fundamentalRules',
-            'specificite': 'specialMoves'
-          };
-
-          const pathKey = pathMapping[page];
-          if (pathKey) {
-            window.ChessSchoolProgress.updateLearningPath(pathKey, true);
-          }
+            const span = document.createElement('span');
+            span.className = 'piece';
+            span.textContent = symbol;
+            return span;
         }
-      });
+
+        // Scroll reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+            });
+        }, { threshold: 0.15 });
+        reveals.forEach(el => observer.observe(el));
     </script>
+
+    <!-- Scripts originaux (préservés) -->
+    <script src="javascript/progress-tracker.js"></script>
+    <script src="javascript/script.js"></script>
+    <script src="javascript/save-system.js"></script>
+    <script src="javascript/burger-menu.js"></script>
+
 </body>
+
 </html>
