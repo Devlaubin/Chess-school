@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Maintenance — Chess School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        font-family: "DM Sans", sans-serif;
+        background: radial-gradient(
+          circle at top,
+          #10233a 0%,
+          #0e0d0b 45%,
+          #060608 100%
+        );
+        color: #f5f0e8;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 24px;
+      }
+      .maintenance-box {
+        width: min(100%, 620px);
+        padding: 40px 36px;
+        border: 1px solid rgba(245, 240, 232, 0.12);
+        border-radius: 28px;
+        background: rgba(14, 13, 11, 0.92);
+        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.35);
+      }
+      .brand {
+        display: inline-flex;
+        font-size: 1.1rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #f5f0e8;
+        margin-bottom: 24px;
+      }
+      .brand span {
+        color: #4c9bc9;
+      }
+      h1 {
+        margin: 0;
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        line-height: 1.05;
+      }
+      p {
+        margin: 22px 0 0;
+        color: rgba(245, 240, 232, 0.78);
+        line-height: 1.75;
+        font-size: 1rem;
+      }
+      .hint {
+        margin-top: 26px;
+        font-size: 0.92rem;
+        color: rgba(245, 240, 232, 0.6);
+      }
+    </style>
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        history.pushState(null, document.title, location.href);
+        window.addEventListener("popstate", function () {
+          history.pushState(null, document.title, location.href);
+        });
+        window.addEventListener("keydown", function (event) {
+          const forbiddenKeys = ["F5", "F11"];
+          if (
+            forbiddenKeys.includes(event.key) ||
+            (event.ctrlKey && ["r", "R"].includes(event.key))
+          ) {
+            event.preventDefault();
+          }
+        });
+        window.addEventListener("contextmenu", function (event) {
+          event.preventDefault();
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="maintenance-box">
+      <div class="brand">Chess <span>School</span></div>
+      <h1>Page de maintenance</h1>
+      <p>Le site est temporairement indisponible.</p>
+      <p>
+        Cette page empêche volontairement la navigation pour maintenir l’accès
+        bloqué pendant la maintenance.
+      </p>
+      <p class="hint">Fermez l’onglet pour sortir.</p>
+    </div>
+  </body>
+</html>
