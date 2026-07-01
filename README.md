@@ -13,6 +13,10 @@ Le projet est une application web **100% front-end** (HTML/CSS/JavaScript) qui p
 
 > Note : le site peut afficher une page de maintenance selon l’état du projet (voir `javascript/maintenance-redirect.js`).
 
+## Screenshot
+
+![Screenshot](/images/screenshot.png)
+
 ## Contenu du dépôt
 
 - **Pages HTML** (root)
